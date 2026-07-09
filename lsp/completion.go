@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"log/slog"
+	"slices"
+	"strings"
 
 	"gioui.org/io/key"
 	"github.com/oligo/gvcode"
@@ -82,10 +84,26 @@ func (c *LspAutoCompletor) Suggest(ctx gvcode.CompletionContext) []gvcode.Comple
 				Description: r.Detail,
 				Kind:        fmt.Sprintf("%s", r.Kind),
 				TextFormat:  fmt.Sprintf("%s", r.InsertTextFormat),
+				SortText:    r.SortText,
+				FilterText:  r.FilterText,
 			})
 		}
-
 	}
+
+	slices.SortStableFunc(c.candicates, func(a, b gvcode.CompletionCandidate) int {
+		if a.SortText != "" || b.SortText != "" {
+			if a.SortText == b.SortText {
+				return 0
+			}
+			if a.SortText < b.SortText {
+				return -1
+			}
+
+			return 1
+		}
+
+		return strings.Compare(a.Label, b.Label)
+	})
 
 	return c.candicates
 
@@ -96,7 +114,12 @@ type candicatesSource struct {
 }
 
 func (src *candicatesSource) String(i int) string {
-	return src.candidates[i].Label
+	c := src.candidates[i]
+	if c.FilterText != "" {
+		return c.FilterText
+	}
+
+	return c.Label
 }
 
 func (src *candicatesSource) Len() int {
@@ -111,6 +134,7 @@ func (c *LspAutoCompletor) FilterAndRank(pattern string, candidates []gvcode.Com
 	//log.Printf("[%d] filter and rank with pattern: %s", len(candidates), pattern)
 	source := &candicatesSource{candidates: candidates}
 
+	//FindForm respects original ordering since v0.1.2.
 	matches := fuzzy.FindFrom(pattern, source)
 
 	c.resultBuf = c.resultBuf[:0]

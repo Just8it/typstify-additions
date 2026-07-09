@@ -19,20 +19,20 @@ require (
 	github.com/modelcontextprotocol/go-sdk v1.6.1
 	github.com/mustafaturan/bus/v3 v3.0.3
 	github.com/oligo/gioview v0.9.2
-	github.com/oligo/gvcode v0.8.1
+	github.com/oligo/gvcode v0.8.2-0.20260709175228-d0c7656323c7
 	github.com/pkg/errors v0.8.1
 	github.com/rivo/uniseg v0.4.7
 	github.com/rogpeppe/go-internal v1.14.1
-	github.com/sahilm/fuzzy v0.1.1
+	github.com/sahilm/fuzzy v0.1.3
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d
 	github.com/typstify/tpix-cli v0.9.4
 	go.etcd.io/bbolt v1.3.11
 	golang.org/x/exp/jsonrpc2 v0.0.0-20250911091902-df9299821621
 	golang.org/x/exp/shiny v0.0.0-20250408133849-7e4ce0ab07d0
-	golang.org/x/image v0.26.0
+	golang.org/x/image v0.44.0
 	golang.org/x/sys v0.41.0
 	golang.org/x/telemetry v0.0.0-20260109210033-bd525da824e2
-	golang.org/x/text v0.33.0
+	golang.org/x/text v0.40.0
 )
 
 // use a local patch to fix the focus switching issue between the native webview and GioView
@@ -52,10 +52,9 @@ require (
 	github.com/go-text/typesetting v0.3.4 // indirect
 	github.com/google/jsonschema-go v0.4.3 // indirect
 	github.com/inkeliz/go_inkwasm v0.1.23-0.20240519174017-989fbe5b10f6 // indirect
-	github.com/kylelemons/godebug v1.1.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
 	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect
-	github.com/rdleal/intervalst v1.4.1 // indirect
+	github.com/rdleal/intervalst v1.5.0 // indirect
 	github.com/segmentio/asm v1.1.3 // indirect
 	github.com/segmentio/encoding v0.5.4 // indirect
 	github.com/shirou/gopsutil/v4 v4.24.9 // indirect
@@ -63,9 +62,9 @@ require (
 	github.com/yuin/goldmark v1.4.13 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	golang.org/x/crypto v0.47.0 // indirect
-	golang.org/x/exp v0.0.0-20250408133849-7e4ce0ab07d0 // indirect
+	golang.org/x/exp v0.0.0-20260709172345-9ea1abe57597 // indirect
 	golang.org/x/exp/event v0.0.0-20250819193227-8b4c13bb791b // indirect
-	golang.org/x/mod v0.33.0 // indirect
+	golang.org/x/mod v0.38.0 // indirect
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/oauth2 v0.35.0 // indirect
 	golang.org/x/xerrors v0.0.0-20240903120638-7835f813f4da // indirect
