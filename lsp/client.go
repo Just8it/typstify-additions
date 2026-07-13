@@ -140,7 +140,7 @@ func (c *Client) buildInitOptions(setting *settings.Settings) map[string]any {
 	// }
 
 	syntaxOnly := "disable"
-	if setting.General().EnablePowerSaving != 0 {
+	if setting.Lsp().EnablePowerSaving != 0 {
 		syntaxOnly = "enable" // or use "onPowerSaving" to let tinymist decide?
 	}
 

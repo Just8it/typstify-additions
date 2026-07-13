@@ -96,7 +96,7 @@ func (cv *AgentChatView) OnResume() {
 		return
 	}
 
-	openInBrowser := cv.srv.Settings().General().OpenPreviewInBrowser != 0
+	openInBrowser := cv.srv.Settings().Lsp().OpenPreviewInBrowser != 0
 	var isLinux = runtime.GOOS == "linux"
 	if openInBrowser || isLinux {
 		return
@@ -278,7 +278,7 @@ func (cv *AgentChatView) togglePreview(previewFile string) error {
 	cv.previewVisible = true
 	cv.previewFile = previewFile
 
-	openInBrowser := cv.srv.Settings().General().OpenPreviewInBrowser != 0
+	openInBrowser := cv.srv.Settings().Lsp().OpenPreviewInBrowser != 0
 	var isLinux = runtime.GOOS == "linux"
 	if openInBrowser || isLinux {
 		utils.OpenInExternalApp(serverAddr)

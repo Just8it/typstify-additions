@@ -15,7 +15,6 @@ import (
 	"github.com/oligo/gioview/theme"
 	gvwidget "github.com/oligo/gioview/widget"
 	"looz.ws/typstify/i18n"
-	"looz.ws/typstify/lsp"
 	"looz.ws/typstify/service/settings"
 	"looz.ws/typstify/typst"
 	"looz.ws/typstify/ui/palette"
@@ -41,9 +40,6 @@ type GeneralView struct {
 
 	externalTypstInput    gvwidget.TextField
 	externalTinymistInput gvwidget.TextField
-	openInBrowser         widget.Bool
-	enableLspLogs         widget.Bool
-	enablePowerSaving     widget.Bool
 	isInitialized         bool
 	lastErr               error
 }
@@ -76,7 +72,6 @@ type TypstSettingsView struct {
 	buildDeps           widget.Bool
 	useSysInputs        widget.Bool
 	typstVersion        string
-	lspVersion          string
 
 	isInitialized bool
 	lastErr       error
@@ -131,9 +126,6 @@ func (g *GeneralView) Layout(gtx C, th *theme.Theme) D {
 		g.typeface.SetText(string(g.setting.TypeFace))
 		g.themeChoice.Value = string(g.setting.Theme)
 		g.checkUpdate = widget.Bool{Value: g.setting.CheckUpdate == "true"}
-		g.openInBrowser = widget.Bool{Value: g.setting.OpenPreviewInBrowser != 0}
-		g.enableLspLogs = widget.Bool{Value: g.setting.EnableLSPLogs != 0}
-		g.enablePowerSaving = widget.Bool{Value: g.setting.EnablePowerSaving != 0}
 
 		g.isInitialized = true
 	} else {
@@ -174,34 +166,6 @@ func (g *GeneralView) Layout(gtx C, th *theme.Theme) D {
 		}
 		if g.externalTinymistInput.Changed() || g.externalTinymistInput.Submitted() {
 			g.setting.ExternalTinymist = g.externalTinymistInput.Text()
-			doUpdate = true
-		}
-
-		if g.enableLspLogs.Update(gtx) {
-			if g.enableLspLogs.Value {
-				g.setting.EnableLSPLogs = 1
-			} else {
-				g.setting.EnableLSPLogs = 0
-			}
-			doUpdate = true
-		}
-
-		if g.enablePowerSaving.Update(gtx) {
-			if g.enablePowerSaving.Value {
-				g.setting.EnablePowerSaving = 1
-			} else {
-				g.setting.EnablePowerSaving = 0
-			}
-			doUpdate = true
-		}
-
-		if g.openInBrowser.Update(gtx) {
-			if g.openInBrowser.Value {
-				g.setting.OpenPreviewInBrowser = 1
-			} else {
-				g.setting.OpenPreviewInBrowser = 0
-			}
-
 			doUpdate = true
 		}
 
@@ -296,45 +260,6 @@ func (g *GeneralView) Layout(gtx C, th *theme.Theme) D {
 					}.Layout(gtx, choices...)
 				})
 
-		}),
-
-		layout.Rigid(func(gtx C) D {
-			return settingItem{}.Layout(gtx, th, i18n.Translate("Preview"),
-				i18n.Translate("When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer."),
-				func(gtx C) D {
-					return layout.Flex{
-						Axis:      layout.Horizontal,
-						Alignment: layout.Middle,
-					}.Layout(gtx,
-						layout.Rigid(material.Switch(th.Theme, &g.openInBrowser, "Open in browser").Layout),
-					)
-				})
-		}),
-
-		layout.Rigid(func(gtx C) D {
-			return settingItem{}.Layout(gtx, th, i18n.Translate("Debug Log"),
-				i18n.Translate("When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect."),
-				func(gtx C) D {
-					return layout.Flex{
-						Axis:      layout.Horizontal,
-						Alignment: layout.Middle,
-					}.Layout(gtx,
-						layout.Rigid(material.Switch(th.Theme, &g.enableLspLogs, "Enable debug log").Layout),
-					)
-				})
-		}),
-
-		layout.Rigid(func(gtx C) D {
-			return settingItem{}.Layout(gtx, th, i18n.Translate("Power Saving"),
-				i18n.Translate(`When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.`),
-				func(gtx C) D {
-					return layout.Flex{
-						Axis:      layout.Horizontal,
-						Alignment: layout.Middle,
-					}.Layout(gtx,
-						layout.Rigid(material.Switch(th.Theme, &g.enablePowerSaving, "Enable power saving").Layout),
-					)
-				})
 		}),
 
 		layout.Rigid(func(gtx C) D {
@@ -584,7 +509,6 @@ func (t *TypstSettingsView) Layout(gtx C, th *theme.Theme) D {
 		t.fontPathInput.SetText(t.setting.ExtraFontPath)
 		t.outputDirInput.SetText(t.setting.OutputDir)
 		t.typstVersion = typst.CurrentVersion()
-		t.lspVersion = lsp.Version()
 		t.ignoreSystemFonts = widget.Bool{Value: t.setting.IgnoreSystemFonts != 0}
 		t.ignoreEmbeddedFonts = widget.Bool{Value: t.setting.IgnoreEmbeddedFonts != 0}
 		t.useSysInputs = widget.Bool{Value: t.setting.UseSysInputs != 0}
@@ -666,21 +590,10 @@ func (t *TypstSettingsView) Layout(gtx C, th *theme.Theme) D {
 		}),
 
 		layout.Rigid(func(gtx C) D {
-			return settingItem{}.Layout(gtx, th, i18n.Translate("Versions"),
+			return settingItem{}.Layout(gtx, th, i18n.Translate("Version"),
 				"",
 				func(gtx C) D {
-					return layout.Flex{
-						Axis:      layout.Vertical,
-						Alignment: layout.Start,
-					}.Layout(gtx,
-						layout.Rigid(func(gtx C) D {
-							return material.Label(th.Theme, th.TextSize, fmt.Sprintf("Typst:    %s", t.typstVersion)).Layout(gtx)
-						}),
-						layout.Rigid(layout.Spacer{Height: unit.Dp(8)}.Layout),
-						layout.Rigid(func(gtx C) D {
-							return material.Label(th.Theme, th.TextSize, fmt.Sprintf("Language Server:    %s", t.lspVersion)).Layout(gtx)
-						}),
-					)
+					return material.Label(th.Theme, th.TextSize, fmt.Sprintf("Typst:    %s", t.typstVersion)).Layout(gtx)
 				})
 		}),
 

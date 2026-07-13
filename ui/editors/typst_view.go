@@ -134,7 +134,7 @@ func (te *TypstEditor) OnResume() {
 		return
 	}
 
-	openInBrowser := te.srv.Settings().General().OpenPreviewInBrowser != 0
+	openInBrowser := te.srv.Settings().Lsp().OpenPreviewInBrowser != 0
 	var isLinux = runtime.GOOS == "linux"
 	if openInBrowser || isLinux {
 		return
@@ -379,7 +379,7 @@ func (te *TypstEditor) togglePreview(gtx C) {
 	// focus LSP triggers a refresh of the preview server.
 	te.srcEditor.FocusLsp()
 
-	openInBrowser := te.srv.Settings().General().OpenPreviewInBrowser != 0
+	openInBrowser := te.srv.Settings().Lsp().OpenPreviewInBrowser != 0
 	var isLinux = runtime.GOOS == "linux"
 	if (openInBrowser || isLinux) && serverAddr != "" {
 		utils.OpenInExternalApp(serverAddr)

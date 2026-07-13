@@ -18,6 +18,7 @@ var (
 	_ Model = (*GeneralSettings)(nil)
 	_ Model = (*EditorSettings)(nil)
 	_ Model = (*TypstSettings)(nil)
+	_ Model = (*LspSettings)(nil)
 	_ Model = (*TpixSettings)(nil)
 	_ Model = (*AcpAgentSettings)(nil)
 )
@@ -26,6 +27,7 @@ var (
 	defaultGeneralSettings  *GeneralSettings
 	defaultEditorSettings   *EditorSettings
 	defaultTypstSettings    *TypstSettings
+	defaultLspSettings      *LspSettings
 	defaultAcpAgentSettings *AcpAgentSettings
 )
 
@@ -41,11 +43,8 @@ type GeneralSettings struct {
 	CheckUpdate string  `key:"checkUpdate" json:"checkUpdate"`
 	DeviceID    string  `key:"deviceId" json:"deviceId"`
 
-	EnableLSPLogs        int    `key:"enableLspLogs" json:"enableLspLogs"`
-	EnablePowerSaving    int    `key:"enablePowerSaving" json:"enablePowerSaving"`
-	ExternalTypst        string `key:"externalTypst" json:"externalTypst"`       // typst executable path
-	ExternalTinymist     string `key:"externalTinymist" json:"externalTinymist"` // tinymist executable path
-	OpenPreviewInBrowser int    `key:"openPreviewInBrowser" json:"openPreviewInBrowser"`
+	ExternalTypst    string `key:"externalTypst" json:"externalTypst"`       // typst executable path
+	ExternalTinymist string `key:"externalTinymist" json:"externalTinymist"` // tinymist executable path
 }
 
 type EditorSettings struct {
@@ -72,6 +71,15 @@ type TypstSettings struct {
 	IgnoreEmbeddedFonts int    `key:"ignoreEmbeddedFonts" json:"ignoreEmbeddedFonts"`
 	BuildDeps           int    `key:"buildDeps" json:"buildDeps"`
 	OutputDir           string `key:"outputDir" json:"outputDir"`
+}
+
+type LspSettings struct {
+	baseModel
+
+	EnableLSPLogs              int  `key:"enableLspLogs" json:"enableLspLogs"`
+	EnablePowerSaving          int  `key:"enablePowerSaving" json:"enablePowerSaving"`
+	OpenPreviewInBrowser       int  `key:"openPreviewInBrowser" json:"openPreviewInBrowser"`
+	EnablePartialRenderPreview bool `json:"enablePartialRenderPreview"`
 }
 
 type TpixSettings struct {
@@ -292,19 +300,32 @@ func (t *TpixSettings) Clear() {
 	t.Save()
 }
 
+func (l *LspSettings) Save() error {
+	if err := l.Validate(); err != nil {
+		return err
+	}
+
+	return l.baseModel.save(l)
+}
+
+func (l *LspSettings) Validate() error {
+	return nil
+}
+
+func (l *LspSettings) Load() error {
+	return l.baseModel.load(l, &LspSettings{})
+}
+
 func init() {
 	// do a initialize here:
 	defaultGeneralSettings = &GeneralSettings{
-		RootDir:              configRoot(),
-		Language:             "en-US",
-		DeviceID:             genDeviceID(),
-		Theme:                "Default Light",
-		TextSize:             13,
-		TypeFace:             "",
-		CheckUpdate:          "true",
-		EnableLSPLogs:        0,
-		EnablePowerSaving:    0,
-		OpenPreviewInBrowser: 0,
+		RootDir:     configRoot(),
+		Language:    "en-US",
+		DeviceID:    genDeviceID(),
+		Theme:       "Default Light",
+		TextSize:    13,
+		TypeFace:    "",
+		CheckUpdate: "true",
 	}
 
 	defaultEditorSettings = &EditorSettings{
@@ -328,6 +349,13 @@ func init() {
 		ExtraFontPath:       "",
 		BuildDeps:           0,
 		OutputDir:           "",
+	}
+
+	defaultLspSettings = &LspSettings{
+		EnableLSPLogs:              0,
+		EnablePowerSaving:          0,
+		OpenPreviewInBrowser:       0,
+		EnablePartialRenderPreview: false,
 	}
 
 	defaultAcpAgentSettings = &AcpAgentSettings{

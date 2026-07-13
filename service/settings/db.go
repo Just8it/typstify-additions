@@ -15,6 +15,7 @@ type Settings struct {
 	general  *GeneralSettings
 	editor   *EditorSettings
 	typst    *TypstSettings
+	lsp      *LspSettings
 	tpix     *TpixSettings
 	acpAgent *AcpAgentSettings
 }
@@ -84,6 +85,17 @@ func (s *Settings) Typst() *TypstSettings {
 
 	s.typst.Load()
 	return s.typst
+}
+
+func (s *Settings) Lsp() *LspSettings {
+	if s.lsp == nil {
+		s.lsp = &LspSettings{
+			baseModel: s.initModel("lsp"),
+		}
+	}
+
+	s.lsp.Load()
+	return s.lsp
 }
 
 func (s *Settings) Tpix() *TpixSettings {

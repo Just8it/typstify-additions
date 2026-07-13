@@ -213,7 +213,7 @@ func (s *ServiceFacade) SetProjectDir(dir string) {
 
 	// connect to LSP server in an eager way.
 	client := lsp.GetLspClient(s.currentProjectDir, s.Settings())
-	if s.settings.General().EnableLSPLogs != 0 {
+	if s.settings.Lsp().EnableLSPLogs != 0 {
 		client.SetServreLogStreamer(s.consoleState)
 	} else {
 		client.SetServreLogStreamer(io.Discard)
@@ -230,7 +230,7 @@ func (s *ServiceFacade) SetProjectDir(dir string) {
 			lsp.PreviewOptions{
 				Mode:          previewMode,
 				InvertColor:   "never",
-				PartialRender: false,
+				PartialRender: s.settings.Lsp().EnablePartialRenderPreview,
 			}, nil)
 	}()
 
@@ -254,7 +254,7 @@ func (s *ServiceFacade) RestartPreview(ctx context.Context, onFinish func()) {
 				Mode:          previewMode,
 				ProjectRoot:   s.currentProjectDir,
 				InvertColor:   "never",
-				PartialRender: false,
+				PartialRender: s.settings.Lsp().EnablePartialRenderPreview,
 			}, onFinish)
 	}()
 }
