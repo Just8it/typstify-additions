@@ -5,7 +5,9 @@ import (
 
 	"context"
 	"errors"
+	"fmt"
 	"log"
+	"os"
 	"path/filepath"
 	"regexp"
 	"runtime"
@@ -17,6 +19,7 @@ import (
 	"github.com/oligo/gioview/theme"
 	"github.com/oligo/gioview/view"
 	"github.com/oligo/gvcode"
+	"golang.design/x/clipboard"
 	"looz.ws/typstify/agent"
 	agentview "looz.ws/typstify/agent/view"
 	"looz.ws/typstify/editor"
@@ -24,12 +27,16 @@ import (
 	"looz.ws/typstify/lsp"
 	lspProtocol "looz.ws/typstify/lsp/protocol"
 	"looz.ws/typstify/service"
+	"looz.ws/typstify/service/bus"
 	"looz.ws/typstify/service/mcp"
+	"looz.ws/typstify/typst"
 	"looz.ws/typstify/ui/dialog"
 	uipreview "looz.ws/typstify/ui/preview"
+	"looz.ws/typstify/ui/statusbar"
 	"looz.ws/typstify/ui/viewer"
 	"looz.ws/typstify/utils"
 	"looz.ws/typstify/widgets"
+	"looz.ws/typstify/widgets/filetree"
 	appIcons "looz.ws/typstify/widgets/icons"
 
 	"gioui.org/io/key"
@@ -83,6 +90,14 @@ type TypstEditor struct {
 	authView  *agentview.AuthenticationView
 	chatErr   error
 	chatReady atomic.Bool
+
+	pendingEdit    *editorEdit
+	pendingProject bus.ProjectSwitchEvent
+}
+
+type editorEdit struct {
+	content string
+	caret   int
 }
 
 func (te *TypstEditor) ID() view.ViewID {
@@ -171,6 +186,7 @@ func (te *TypstEditor) setupEditor(path string) error {
 		}
 	}
 	te.srcEditor.OnOpenLink = te.openLink
+	te.srcEditor.OnPaste = te.onPaste
 	te.srcEditor.OnTextChange = func() {
 		te.symbolsDirty.Store(true)
 	}
@@ -267,7 +283,7 @@ func (te *TypstEditor) update(gtx C) {
 func (te *TypstEditor) Layout(gtx layout.Context, th *theme.Theme) layout.Dimensions {
 	te.update(gtx)
 
-	return layout.Inset{
+	dims := layout.Inset{
 		Left:  unit.Dp(1),
 		Right: unit.Dp(1),
 		Top:   unit.Dp(1),
@@ -319,6 +335,112 @@ func (te *TypstEditor) Layout(gtx layout.Context, th *theme.Theme) layout.Dimens
 				return te.srcEditor.Layout(gtx, th, te.srv.Settings().Editor())
 			}),
 		)
+	})
+
+	if te.pendingEdit != nil {
+		edit := te.pendingEdit
+		te.pendingEdit = nil
+		te.srcEditor.ReplaceText(edit.content, edit.caret)
+		te.srv.RefreshWindow()
+	}
+	if te.pendingProject.Path != "" {
+		event := te.pendingProject
+		te.pendingProject = bus.ProjectSwitchEvent{}
+		te.srv.EventBus().Emit(bus.TopicProjectSwitched, event)
+		te.srv.RefreshWindow()
+	}
+	return dims
+}
+
+func (te *TypstEditor) onPaste(text string) string {
+	paths := filetree.ReadClipboardFiles()
+	if len(paths) == 0 {
+		trimmed := strings.TrimSpace(text)
+		quoted := len(trimmed) >= 2 && ((trimmed[0] == '"' && trimmed[len(trimmed)-1] == '"') || (trimmed[0] == '\'' && trimmed[len(trimmed)-1] == '\''))
+		if strings.HasPrefix(trimmed, "file://") || quoted {
+			paths = filetree.ParseClipboardPaths(text)
+		}
+	}
+	if len(paths) == 0 {
+		if err := clipboard.Init(); err != nil {
+			if text == "" {
+				te.pasteError(fmt.Errorf("read clipboard image: %w", err))
+				return ""
+			}
+		} else if image := clipboard.Read(clipboard.FmtImage); len(image) > 0 {
+			tempDir, err := os.MkdirTemp("", "typstify-clipboard-")
+			if err != nil {
+				te.pasteError(fmt.Errorf("prepare clipboard image: %w", err))
+				return ""
+			}
+			defer os.RemoveAll(tempDir)
+			screenshot := filepath.Join(tempDir, "screenshot.png")
+			if err := os.WriteFile(screenshot, image, 0600); err != nil {
+				te.pasteError(fmt.Errorf("prepare clipboard image: %w", err))
+				return ""
+			}
+			paths = []string{screenshot}
+		}
+	}
+	if len(paths) == 0 {
+		return text
+	}
+	if len(paths) != 1 {
+		te.pasteError(errors.New("paste one image or PDF at a time"))
+		return ""
+	}
+	if !filepath.IsAbs(paths[0]) {
+		return text
+	}
+
+	version := typst.Current()
+	_, _, supported, err := assetKind(paths[0], version)
+	if err != nil {
+		te.pasteError(err)
+		return ""
+	}
+	if !supported {
+		return text
+	}
+
+	start, end := te.srcEditor.Selection()
+	content := te.srcEditor.Text()
+	root := te.srv.CurrentProjectDir()
+	if root != "" && pathWithin(root, te.targetFile) {
+		markup, header, err := importAsset(root, te.targetFile, paths[0], content, version)
+		if err != nil {
+			te.pasteError(err)
+			return ""
+		}
+		if header == "" {
+			return markup
+		}
+		updated, caret, err := applyPaste(content, start, end, header, markup)
+		if err != nil {
+			te.pasteError(err)
+			return ""
+		}
+		te.pendingEdit = &editorEdit{content: updated, caret: caret}
+		return ""
+	}
+
+	if err := te.srcEditor.Save(); err != nil {
+		te.pasteError(fmt.Errorf("save standalone document: %w", err))
+		return ""
+	}
+	project, document, err := promoteStandalone(te.targetFile, paths[0], start, end, version)
+	if err != nil {
+		te.pasteError(err)
+		return ""
+	}
+	te.pendingProject = bus.ProjectSwitchEvent{Path: project, OpenFile: document}
+	return ""
+}
+
+func (te *TypstEditor) pasteError(err error) {
+	te.srv.EventBus().Emit(bus.TopicStatusbarNotifyEvent, statusbar.Notification{
+		Content: "Paste asset: " + err.Error(),
+		Level:   2,
 	})
 }
 
