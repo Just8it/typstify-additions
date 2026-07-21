@@ -58,6 +58,7 @@ type TextEditor struct {
 	state        *gvcode.Editor
 	filename     string // for syntax highlight
 	originalHash string
+	mathPair     *trackedMathPair
 	autoSaver    *AutoSaver
 	highlighter  *Highlighter
 	colorScheme  *syntax.ColorScheme
@@ -86,6 +87,10 @@ type TextEditor struct {
 	OnSelectChange func(gvcode.Position)
 	OnTextChange   func()
 	OnOpenLink     func(link string, external bool)
+}
+
+type trackedMathPair struct {
+	start, end, textLen int
 }
 
 func (me *TextEditor) File() string {
@@ -289,6 +294,8 @@ func (me *TextEditor) handleEvents(gtx layout.Context) {
 
 		switch evt := event.(type) {
 		case gvcode.ChangeEvent:
+			me.updateMathPair()
+			me.insertMathPairSpace()
 			me.onTextChanged()
 			me.highlighter.Highlight(me.state)
 			me.searchbar.ReSearch()
@@ -358,6 +365,53 @@ func (me *TextEditor) handleEvents(gtx layout.Context) {
 		}
 	}
 
+}
+
+func (me *TextEditor) insertMathPairSpace() bool {
+	start, end := me.state.Selection()
+	if start != end || start < 2 || start >= me.state.Len() || !shouldInsertMathPairSpace(me.filename, me.state.ReadTextBetween(start-2, start+1)) {
+		return false
+	}
+
+	me.state.Insert(" ")
+	me.state.MoveCaret(-1, -1)
+	me.mathPair = &trackedMathPair{start: start - 2, end: start + 1, textLen: me.state.Len()}
+	return true
+}
+
+func (me *TextEditor) updateMathPair() bool {
+	pair := me.mathPair
+	if pair == nil {
+		return false
+	}
+
+	start, end := me.state.Selection()
+	pairEnd := pair.end + me.state.Len() - pair.textLen
+	if start != end || start < pair.start || start > pairEnd || pairEnd < pair.start || pairEnd >= me.state.Len() {
+		me.mathPair = nil
+		return false
+	}
+
+	opening := me.state.ReadTextBetween(pair.start, pair.start+1) == "$"
+	closing := me.state.ReadTextBetween(pairEnd, pairEnd+1) == "$"
+	if opening && closing {
+		pair.end = pairEnd
+		pair.textLen = me.state.Len()
+		return false
+	}
+	if !opening && closing {
+		me.state.SetCaret(pairEnd, pairEnd+1)
+		me.state.Delete(1)
+		me.state.SetCaret(start, end)
+		me.mathPair = nil
+		return true
+	}
+	me.mathPair = nil
+	return false
+}
+
+func shouldInsertMathPairSpace(filename, surrounding string) bool {
+	return filepath.Ext(filename) == ".typ" && surrounding == "$ $"
 }
 
 func (me *TextEditor) queryDocOnHover(pos gvcode.Position) (string, f32.Point) {
@@ -728,6 +782,14 @@ func NewTextEditor(path string, showDiff bool, settings *settings.EditorSettings
 		gvcode.WithGutter(providers.NewLineNumberProvider()),
 		gvcode.WithGutter(ed.diffProvider),
 	)
+	if filepath.Ext(path) == ".typ" {
+		ed.state.WithOptions(gvcode.WithQuotePairs(map[rune]rune{
+			'\'': '\'',
+			'"':  '"',
+			'`':  '`',
+			'$':  '$',
+		}))
+	}
 
 	// Initialize overview ruler colors
 	ed.overviewRuler.UseDefaultColors()
