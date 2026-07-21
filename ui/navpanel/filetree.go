@@ -48,6 +48,7 @@ type FileTreeNav struct {
 
 	rootSwitched bool
 	newRoot      string
+	openFile     string
 
 	historyBtn      widget.Clickable
 	historyProjects *RecentProjects
@@ -64,9 +65,15 @@ func NewFileTreeNav(title string, srv *service.ServiceFacade, vm view.ViewManage
 	}
 
 	srv.EventBus().Subscribe(ftn, "filetree", `project\.(switched|create)$`, func(topic string, data interface{}) {
-		path, ok := data.(string)
-		if !ok {
-			panic("not a path")
+		var path string
+		switch event := data.(type) {
+		case string:
+			path = event
+		case bus.ProjectSwitchEvent:
+			path = event.Path
+			ftn.openFile = event.OpenFile
+		default:
+			panic("not a project switch event")
 		}
 
 		if ftn.tree != nil && path == ftn.tree.Root() {
@@ -130,7 +137,12 @@ func (tn *FileTreeNav) switchRoot() {
 
 	tn.tree = newTree
 
-	for _, file := range tn.srv.Workspace().Current().OpenedFiles {
+	openedFiles := tn.srv.Workspace().Current().OpenedFiles
+	if tn.openFile != "" {
+		openedFiles = []string{tn.openFile}
+		tn.openFile = ""
+	}
+	for _, file := range openedFiles {
 		node, err := explorer.NewFileTree(file)
 		if err != nil {
 			log.Println("open file failed: ", err)

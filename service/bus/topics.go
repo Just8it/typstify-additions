@@ -16,6 +16,11 @@ type FileChangedEvent struct {
 	Path string
 }
 
+type ProjectSwitchEvent struct {
+	Path     string
+	OpenFile string
+}
+
 var allTopics = []string{
 	TopicSettingsUpdated,
 	TopicStatusbarNotifyEvent,
