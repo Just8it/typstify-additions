@@ -9,7 +9,7 @@ import (
 
 // ParseClipboardPaths attempts to extract valid absolute file paths
 // from raw cross-platform clipboard text.
-func parseClipboardPaths(data string) []string {
+func ParseClipboardPaths(data string) []string {
 	var result []string
 
 	// Normalize Windows \r\n to standard \n
