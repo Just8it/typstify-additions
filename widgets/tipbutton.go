@@ -10,6 +10,7 @@ import (
 	"gioui.org/layout"
 	"gioui.org/op"
 	"gioui.org/op/clip"
+	"gioui.org/unit"
 	cmp "gioui.org/x/component"
 	"github.com/oligo/gioview/theme"
 )
@@ -119,6 +120,7 @@ func (t *TipArea) Layout(gtx C, tip cmp.Tooltip, w layout.Widget) D {
 			gtx.Constraints.Min = image.Point{}
 
 			if t.Visible() {
+				gtx.Constraints.Max.X = max(gtx.Constraints.Max.X, gtx.Dp(unit.Dp(240)))
 				macro := op.Record(gtx.Ops)
 				tip.Bg = cmp.Interpolate(color.NRGBA{}, tip.Bg, t.VisibilityAnimation.Revealed(gtx))
 				dims := tip.Layout(gtx)

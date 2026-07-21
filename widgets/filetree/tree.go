@@ -43,7 +43,8 @@ type MenuOptionFunc func(node *FileNode) [][]menu.MenuOption
 
 // TreeView is the view controller of file nodes.
 type TreeView struct {
-	root *FileNode
+	root     *FileNode
+	HideRoot bool
 	// states maps a file path to its persistent UI state.
 	states     map[string]*NodeState
 	statesLock sync.Mutex
@@ -77,6 +78,7 @@ type TreeView struct {
 	OnFileUpdatedFunc       func(node *FileNode, oldPath string)
 	OnFileRemoveFunc        func(node *FileNode)
 	OnFileSelectedFunc      func(node *FileNode)
+	OnFolderSelectedFunc    func(node *FileNode)
 	OnDropConfirmFunc       OnDropConfirmFunc
 	OnErrorFunc             func(err error)
 	ExtraMenuOptionProvider MenuOptionFunc
@@ -154,8 +156,9 @@ func (t *TreeView) Rebuild() {
 
 func (t *TreeView) flatten(node *FileNode, depth int) {
 	state := t.GetState(node.Path)
+	hideNode := t.HideRoot && node == t.root
 
-	if node != nil {
+	if node != nil && !hideNode {
 		flatNode := FlatNode{
 			Node:            node,
 			Depth:           depth,
@@ -179,7 +182,11 @@ func (t *TreeView) flatten(node *FileNode, depth int) {
 		// its pointer.
 		node.Refresh(nil)
 		for _, child := range node.Children() {
-			t.flatten(child, depth+1)
+			childDepth := depth + 1
+			if hideNode {
+				childDepth = depth
+			}
+			t.flatten(child, childDepth)
 		}
 	}
 
@@ -193,12 +200,7 @@ func (t *TreeView) droppable() bool {
 }
 
 func (t *TreeView) Layout(gtx layout.Context, th *theme.Theme) layout.Dimensions {
-	t.update(gtx)
-
-	if t.pendingRebuild {
-		t.Rebuild()
-		t.pendingRebuild = false
-	}
+	t.Update(gtx)
 
 	// drop target
 	dropTarget := t.currentDropTarget
@@ -243,41 +245,7 @@ func (t *TreeView) layout(gtx layout.Context, th *theme.Theme, dropTarget *FileN
 
 	return list.Layout(gtx, len(t.visibleNodes), func(gtx layout.Context, index int) layout.Dimensions {
 		flatNode := t.visibleNodes[index]
-		state := t.GetState(flatNode.Node.Path)
-		state.Editable.OnChanged = func(text string) error {
-			oldPath := flatNode.Node.Path
-			err := flatNode.Node.UpdateName(text)
-			if err != nil {
-				log.Println("err: ", err)
-				if t.OnErrorFunc != nil {
-					t.OnErrorFunc(err)
-				}
-				return err
-			}
-			// Only when rename of node succeededs do we update the editing status.
-			t.isEditingNode = false
-			// path changed, so we also need to delete the stale node state.
-			t.deleteState(oldPath)
-			// Re-register state under the new path, so the state survives the rebuild after we make
-			// it the selectedNode.
-			t.statesLock.Lock()
-			t.states[flatNode.Node.Path] = state
-			t.statesLock.Unlock()
-			t.pendingRebuild = true
-
-			// Update tree selection to track the renamed node.
-			if t.selectedNode != nil && t.selectedNode != flatNode.Node {
-				prevState := t.GetState(t.selectedNode.Path)
-				prevState.Label.Unselect()
-			}
-			t.selectedNode = flatNode.Node
-			state.Label.Select()
-
-			if t.OnFileUpdatedFunc != nil {
-				t.OnFileUpdatedFunc(flatNode.Node, oldPath)
-			}
-			return nil
-		}
+		state := t.PrepareNode(flatNode.Node)
 		state.Editable.Color = th.Fg
 		state.Editable.TextSize = th.TextSize
 
@@ -319,7 +287,7 @@ func (t *TreeView) layoutRow(gtx layout.Context, th *theme.Theme, flatNode FlatN
 	return dims
 }
 
-func (t *TreeView) update(gtx layout.Context) {
+func (t *TreeView) Update(gtx layout.Context) bool {
 	// Lifting the event processing of context menu first, so dismiss event can be handled first
 	// and won't overwrite t.contextMenu.Show in OnContextNodeChange.
 	t.contextMenu.Update(gtx)
@@ -331,6 +299,48 @@ func (t *TreeView) update(gtx layout.Context) {
 		}
 		log.Println("filetree error: ", err)
 	}
+
+	if t.pendingRebuild {
+		t.Rebuild()
+		t.pendingRebuild = false
+		return true
+	}
+	return false
+}
+
+func (t *TreeView) LayoutContextMenu(gtx layout.Context, th *theme.Theme) layout.Dimensions {
+	return t.contextMenu.Layout(gtx, th)
+}
+
+func (t *TreeView) PrepareNode(node *FileNode) *NodeState {
+	state := t.GetState(node.Path)
+	state.Editable.OnChanged = func(text string) error {
+		oldPath := node.Path
+		if err := node.UpdateName(text); err != nil {
+			if t.OnErrorFunc != nil {
+				t.OnErrorFunc(err)
+			}
+			return err
+		}
+		t.isEditingNode = false
+		t.deleteState(oldPath)
+		t.statesLock.Lock()
+		t.states[node.Path] = state
+		t.statesLock.Unlock()
+		t.pendingRebuild = true
+
+		if t.selectedNode != nil && t.selectedNode != node {
+			t.GetState(t.selectedNode.Path).Label.Unselect()
+		}
+		t.selectedNode = node
+		state.Label.Select()
+
+		if t.OnFileUpdatedFunc != nil {
+			t.OnFileUpdatedFunc(node, oldPath)
+		}
+		return nil
+	}
+	return state
 }
 
 func (t *TreeView) processKeyEvents(gtx layout.Context) error {
@@ -620,12 +630,38 @@ func (t *TreeView) OnSelect(fileNode *FileNode) {
 
 		if fileNode.IsDir() {
 			t.pendingRebuild = true
+			if t.OnFolderSelectedFunc != nil {
+				t.OnFolderSelectedFunc(fileNode)
+			}
 		}
 
 		if !fileNode.IsDir() && t.OnFileSelectedFunc != nil {
 			t.OnFileSelectedFunc(fileNode)
 		}
 	}
+}
+
+func (t *TreeView) SelectPath(path string) error {
+	if !PathWithin(t.Root(), path) {
+		return fmt.Errorf("path is outside tree root: %s", path)
+	}
+	node, err := explorer.NewFileTree(path)
+	if err != nil {
+		return err
+	}
+	if t.selectedNode != nil {
+		t.GetState(t.selectedNode.Path).Label.Unselect()
+	}
+	t.selectedNode = node
+	t.GetState(path).Label.Select()
+	for parent := filepath.Dir(path); PathWithin(t.Root(), parent); parent = filepath.Dir(parent) {
+		t.GetState(parent).Expanded = true
+		if parent == t.Root() {
+			break
+		}
+	}
+	t.pendingRebuild = true
+	return nil
 }
 
 func (t *TreeView) UpdateDropTarget(destNode *FileNode, isLeave bool) {

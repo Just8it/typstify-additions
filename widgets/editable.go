@@ -87,20 +87,23 @@ func (e *Editable) Update(gtx C) {
 		defer e.quit()
 	}
 
-	// handle editor events:
-	if ev, ok := e.editor.Update(gtx); ok {
-		if _, ok := ev.(wg.SubmitEvent); ok {
-			text := e.editor.Text()
-			if e.OnChanged != nil {
-				if err := e.OnChanged(text); err == nil {
-					e.editing = false
-					e.Text = text
-				}
-			} else {
-				e.editing = false
-				e.Text = text
+	// An edit and its submit can arrive together; drain both before Layout does.
+	for {
+		ev, ok := e.editor.Update(gtx)
+		if !ok {
+			break
+		}
+		if _, ok := ev.(wg.SubmitEvent); !ok {
+			continue
+		}
+		text := e.editor.Text()
+		if e.OnChanged != nil {
+			if err := e.OnChanged(text); err != nil {
+				continue
 			}
 		}
+		e.editing = false
+		e.Text = text
 	}
 }
 

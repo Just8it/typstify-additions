@@ -85,11 +85,17 @@ var ArrowLeftRight []byte
 //go:embed lucide/folder-open.svg
 var FolderOpen []byte
 
+//go:embed lucide/home.svg
+var Home []byte
+
 //go:embed lucide/file-plus.svg
 var FilePlus []byte
 
 //go:embed lucide/list.svg
 var List []byte
+
+//go:embed lucide/list-filter.svg
+var ListFilter []byte
 
 //go:embed lucide/folder-tree.svg
 var FolderTree []byte
