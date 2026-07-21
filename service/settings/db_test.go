@@ -68,6 +68,60 @@ func TestModelGetDefault(t *testing.T) {
 
 }
 
+func TestFileInterfaceSettings(t *testing.T) {
+	root := t.TempDir()
+	db := newSettings(root, nil)
+	got := db.FileInterface()
+	if got.Mode != FileInterfaceModeClassic ||
+		got.LibraryRoot != "" ||
+		got.EditorScope != FileInterfaceEditorScopeContextual ||
+		got.LibraryView != FileInterfaceLibraryViewGrid ||
+		got.NavigationLayout != FileInterfaceNavigationLayoutLibrary {
+		t.Fatalf("defaults = %#v", got)
+	}
+
+	got.Mode = FileInterfaceModeStudent
+	got.LibraryRoot = root
+	got.EditorScope = FileInterfaceEditorScopeWholeWorkspace
+	got.LibraryView = FileInterfaceLibraryViewList
+	got.NavigationLayout = FileInterfaceNavigationLayoutClassic
+	if err := got.Save(); err != nil {
+		t.Fatal(err)
+	}
+
+	reloaded := newSettings(root, nil).FileInterface()
+	if reloaded.Mode != FileInterfaceModeStudent ||
+		reloaded.LibraryRoot != root ||
+		reloaded.EditorScope != FileInterfaceEditorScopeWholeWorkspace ||
+		reloaded.LibraryView != FileInterfaceLibraryViewList ||
+		reloaded.NavigationLayout != FileInterfaceNavigationLayoutClassic {
+		t.Fatalf("reloaded = %#v", reloaded)
+	}
+
+	invalidRoot := t.TempDir()
+	invalidJSON := `{
+  "version": 1,
+  "fileInterface": {
+    "mode": "unknown",
+    "libraryRoot": "missing-folder",
+    "editorScope": "unknown",
+    "libraryView": "unknown",
+    "navigationLayout": "unknown"
+  }
+}`
+	if err := os.WriteFile(filepath.Join(invalidRoot, "settings.json"), []byte(invalidJSON), 0600); err != nil {
+		t.Fatal(err)
+	}
+	invalid := newSettings(invalidRoot, nil).FileInterface()
+	if invalid.Mode != FileInterfaceModeClassic ||
+		invalid.LibraryRoot != "" ||
+		invalid.EditorScope != FileInterfaceEditorScopeContextual ||
+		invalid.LibraryView != FileInterfaceLibraryViewGrid ||
+		invalid.NavigationLayout != FileInterfaceNavigationLayoutLibrary {
+		t.Fatalf("invalid fallback = %#v", invalid)
+	}
+}
+
 func TestLegacySettingsMigration(t *testing.T) {
 	root := t.TempDir()
 	db, err := bolt.Open(filepath.Join(root, "settings.db"), 0600, nil)

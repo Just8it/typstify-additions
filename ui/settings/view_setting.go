@@ -76,6 +76,7 @@ func NewSettingsView(srv *service.ServiceFacade) *SettingsView {
 	subSettings := []SubSettingView{
 		&GeneralView{setting: general},
 		&EditorView{setting: editor},
+		&FileInterfaceView{srv: srv, setting: srv.Settings().FileInterface()},
 		&TypstSettingsView{setting: srv.Settings().Typst()},
 		&LspSettingsView{setting: srv.Settings().Lsp()},
 		&TpixSettingsView{srv: srv.TpixSessionService()},

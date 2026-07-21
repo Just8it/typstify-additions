@@ -12,12 +12,13 @@ type Settings struct {
 	store    *settingsStore
 	eventbus *bus.EventBus
 
-	general  *GeneralSettings
-	editor   *EditorSettings
-	typst    *TypstSettings
-	lsp      *LspSettings
-	tpix     *TpixSettings
-	acpAgent *AcpAgentSettings
+	general       *GeneralSettings
+	editor        *EditorSettings
+	fileInterface *FileInterfaceSettings
+	typst         *TypstSettings
+	lsp           *LspSettings
+	tpix          *TpixSettings
+	acpAgent      *AcpAgentSettings
 }
 
 func configRoot() string {
@@ -74,6 +75,17 @@ func (s *Settings) Editor() *EditorSettings {
 	s.editor.Load()
 
 	return s.editor
+}
+
+func (s *Settings) FileInterface() *FileInterfaceSettings {
+	if s.fileInterface == nil {
+		s.fileInterface = &FileInterfaceSettings{
+			baseModel: s.initModel("fileInterface"),
+		}
+	}
+
+	s.fileInterface.Load()
+	return s.fileInterface
 }
 
 func (s *Settings) Typst() *TypstSettings {

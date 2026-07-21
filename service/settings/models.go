@@ -17,6 +17,7 @@ type Model interface {
 var (
 	_ Model = (*GeneralSettings)(nil)
 	_ Model = (*EditorSettings)(nil)
+	_ Model = (*FileInterfaceSettings)(nil)
 	_ Model = (*TypstSettings)(nil)
 	_ Model = (*LspSettings)(nil)
 	_ Model = (*TpixSettings)(nil)
@@ -24,11 +25,31 @@ var (
 )
 
 var (
-	defaultGeneralSettings  *GeneralSettings
-	defaultEditorSettings   *EditorSettings
-	defaultTypstSettings    *TypstSettings
-	defaultLspSettings      *LspSettings
-	defaultAcpAgentSettings *AcpAgentSettings
+	defaultGeneralSettings       *GeneralSettings
+	defaultEditorSettings        *EditorSettings
+	defaultFileInterfaceSettings *FileInterfaceSettings
+	defaultTypstSettings         *TypstSettings
+	defaultLspSettings           *LspSettings
+	defaultAcpAgentSettings      *AcpAgentSettings
+)
+
+type FileInterfaceMode string
+type FileInterfaceEditorScope string
+type FileInterfaceLibraryView string
+type FileInterfaceNavigationLayout string
+
+const (
+	FileInterfaceModeClassic FileInterfaceMode = "classic"
+	FileInterfaceModeStudent FileInterfaceMode = "student"
+
+	FileInterfaceEditorScopeContextual     FileInterfaceEditorScope = "contextual"
+	FileInterfaceEditorScopeWholeWorkspace FileInterfaceEditorScope = "whole-workspace"
+
+	FileInterfaceLibraryViewGrid FileInterfaceLibraryView = "grid"
+	FileInterfaceLibraryViewList FileInterfaceLibraryView = "list"
+
+	FileInterfaceNavigationLayoutLibrary FileInterfaceNavigationLayout = "library"
+	FileInterfaceNavigationLayoutClassic FileInterfaceNavigationLayout = "classic"
 )
 
 type GeneralSettings struct {
@@ -58,6 +79,16 @@ type EditorSettings struct {
 	UseSoftTab       string  `key:"softTab" json:"softTab"`
 	WrapLine         string  `key:"wrapLine" json:"wrapLine"`
 	AutoSaveInterval int     `key:"autoSaveInterval" json:"autoSaveInterval"`
+}
+
+type FileInterfaceSettings struct {
+	baseModel
+
+	Mode             FileInterfaceMode             `key:"mode" json:"mode"`
+	LibraryRoot      string                        `key:"libraryRoot" json:"libraryRoot"`
+	EditorScope      FileInterfaceEditorScope      `key:"editorScope" json:"editorScope"`
+	LibraryView      FileInterfaceLibraryView      `key:"libraryView" json:"libraryView"`
+	NavigationLayout FileInterfaceNavigationLayout `key:"navigationLayout" json:"navigationLayout"`
 }
 
 type TypstSettings struct {
@@ -228,6 +259,42 @@ func (e *EditorSettings) Validate() error {
 	return nil
 }
 
+func (f *FileInterfaceSettings) Save() error {
+	if err := f.Validate(); err != nil {
+		return err
+	}
+	return f.baseModel.save(f)
+}
+
+func (f *FileInterfaceSettings) Load() error {
+	if err := f.baseModel.load(f, defaultFileInterfaceSettings); err != nil {
+		return err
+	}
+	return f.Validate()
+}
+
+func (f *FileInterfaceSettings) Validate() error {
+	defaults := defaultFileInterfaceSettings
+	if f.LibraryRoot != "" {
+		if err := isDir(f.LibraryRoot); err != nil {
+			f.LibraryRoot = defaults.LibraryRoot
+		}
+	}
+	if f.Mode != FileInterfaceModeClassic && f.Mode != FileInterfaceModeStudent {
+		f.Mode = defaults.Mode
+	}
+	if f.EditorScope != FileInterfaceEditorScopeContextual && f.EditorScope != FileInterfaceEditorScopeWholeWorkspace {
+		f.EditorScope = defaults.EditorScope
+	}
+	if f.LibraryView != FileInterfaceLibraryViewGrid && f.LibraryView != FileInterfaceLibraryViewList {
+		f.LibraryView = defaults.LibraryView
+	}
+	if f.NavigationLayout != FileInterfaceNavigationLayoutLibrary && f.NavigationLayout != FileInterfaceNavigationLayoutClassic {
+		f.NavigationLayout = defaults.NavigationLayout
+	}
+	return nil
+}
+
 func (t *TypstSettings) Save() error {
 	if err := t.Validate(); err != nil {
 		return err
@@ -337,6 +404,13 @@ func init() {
 		TabSize:          4,
 		WrapLine:         "true",
 		AutoSaveInterval: 3,
+	}
+
+	defaultFileInterfaceSettings = &FileInterfaceSettings{
+		Mode:             FileInterfaceModeClassic,
+		EditorScope:      FileInterfaceEditorScopeContextual,
+		LibraryView:      FileInterfaceLibraryViewGrid,
+		NavigationLayout: FileInterfaceNavigationLayoutLibrary,
 	}
 
 	defaultTypstSettings = &TypstSettings{

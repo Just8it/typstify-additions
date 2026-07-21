@@ -54,6 +54,7 @@ type WorkspaceState struct {
 	LastAccessAt time.Time
 	TreeState    *filetree.TreeState
 	OpenedFiles  []string
+	LibraryPath  string
 }
 
 type AppState struct {
@@ -138,6 +139,14 @@ func (rp *WorkspaceService) SaveSnapshot(treeState *filetree.TreeState, openedFi
 	}
 	rp.currentWorkspace.TreeState = treeState
 	rp.currentWorkspace.OpenedFiles = openedFiles
+	rp.stateIndex.Save(utils.SKey(rp.currentWorkspace.Path), rp.currentWorkspace)
+}
+
+func (rp *WorkspaceService) SaveLibraryPath(path string) {
+	if rp.currentWorkspace.Path == "" {
+		return
+	}
+	rp.currentWorkspace.LibraryPath = path
 	rp.stateIndex.Save(utils.SKey(rp.currentWorkspace.Path), rp.currentWorkspace)
 }
 

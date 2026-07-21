@@ -15,6 +15,7 @@ import (
 	"github.com/oligo/gioview/theme"
 	gvwidget "github.com/oligo/gioview/widget"
 	"looz.ws/typstify/i18n"
+	"looz.ws/typstify/service"
 	"looz.ws/typstify/service/settings"
 	"looz.ws/typstify/typst"
 	"looz.ws/typstify/ui/palette"
@@ -59,6 +60,19 @@ type EditorView struct {
 
 	weightChoices []layout.FlexChild
 	tabKindChoces []layout.FlexChild
+}
+
+type FileInterfaceView struct {
+	srv              *service.ServiceFacade
+	setting          *settings.FileInterfaceSettings
+	mode             widget.Enum
+	editorScope      widget.Enum
+	libraryView      widget.Enum
+	navigationLayout widget.Enum
+	changeLibraryBtn widget.Clickable
+	forgetLibraryBtn widget.Clickable
+	isInitialized    bool
+	lastErr          error
 }
 
 type TypstSettingsView struct {
@@ -499,6 +513,174 @@ func (e *EditorView) Layout(gtx C, th *theme.Theme) D {
 }
 
 func (e *EditorView) Title() string { return i18n.Translate("Editor") }
+
+func (f *FileInterfaceView) Title() string { return i18n.Translate("File Interface") }
+
+func (f *FileInterfaceView) Layout(gtx C, th *theme.Theme) D {
+	if f.changeLibraryBtn.Clicked(gtx) {
+		go func() {
+			path, err := f.srv.FileChooser().ChooseFolder()
+			if err != nil || path == "" {
+				return
+			}
+			f.setting.LibraryRoot = path
+			f.lastErr = f.setting.Save()
+		}()
+	}
+	if f.forgetLibraryBtn.Clicked(gtx) {
+		f.setting.LibraryRoot = ""
+		f.lastErr = f.setting.Save()
+	}
+
+	if !f.isInitialized {
+		f.mode.Value = string(f.setting.Mode)
+		f.editorScope.Value = string(f.setting.EditorScope)
+		f.libraryView.Value = string(f.setting.LibraryView)
+		f.navigationLayout.Value = string(f.setting.NavigationLayout)
+		f.isInitialized = true
+	} else {
+		var doUpdate bool
+		if f.mode.Update(gtx) {
+			f.setting.Mode = settings.FileInterfaceMode(f.mode.Value)
+			doUpdate = true
+		}
+		if f.editorScope.Update(gtx) {
+			f.setting.EditorScope = settings.FileInterfaceEditorScope(f.editorScope.Value)
+			doUpdate = true
+		}
+		if f.libraryView.Update(gtx) {
+			f.setting.LibraryView = settings.FileInterfaceLibraryView(f.libraryView.Value)
+			doUpdate = true
+		}
+		if f.navigationLayout.Update(gtx) {
+			f.setting.NavigationLayout = settings.FileInterfaceNavigationLayout(f.navigationLayout.Value)
+			doUpdate = true
+		}
+		if doUpdate {
+			f.lastErr = f.setting.Save()
+		}
+	}
+
+	children := []layout.FlexChild{
+		layout.Rigid(func(gtx C) D {
+			if f.lastErr != nil {
+				return misc.LayoutErrorLabel(gtx, th, f.lastErr)
+			}
+			return D{}
+		}),
+		layout.Rigid(func(gtx C) D {
+			return settingItem{}.Layout(gtx, th,
+				i18n.Translate("Interface"),
+				i18n.Translate("Classic keeps Typstify's existing file workflow. Student adds a Library home and focused project navigation."),
+				func(gtx C) D {
+					return layout.Flex{Axis: layout.Horizontal}.Layout(gtx,
+						layout.Rigid(material.RadioButton(th.Theme, &f.mode, string(settings.FileInterfaceModeClassic), i18n.Translate("Classic")).Layout),
+						layout.Rigid(material.RadioButton(th.Theme, &f.mode, string(settings.FileInterfaceModeStudent), i18n.Translate("Student")).Layout),
+					)
+				})
+		}),
+	}
+
+	if f.mode.Value != string(settings.FileInterfaceModeStudent) {
+		children = append(children, layout.Rigid(func(gtx C) D {
+			label := material.Caption(th.Theme, i18n.Translate("Your Student preferences are saved and will return when you choose Student."))
+			label.Color = misc.WithAlpha(th.Fg, 0x90)
+			return label.Layout(gtx)
+		}))
+		return layout.Flex{Axis: layout.Vertical}.Layout(gtx, children...)
+	}
+
+	children = append(children, layout.Rigid(func(gtx C) D {
+		return widget.Border{Color: misc.WithAlpha(th.Fg, 0x30), Width: unit.Dp(1), CornerRadius: unit.Dp(8)}.Layout(gtx, func(gtx C) D {
+			return layout.Inset{Top: unit.Dp(18), Bottom: unit.Dp(2), Left: unit.Dp(18), Right: unit.Dp(18)}.Layout(gtx, func(gtx C) D {
+				return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+					layout.Rigid(func(gtx C) D {
+						label := material.H6(th.Theme, i18n.Translate("Student preferences"))
+						label.Font.Weight = font.SemiBold
+						return label.Layout(gtx)
+					}),
+					layout.Rigid(func(gtx C) D {
+						label := material.Caption(th.Theme, i18n.Translate("These choices apply immediately and do not change the Classic interface."))
+						label.Color = misc.WithAlpha(th.Fg, 0xa0)
+						return layout.Inset{Top: unit.Dp(4), Bottom: unit.Dp(18)}.Layout(gtx, label.Layout)
+					}),
+					layout.Rigid(func(gtx C) D {
+						return settingItem{}.Layout(gtx, th,
+							i18n.Translate("Library folder"),
+							i18n.Translate("The folder shown when Student mode starts. Forgetting it does not delete any files."),
+							func(gtx C) D {
+								path := f.setting.LibraryRoot
+								if path == "" {
+									path = i18n.Translate("No Library folder selected")
+								}
+								return layout.Flex{Alignment: layout.Middle}.Layout(gtx,
+									layout.Flexed(1, func(gtx C) D {
+										label := material.Body2(th.Theme, path)
+										label.MaxLines = 2
+										return label.Layout(gtx)
+									}),
+									layout.Rigid(layout.Spacer{Width: unit.Dp(12)}.Layout),
+									layout.Rigid(func(gtx C) D {
+										text := i18n.Translate("Choose folder")
+										if f.setting.LibraryRoot != "" {
+											text = i18n.Translate("Change")
+										}
+										return material.Button(th.Theme, &f.changeLibraryBtn, text).Layout(gtx)
+									}),
+									layout.Rigid(func(gtx C) D {
+										if f.setting.LibraryRoot == "" {
+											return D{}
+										}
+										return layout.Inset{Left: unit.Dp(8)}.Layout(gtx, func(gtx C) D {
+											button := material.Button(th.Theme, &f.forgetLibraryBtn, i18n.Translate("Forget"))
+											button.Background = th.Bg
+											button.Color = th.Fg
+											return button.Layout(gtx)
+										})
+									}),
+								)
+							})
+					}),
+					layout.Rigid(func(gtx C) D {
+						return settingItem{}.Layout(gtx, th,
+							i18n.Translate("Editor files"),
+							i18n.Translate("Show only the current project or folder, or keep the complete workspace tree."),
+							func(gtx C) D {
+								return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+									layout.Rigid(material.RadioButton(th.Theme, &f.editorScope, string(settings.FileInterfaceEditorScopeContextual), i18n.Translate("Current project or folder")).Layout),
+									layout.Rigid(material.RadioButton(th.Theme, &f.editorScope, string(settings.FileInterfaceEditorScopeWholeWorkspace), i18n.Translate("Whole workspace")).Layout),
+								)
+							})
+					}),
+					layout.Rigid(func(gtx C) D {
+						return settingItem{}.Layout(gtx, th,
+							i18n.Translate("Library view"),
+							i18n.Translate("Choose the default presentation for folders, notebooks, and files."),
+							func(gtx C) D {
+								return layout.Flex{Axis: layout.Horizontal}.Layout(gtx,
+									layout.Rigid(material.RadioButton(th.Theme, &f.libraryView, string(settings.FileInterfaceLibraryViewGrid), i18n.Translate("Grid")).Layout),
+									layout.Rigid(material.RadioButton(th.Theme, &f.libraryView, string(settings.FileInterfaceLibraryViewList), i18n.Translate("List")).Layout),
+								)
+							})
+					}),
+					layout.Rigid(func(gtx C) D {
+						return settingItem{}.Layout(gtx, th,
+							i18n.Translate("Navigation"),
+							i18n.Translate("Use the Library rail, or keep Typstify's familiar sidebar and bottom controls."),
+							func(gtx C) D {
+								return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+									layout.Rigid(material.RadioButton(th.Theme, &f.navigationLayout, string(settings.FileInterfaceNavigationLayoutLibrary), i18n.Translate("Library rail")).Layout),
+									layout.Rigid(material.RadioButton(th.Theme, &f.navigationLayout, string(settings.FileInterfaceNavigationLayoutClassic), i18n.Translate("Classic controls")).Layout),
+								)
+							})
+					}),
+				)
+			})
+		})
+	}))
+
+	return layout.Flex{Axis: layout.Vertical}.Layout(gtx, children...)
+}
 
 func (t *TypstSettingsView) Title() string { return i18n.Translate("Typst") }
 
