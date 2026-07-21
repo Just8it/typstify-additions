@@ -87,6 +87,7 @@ type TextEditor struct {
 	OnSelectChange func(gvcode.Position)
 	OnTextChange   func()
 	OnOpenLink     func(link string, external bool)
+	OnPaste        func(text string) string
 }
 
 type trackedMathPair struct {
@@ -643,6 +644,32 @@ func (me *TextEditor) SelectedText() string {
 	return me.state.SelectedText()
 }
 
+// Text returns the editor's current contents.
+func (me *TextEditor) Text() string {
+	return me.state.Text()
+}
+
+// ReplaceText replaces the document and positions the caret at a rune offset.
+func (me *TextEditor) ReplaceText(text string, caret int) {
+	me.state.SetCaret(0, me.state.Len())
+	me.state.Insert(text)
+	me.state.SetCaret(caret, caret)
+	me.onTextChanged()
+	me.highlighter.Highlight(me.state)
+	if me.searchbar != nil {
+		me.searchbar.ReSearch()
+	}
+	if me.lspClient != nil {
+		me.lspClient.OnEditorUpdated(me.filename, me.state.GetReader())
+	}
+	me.updateDiff()
+}
+
+// Save flushes pending editor contents to disk.
+func (me *TextEditor) Save() error {
+	return me.autoSaver.doSave()
+}
+
 // NavigateToLine moves the editor caret to the given line and column (0-indexed).
 func (me *TextEditor) NavigateToLine(line, col int) {
 	off, _ := me.state.ConvertPos(line, col)
@@ -781,6 +808,12 @@ func NewTextEditor(path string, showDiff bool, settings *settings.EditorSettings
 		gvcode.WithCornerRadius(unit.Dp(4)),
 		gvcode.WithGutter(providers.NewLineNumberProvider()),
 		gvcode.WithGutter(ed.diffProvider),
+		gvcode.AddBeforePasteHook(func(text string) string {
+			if ed.OnPaste != nil {
+				return ed.OnPaste(text)
+			}
+			return text
+		}),
 	)
 	if filepath.Ext(path) == ".typ" {
 		ed.state.WithOptions(gvcode.WithQuotePairs(map[rune]rune{

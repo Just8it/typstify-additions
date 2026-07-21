@@ -15,6 +15,8 @@ const (
 type ProjectCreatedEvent struct {
 	Path            string
 	SwitchWorkspace bool
+	OpenFile        string
+	ReplacedFile    string
 }
 
 type FileChangedEvent struct {

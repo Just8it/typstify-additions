@@ -425,7 +425,7 @@ func (t *TreeView) processKeyEvents(gtx layout.Context) error {
 
 			switch event.Type {
 			case mimeText: // when using MacOS, path paste is handled directly in key.Event 'cmd+V'
-				paths := parseClipboardPaths(string(content))
+				paths := ParseClipboardPaths(string(content))
 				// Guess which kind of node we should operating on.
 				targetNode := t.contextNode
 				if targetNode == nil {

@@ -51,6 +51,8 @@ type FileTreeNav struct {
 	rootSwitched bool
 	newRoot      string
 	pendingOpen  string
+	pendingFile  string
+	pendingClose string
 
 	historyBtn      widget.Clickable
 	historyProjects *RecentProjects
@@ -86,6 +88,9 @@ func NewFileTreeNav(title string, srv *service.ServiceFacade, vm view.ViewManage
 			}
 			if srv.Settings().FileInterface().Mode == settingsmodel.FileInterfaceModeStudent {
 				ftn.pendingOpen = created.Path
+				ftn.pendingClose = created.ReplacedFile
+			} else if created.SwitchWorkspace {
+				ftn.pendingFile = created.OpenFile
 			}
 			if !created.SwitchWorkspace || ftn.tree != nil && created.Path == ftn.tree.Root() {
 				return
@@ -287,13 +292,41 @@ func (tn *FileTreeNav) Update(gtx C) bool {
 	}
 
 	tn.newRoot = ""
+	if tn.pendingClose != "" {
+		tn.closeOpenedFile(tn.pendingClose)
+		tn.pendingClose = ""
+	}
 	if tn.pendingOpen != "" {
 		path := tn.pendingOpen
 		tn.pendingOpen = ""
 		tn.openProject(path)
 	}
+	if tn.pendingFile != "" {
+		path := tn.pendingFile
+		tn.pendingFile = ""
+		tn.openFile(path)
+	}
 	tn.updateContextualTree()
 	return updated
+}
+
+func (tn *FileTreeNav) openFile(path string) {
+	node, err := explorer.NewFileTree(path)
+	if err != nil {
+		log.Printf("opening file %s: %v", path, err)
+		return
+	}
+	tn.onFileSelected(node)
+}
+
+func (tn *FileTreeNav) closeOpenedFile(path string) {
+	views := tn.vm.OpenedViews()
+	for idx := len(views) - 1; idx >= 0; idx-- {
+		location := views[idx].Location()
+		if location.Query().Get("path") == path {
+			tn.vm.CloseTab(idx)
+		}
+	}
 }
 
 func (tn *FileTreeNav) Layout(gtx C, th *theme.Theme) D {
