@@ -25,11 +25,13 @@ import (
 	"looz.ws/typstify/i18n"
 	"looz.ws/typstify/service"
 	"looz.ws/typstify/service/bus"
+	settingsmodel "looz.ws/typstify/service/settings"
 	"looz.ws/typstify/ui/dialog"
 	"looz.ws/typstify/ui/editors"
 	"looz.ws/typstify/ui/statusbar"
 	"looz.ws/typstify/ui/viewer"
 	"looz.ws/typstify/utils"
+	"looz.ws/typstify/widgets"
 	"looz.ws/typstify/widgets/filetree"
 	"looz.ws/typstify/widgets/icons"
 	"looz.ws/typstify/widgets/menu"
@@ -48,9 +50,20 @@ type FileTreeNav struct {
 
 	rootSwitched bool
 	newRoot      string
+	pendingOpen  string
 
 	historyBtn      widget.Clickable
 	historyProjects *RecentProjects
+
+	contextualTree     *filetree.TreeView
+	contextualFile     string
+	contextualScope    string
+	contextualKind     filetree.EditorScopeKind
+	contextualOverride string
+	focusedScope       string
+	requestedScope     string
+	scopeBtn           widget.Clickable
+	scopePopup         *widgets.Popup
 }
 
 // Construct a FileTreeNav object that loads files and folders from rootDir. The skipFolders
@@ -61,20 +74,36 @@ func NewFileTreeNav(title string, srv *service.ServiceFacade, vm view.ViewManage
 		srv:             srv,
 		vm:              vm,
 		historyProjects: NewRecentProjects(srv),
+		scopePopup:      &widgets.Popup{MaxHeight: unit.Dp(300), Width: unit.Dp(250), Direction: layout.S},
 	}
 
 	srv.EventBus().Subscribe(ftn, "filetree", `project\.(switched|create)$`, func(topic string, data interface{}) {
-		path, ok := data.(string)
-		if !ok {
-			panic("not a path")
-		}
-
-		if ftn.tree != nil && path == ftn.tree.Root() {
+		if topic == bus.TopicProjectCreate {
+			created, ok := data.(bus.ProjectCreatedEvent)
+			if !ok {
+				log.Printf("invalid project creation event: %#v", data)
+				return
+			}
+			if srv.Settings().FileInterface().Mode == settingsmodel.FileInterfaceModeStudent {
+				ftn.pendingOpen = created.Path
+			}
+			if !created.SwitchWorkspace || ftn.tree != nil && created.Path == ftn.tree.Root() {
+				return
+			}
+			ftn.saveLastWorkplace()
+			ftn.newRoot = created.Path
 			return
 		}
 
-		ftn.saveLastWorkplace()
-		ftn.newRoot = path
+		path, ok := data.(string)
+		if !ok {
+			log.Printf("invalid workspace switch event: %#v", data)
+			return
+		}
+		if ftn.tree == nil || path != ftn.tree.Root() {
+			ftn.saveLastWorkplace()
+			ftn.newRoot = path
+		}
 	})
 
 	return ftn
@@ -91,6 +120,8 @@ func (tn *FileTreeNav) switchRoot() {
 		return
 	}
 
+	tn.focusedScope = ""
+	tn.closeContextualTree()
 	tn.srv.SetProjectDir(newRoot)
 
 	// Restore the workplace.
@@ -115,18 +146,9 @@ func (tn *FileTreeNav) switchRoot() {
 		newTree = filetree.NewTreeView(root)
 	}
 
-	// set callbacks for file operations
-	newTree.OnFileSelectedFunc = tn.onFileSelected
-	newTree.OnDropConfirmFunc = onDropConfirmFunc(tn.vm, newTree.Root())
-	newTree.OnFileUpdatedFunc = tn.onFileUpdated
-	newTree.OnFileRemoveFunc = tn.onFileDeleted
-	newTree.OnErrorFunc = func(err error) {
-		log.Println("file tree error: ", err)
-		tn.srv.EventBus().Emit(bus.TopicStatusbarNotifyEvent, statusbar.Notification{Content: err.Error(), Level: 1})
-	}
-
-	newTree.ExtraMenuOptionProvider = tn.extraMenuOptions
-	newTree.NodeMarkerProvider = tn.nodeMarker
+	configureFileTree(newTree, tn.srv, tn.vm)
+	newTree.OnFileSelectedFunc = tn.onWorkspaceFileSelected
+	newTree.OnFolderSelectedFunc = tn.onWorkspaceFolderSelected
 
 	tn.tree = newTree
 
@@ -139,6 +161,20 @@ func (tn *FileTreeNav) switchRoot() {
 		tn.onFileSelected(node)
 	}
 
+}
+
+func configureFileTree(tree *filetree.TreeView, srv *service.ServiceFacade, vm view.ViewManager) {
+	controller := &FileTreeNav{tree: tree, srv: srv, vm: vm}
+	tree.OnFileSelectedFunc = controller.onFileSelected
+	tree.OnDropConfirmFunc = onDropConfirmFunc(vm, tree.Root())
+	tree.OnFileUpdatedFunc = controller.onFileUpdated
+	tree.OnFileRemoveFunc = controller.onFileDeleted
+	tree.OnErrorFunc = func(err error) {
+		log.Println("file tree error: ", err)
+		srv.EventBus().Emit(bus.TopicStatusbarNotifyEvent, statusbar.Notification{Content: err.Error(), Level: 1})
+	}
+	tree.ExtraMenuOptionProvider = controller.extraMenuOptions
+	tree.NodeMarkerProvider = controller.nodeMarker
 }
 
 func (tn *FileTreeNav) saveLastWorkplace() {
@@ -167,6 +203,7 @@ func (tn *FileTreeNav) saveLastWorkplace() {
 
 func (tn *FileTreeNav) OnClose() {
 	tn.saveLastWorkplace()
+	tn.closeContextualTree()
 	if tn.tree != nil {
 		tn.tree.Close()
 	}
@@ -180,7 +217,18 @@ func (tn *FileTreeNav) Icon() *icons.SvgIcon {
 	return explorerIcon
 }
 
+func (tn *FileTreeNav) FocusScope(scope string) {
+	tn.focusedScope = filepath.Clean(scope)
+}
+
 func (tn *FileTreeNav) LayoutHeader(gtx C, th *theme.Theme) D {
+	tn.Update(gtx)
+	if tn.contextualTree != nil {
+		label := material.Caption(th.Theme, i18n.Translate("Explorer"))
+		label.Font.Weight = font.Medium
+		return label.Layout(gtx)
+	}
+
 	if tn.historyBtn.Clicked(gtx) {
 		tn.historyProjects.Show()
 	}
@@ -239,13 +287,26 @@ func (tn *FileTreeNav) Update(gtx C) bool {
 	}
 
 	tn.newRoot = ""
+	if tn.pendingOpen != "" {
+		path := tn.pendingOpen
+		tn.pendingOpen = ""
+		tn.openProject(path)
+	}
+	tn.updateContextualTree()
 	return updated
 }
 
 func (tn *FileTreeNav) Layout(gtx C, th *theme.Theme) D {
 	tn.Update(gtx)
 
-	if tn.tree == nil {
+	if tn.contextualTree != nil {
+		return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+			layout.Rigid(func(gtx C) D { return tn.layoutContextualScope(gtx, th) }),
+			layout.Flexed(1, func(gtx C) D { return tn.contextualTree.Layout(gtx, th) }),
+		)
+	}
+	tree := tn.tree
+	if tree == nil {
 		return layout.UniformInset(unit.Dp(8)).Layout(gtx, func(gtx C) D {
 			lb := material.Label(th.Theme, th.TextSize*0.9, i18n.Translate("No open project."))
 			lb.Font.Style = font.Italic
@@ -254,7 +315,180 @@ func (tn *FileTreeNav) Layout(gtx C, th *theme.Theme) D {
 		})
 	}
 
-	return tn.tree.Layout(gtx, th)
+	return tree.Layout(gtx, th)
+}
+
+func (tn *FileTreeNav) updateContextualTree() {
+	setting := tn.srv.Settings().FileInterface()
+	if setting.Mode != settingsmodel.FileInterfaceModeStudent {
+		tn.focusedScope = ""
+		tn.closeContextualTree()
+		return
+	}
+	if tn.tree == nil {
+		tn.closeContextualTree()
+		return
+	}
+
+	current := tn.vm.CurrentView()
+	if current == nil {
+		tn.closeContextualTree()
+		return
+	}
+	location := current.Location()
+	file := location.Query().Get("path")
+	if file == "" {
+		tn.closeContextualTree()
+		return
+	}
+	focused := tn.focusedScope != "" && filetree.PathWithin(tn.focusedScope, file)
+	if tn.focusedScope != "" && !focused {
+		tn.focusedScope = ""
+	}
+	if setting.EditorScope != settingsmodel.FileInterfaceEditorScopeContextual && !focused {
+		tn.closeContextualTree()
+		return
+	}
+
+	fileChanged := filepath.Clean(file) != filepath.Clean(tn.contextualFile)
+	if fileChanged {
+		tn.contextualOverride = ""
+	}
+	scope, kind, err := filetree.ResolveEditorScope(tn.tree.Root(), file)
+	if err != nil {
+		tn.closeContextualTree()
+		return
+	}
+	if tn.requestedScope != "" {
+		tn.contextualOverride = tn.requestedScope
+		tn.requestedScope = ""
+	}
+	if focused {
+		scope = tn.focusedScope
+		kind = scopeKind(scope)
+	}
+	if tn.contextualOverride != "" {
+		scope = tn.contextualOverride
+		kind = scopeKind(scope)
+	}
+
+	tn.contextualFile = file
+	if tn.contextualTree != nil && filepath.Clean(scope) == filepath.Clean(tn.contextualScope) {
+		tn.contextualKind = kind
+		if fileChanged {
+			_ = tn.contextualTree.SelectPath(file)
+		}
+		return
+	}
+
+	root, err := explorer.NewFileTree(scope)
+	if err != nil {
+		tn.closeContextualTree()
+		return
+	}
+	tree := filetree.NewTreeView(root)
+	tree.HideRoot = true
+	configureFileTree(tree, tn.srv, tn.vm)
+	_ = tree.SelectPath(file)
+	if tn.contextualTree != nil {
+		tn.contextualTree.Close()
+	}
+	tn.contextualTree = tree
+	tn.contextualFile = file
+	tn.contextualScope = scope
+	tn.contextualKind = kind
+}
+
+func (tn *FileTreeNav) closeContextualTree() {
+	if tn.contextualTree != nil {
+		tn.contextualTree.Close()
+	}
+	tn.contextualTree = nil
+	tn.contextualFile = ""
+	tn.contextualScope = ""
+	tn.contextualKind = ""
+	tn.contextualOverride = ""
+	tn.requestedScope = ""
+}
+
+func scopeKind(path string) filetree.EditorScopeKind {
+	marker, err := os.Stat(filepath.Join(path, "typst.toml"))
+	if err == nil && !marker.IsDir() {
+		return filetree.EditorScopeProject
+	}
+	return filetree.EditorScopeFolder
+}
+
+func (tn *FileTreeNav) layoutContextualScope(gtx C, th *theme.Theme) D {
+	if tn.scopeBtn.Clicked(gtx) {
+		tn.scopePopup.SetOpen()
+	}
+	items := make([]widgets.PopupWidget, 0)
+	workspaceRoot := filepath.Clean(tn.tree.Root())
+	for path := filepath.Clean(tn.contextualScope); ; path = filepath.Dir(path) {
+		path := path
+		items = append(items, scopeMenuItem{
+			name: filepath.Base(path),
+			kind: scopeKind(path),
+			onClick: func() {
+				tn.requestedScope = path
+			},
+		})
+		if path == workspaceRoot {
+			break
+		}
+	}
+
+	return tn.scopePopup.Layout(gtx, th, func(gtx C) D {
+		return layout.Inset{Top: unit.Dp(9), Bottom: unit.Dp(10), Left: unit.Dp(10), Right: unit.Dp(10)}.Layout(gtx, func(gtx C) D {
+			return tn.scopeBtn.Layout(gtx, func(gtx C) D {
+				return widget.Border{Color: misc.WithAlpha(th.Fg, 0x24), Width: unit.Dp(1), CornerRadius: unit.Dp(8)}.Layout(gtx, func(gtx C) D {
+					return layout.Inset{Top: unit.Dp(7), Bottom: unit.Dp(7), Left: unit.Dp(8), Right: unit.Dp(8)}.Layout(gtx, func(gtx C) D {
+						return layout.Flex{Alignment: layout.Middle}.Layout(gtx,
+							layout.Rigid(func(gtx C) D {
+								return explorerIcon.Layout(gtx, th.ContrastBg, th.TextSize)
+							}),
+							layout.Rigid(layout.Spacer{Width: unit.Dp(8)}.Layout),
+							layout.Flexed(1, func(gtx C) D {
+								label := material.Subtitle2(th.Theme, filepath.Base(tn.contextualScope))
+								label.MaxLines = 1
+								return label.Layout(gtx)
+							}),
+							layout.Rigid(func(gtx C) D {
+								label := material.Caption(th.Theme, strings.ToUpper(string(tn.contextualKind)))
+								label.Color = th.ContrastBg
+								return layout.Inset{Left: unit.Dp(5), Right: unit.Dp(5)}.Layout(gtx, label.Layout)
+							}),
+							layout.Rigid(func(gtx C) D {
+								return arrowDownIcon.Layout(gtx, th.Fg, th.TextSize)
+							}),
+						)
+					})
+				})
+			})
+		})
+	}, items...)
+}
+
+type scopeMenuItem struct {
+	name    string
+	kind    filetree.EditorScopeKind
+	onClick func()
+}
+
+func (s scopeMenuItem) OnClicked() { s.onClick() }
+
+func (s scopeMenuItem) Layout(gtx C, th *theme.Theme) D {
+	return layout.Inset{Top: unit.Dp(5), Bottom: unit.Dp(5), Left: unit.Dp(10), Right: unit.Dp(10)}.Layout(gtx, func(gtx C) D {
+		return layout.Flex{Alignment: layout.Middle}.Layout(gtx,
+			layout.Flexed(1, material.Body2(th.Theme, s.name).Layout),
+			layout.Rigid(func(gtx C) D {
+				label := material.Caption(th.Theme, strings.ToUpper(string(s.kind)))
+				label.Color = misc.WithAlpha(th.Fg, 0x90)
+				return label.Layout(gtx)
+			}),
+		)
+	})
 }
 
 // onFileUpdated close opened view, and then re-open the updated file.
@@ -296,6 +530,36 @@ func (tn *FileTreeNav) onFileSelected(node *filetree.FileNode) {
 	}
 }
 
+func (tn *FileTreeNav) onWorkspaceFileSelected(node *filetree.FileNode) {
+	if node != nil && tn.srv.Settings().FileInterface().Mode == settingsmodel.FileInterfaceModeStudent {
+		tn.FocusScope(filepath.Dir(node.Path))
+	}
+	tn.onFileSelected(node)
+}
+
+func (tn *FileTreeNav) onWorkspaceFolderSelected(node *filetree.FileNode) {
+	if node == nil || tn.srv.Settings().FileInterface().Mode != settingsmodel.FileInterfaceModeStudent || !isPackageProject(node.Path) {
+		return
+	}
+	tn.openProject(node.Path)
+}
+
+func (tn *FileTreeNav) openProject(path string) {
+	entrypoint, err := filetree.NotebookEntrypoint(path)
+	if err != nil {
+		log.Printf("opening notebook %s: %v", path, err)
+		tn.srv.EventBus().Emit(bus.TopicStatusbarNotifyEvent, statusbar.Notification{Content: err.Error(), Level: 1})
+		return
+	}
+	entry, err := explorer.NewFileTree(entrypoint)
+	if err != nil {
+		log.Printf("opening notebook entrypoint %s: %v", entrypoint, err)
+		return
+	}
+	tn.FocusScope(path)
+	tn.onFileSelected(entry)
+}
+
 func (tn *FileTreeNav) onFileDeleted(node *filetree.FileNode) {
 	rootDir := tn.tree.Root()
 
@@ -323,7 +587,11 @@ func (tn *FileTreeNav) nodeMarker(nodePath string) *filetree.NodeMarker {
 	// First check if it's managed bibliography file.
 	settings := tn.srv.Workspace().LoadWorkspaceSettings()
 	if len(settings.BibFiles) > 0 {
-		relPath, err := filepath.Rel(tn.tree.Root(), nodePath)
+		root := tn.srv.Workspace().Current().Path
+		if root == "" {
+			root = tn.tree.Root()
+		}
+		relPath, err := filepath.Rel(root, nodePath)
 		if err != nil {
 			log.Println("get relative path error: ", err)
 			return nil
@@ -417,7 +685,11 @@ func (tn *FileTreeNav) extraMenuOptions(node *filetree.FileNode) [][]menu.MenuOp
 				return nil
 			}
 
-			relPath, _ := filepath.Rel(tn.tree.Root(), node.Path)
+			root := tn.srv.Workspace().Current().Path
+			if root == "" {
+				root = tn.tree.Root()
+			}
+			relPath, _ := filepath.Rel(root, node.Path)
 			// open the publish dialog
 			tn.vm.RequestSwitch(view.Intent{
 				Target:      dialog.SyncBibDialogViewID,

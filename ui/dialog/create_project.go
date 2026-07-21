@@ -44,6 +44,7 @@ type CreateProjectDialog struct {
 	templateInput   gw.TextField
 	nameInput       gw.TextField
 	projectDir      string
+	fixedProjectDir bool
 	projectDirInput gw.TextField
 	openFolderBtn   widget.Clickable
 
@@ -52,11 +53,14 @@ type CreateProjectDialog struct {
 
 var CreateProjectDialogViewID = view.NewViewID("CreateProjectDialogView")
 
+const (
+	ProjectDirParam      = "projectDir"
+	FixedProjectDirParam = "fixedProjectDir"
+)
+
 var (
-	tip1 = `Choose document if you want to write articles ,books, slides, etc. For package or template development, please choose the other two.`
-	tip2 = `Find the desired template in Typst Packages explorer. Both local and remote templates can be used. 
-A template name should have the form @namespace/package-name:version, for example: '@preview/aero-check:0.1.1'.
-If you want to create project without template, just leave it empty.`
+	tip1 = `Choose Document for notes, articles, books, or slides. Choose Package or Template only when developing reusable Typst packages.`
+	tip2 = `Optionally start from a Typst package such as @preview/aero-check:0.1.1. Leave this empty to create a basic document.`
 )
 
 var projectKinds = []ProjectKind{DocumentKind, PackageKind, TemplateKind}
@@ -75,12 +79,19 @@ func NewCreateProjectDialog(srv *service.ServiceFacade) view.View {
 
 func (d *CreateProjectDialog) OnInit(intent view.Intent) error {
 	d.kindEnum.Value = string(DocumentKind)
-	val, ok := intent.Params["template"]
-	if !ok {
-		return nil
+	d.projectDir = ""
+	d.fixedProjectDir = false
+
+	if projectDir, ok := intent.Params[ProjectDirParam].(string); ok && projectDir != "" {
+		d.projectDir = filepath.Clean(projectDir)
+	}
+	if fixed, ok := intent.Params[FixedProjectDirParam].(bool); ok {
+		d.fixedProjectDir = fixed && d.projectDir != ""
+	}
+	if template, ok := intent.Params["template"].(string); ok {
+		d.templateInput.SetText(template)
 	}
 
-	d.templateInput.SetText(val.(string))
 	return nil
 }
 
@@ -140,35 +151,36 @@ func (d *CreateProjectDialog) createPackageProject(req *ProjectCreateReq) (strin
 }
 
 func (d *CreateProjectDialog) OnConfirm() error {
-	go func() {
-		var req ProjectCreateReq
+	name := strings.TrimSpace(d.nameInput.Text())
+	if name == "" {
+		return errors.New(i18n.Translate("Please set a name for your project."))
+	}
+	if d.projectDir == "" {
+		return errors.New(i18n.Translate("Please select where the project should be created."))
+	}
+
+	req := ProjectCreateReq{
+		Kind:       ProjectKind(d.kindEnum.Value),
+		ProjectDir: d.projectDir,
+		Name:       name,
+	}
+	if req.Kind == DocumentKind {
+		req.TemplateName = strings.TrimSpace(d.templateInput.Text())
+		if req.TemplateName != "" && !strings.HasPrefix(req.TemplateName, "@") {
+			return errors.New(i18n.Translate("Please input a valid full template name."))
+		}
+	}
+
+	go func(req ProjectCreateReq) {
 		var err error
 		var dir string
 
-		switch d.kindEnum.Value {
-		case string(DocumentKind):
-			req = ProjectCreateReq{
-				Kind:         DocumentKind,
-				Name:         d.nameInput.Text(),
-				ProjectDir:   d.projectDir,
-				TemplateName: d.templateInput.Text(),
-			}
+		switch req.Kind {
+		case DocumentKind:
 			dir, err = d.createDocumentProject(&req)
-		case string(PackageKind):
-			req = ProjectCreateReq{
-				ProjectDir: d.projectDir,
-				Kind:       PackageKind,
-				Name:       d.nameInput.Text(),
-			}
-
+		case PackageKind:
 			dir, err = d.createPackageProject(&req)
-		case string(TemplateKind):
-			req = ProjectCreateReq{
-				ProjectDir: d.projectDir,
-				Kind:       TemplateKind,
-				Name:       d.nameInput.Text(),
-			}
-
+		case TemplateKind:
 			dir, err = d.createPackageProject(&req)
 		}
 
@@ -181,14 +193,17 @@ func (d *CreateProjectDialog) OnConfirm() error {
 			return
 		}
 
-		d.srv.EventBus().Emit(bus.TopicProjectCreate, dir)
-	}()
+		d.srv.EventBus().Emit(bus.TopicProjectCreate, bus.ProjectCreatedEvent{
+			Path:            dir,
+			SwitchWorkspace: !d.fixedProjectDir,
+		})
+	}(req)
 
 	return nil
 }
 
 func (d *CreateProjectDialog) LayoutBody(gtx C, th *theme.Theme) D {
-	if d.openFolderBtn.Clicked(gtx) {
+	if !d.fixedProjectDir && d.openFolderBtn.Clicked(gtx) {
 		go func() {
 			d.projectDir, _ = d.srv.FileChooser().ChooseFolder()
 		}()
@@ -216,10 +231,16 @@ func (d *CreateProjectDialog) LayoutBody(gtx C, th *theme.Theme) D {
 		}),
 
 		layout.Rigid(func(gtx C) D {
-			return formItem{Axis: layout.Vertical}.Layout(gtx, th, i18n.Translate("Project Location"),
-				i18n.Translate("Select the location where the project will be created."),
+			title := i18n.Translate("Project Location")
+			description := i18n.Translate("Select the folder where the project will be created.")
+			if d.fixedProjectDir {
+				title = i18n.Translate("Create In")
+				description = i18n.Translate("The project will be created inside the current Library folder.")
+			}
+
+			return formItem{Axis: layout.Vertical}.Layout(gtx, th, title, description,
 				func(gtx C) D {
-					return d.openFolderBtn.Layout(gtx, func(gtx C) D {
+					locationField := func(gtx C) D {
 						d.projectDirInput.Alignment = text.Start
 						d.projectDirInput.SingleLine = true
 						d.projectDirInput.State().ReadOnly = true
@@ -231,7 +252,11 @@ func (d *CreateProjectDialog) LayoutBody(gtx C, th *theme.Theme) D {
 						}
 
 						return d.projectDirInput.Layout(gtx, th, "Select a directory")
-					})
+					}
+					if d.fixedProjectDir {
+						return locationField(gtx)
+					}
+					return d.openFolderBtn.Layout(gtx, locationField)
 				})
 		}),
 
@@ -241,17 +266,17 @@ func (d *CreateProjectDialog) LayoutBody(gtx C, th *theme.Theme) D {
 			}
 			return formItem{Axis: layout.Vertical}.Layout(gtx, th, i18n.Translate("Typst Template"), i18n.Translate(tip2), func(gtx C) D {
 				d.templateInput.Alignment = text.Start
-				return d.templateInput.Layout(gtx, th, "")
+				return d.templateInput.Layout(gtx, th, "@preview/package:version (optional)")
 			})
 		}),
 
 		layout.Rigid(func(gtx C) D {
 			return formItem{Axis: layout.Vertical}.Layout(gtx, th, i18n.Translate("Project Name"),
-				i18n.Translate("The name of your project. A new folder will be created inside of the directory selected."),
+				i18n.Translate("A folder with this name will be created at the location above."),
 				func(gtx C) D {
 					d.nameInput.Alignment = text.Start
 					d.nameInput.SingleLine = true
-					return d.nameInput.Layout(gtx, th, "")
+					return d.nameInput.Layout(gtx, th, "Project name")
 				})
 		}),
 	)

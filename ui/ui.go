@@ -139,7 +139,7 @@ func (ui *UI) registerViews() {
 	vm.Register(assistant.AgentChatViewID, func() view.View { return assistant.NewAgentChatView(ui.srv) })
 
 	ui.vm = vm
-	ui.srv.SetViewManager(vm.ViewManager)
+	ui.srv.SetViewManager(vm)
 }
 
 func (ui *UI) getWindowSize() (width unit.Dp, height unit.Dp) {

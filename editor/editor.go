@@ -220,7 +220,7 @@ func (me *TextEditor) ToggleSearchBar(gtx C) {
 }
 
 func (me *TextEditor) LayoutStatus(gtx C, th *theme.Theme, srv *service.ServiceFacade) D {
-	return me.status.Layout(gtx, th, me, srv)
+	return me.ensureStatus().Layout(gtx, th, me, srv)
 }
 
 func (me *TextEditor) update(gtx layout.Context, th *theme.Theme) {

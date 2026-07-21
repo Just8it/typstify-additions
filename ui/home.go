@@ -2,11 +2,16 @@ package ui
 
 import (
 	"fmt"
+	"image"
+	"path/filepath"
 
+	"github.com/oligo/gioview/misc"
 	"github.com/oligo/gioview/theme"
 	"github.com/oligo/gioview/view"
 	"looz.ws/typstify/i18n"
 	"looz.ws/typstify/service"
+	"looz.ws/typstify/service/bus"
+	settingsmodel "looz.ws/typstify/service/settings"
 	"looz.ws/typstify/ui/assistant"
 	"looz.ws/typstify/ui/navpanel"
 	"looz.ws/typstify/ui/preview"
@@ -14,17 +19,22 @@ import (
 	"looz.ws/typstify/ui/statusbar"
 	"looz.ws/typstify/widgets"
 	"looz.ws/typstify/widgets/console"
+	"looz.ws/typstify/widgets/icons"
 
 	"gioui.org/app"
+	"gioui.org/font"
 	"gioui.org/io/key"
 	"gioui.org/layout"
 	"gioui.org/op"
 	"gioui.org/op/clip"
 	"gioui.org/op/paint"
+	"gioui.org/text"
 	"gioui.org/unit"
 	"gioui.org/widget"
 	"gioui.org/widget/material"
 )
+
+var libraryPromptIcon = icons.NewSvgIcon(icons.Home)
 
 // previewable is implemented by views that support an inline preview panel.
 type previewable interface {
@@ -41,6 +51,12 @@ type HomeView struct {
 	statusBar    *statusbar.StatusBar
 	consolePanel *console.Console
 	menuPanel    *navpanel.MenuPanel
+	library      *navpanel.Library
+
+	studentMode      bool
+	libraryActive    bool
+	libraryRoot      string
+	libraryRequested bool
 
 	// horizontal resizer
 	resizer         widgets.Resize
@@ -58,12 +74,59 @@ type HomeView struct {
 	previewBar     *widgets.ResizeBar
 	previewer      *preview.Previewer
 
-	welcome      WelcomeView
-	accountClick widget.Clickable
+	welcome          WelcomeView
+	accountClick     widget.Clickable
+	chooseLibraryBtn widget.Clickable
 }
 
 func (hv *HomeView) ID() string {
 	return "Home"
+}
+
+func (hv *HomeView) RequestSwitch(intent view.Intent) error {
+	if !intent.ShowAsModal {
+		hv.libraryActive = false
+	}
+	return hv.ViewManager.RequestSwitch(intent)
+}
+
+func (hv *HomeView) SwitchTab(idx int) {
+	hv.libraryActive = false
+	hv.ViewManager.SwitchTab(idx)
+}
+
+func (hv *HomeView) showLibrary() {
+	if !hv.studentMode {
+		return
+	}
+	root := hv.srv.Settings().FileInterface().LibraryRoot
+	hv.libraryRoot = root
+	hv.libraryActive = true
+	hv.menuPanel.IsDrawerHidden = true
+	if root != "" && filepath.Clean(hv.srv.Workspace().Current().Path) != filepath.Clean(root) {
+		hv.srv.EventBus().Emit(bus.TopicProjectSwitched, root)
+		return
+	}
+	hv.Invalidate()
+}
+
+func (hv *HomeView) usesStudentRail() bool {
+	setting := hv.srv.Settings().FileInterface()
+	return hv.studentMode && setting.NavigationLayout == settingsmodel.FileInterfaceNavigationLayoutLibrary
+}
+
+func (hv *HomeView) toggleStudentDrawer(section navpanel.NavSectionID) {
+	if hv.CurrentView() == nil {
+		return
+	}
+	if !hv.libraryActive && !hv.menuPanel.IsDrawerHidden && hv.sidebar.CurrentSection() == section {
+		hv.menuPanel.IsDrawerHidden = true
+	} else {
+		hv.libraryActive = false
+		hv.sidebar.ShowSection(section)
+		hv.menuPanel.IsDrawerHidden = false
+	}
+	hv.Invalidate()
 }
 
 func (hv *HomeView) toggleConsole() {
@@ -94,12 +157,16 @@ func (hv *HomeView) toggleChat() {
 
 func (hv *HomeView) update(gtx C) {
 	// handle events and states update
+	hv.sidebar.Update(gtx)
 	showConsoleClicked, showChatClicked := hv.statusBar.Update(gtx)
 	if showConsoleClicked {
 		hv.toggleConsole()
 	}
 	if showChatClicked {
 		hv.toggleChat()
+	}
+	if hv.chooseLibraryBtn.Clicked(gtx) {
+		hv.menuPanel.OpenFolder()
 	}
 
 	// global key handler, without a focused target.
@@ -120,7 +187,11 @@ func (hv *HomeView) update(gtx C) {
 			}
 
 			if event.Name == "D" && event.Modifiers.Contain(key.ModShortcut) {
-				hv.menuPanel.IsDrawerHidden = !hv.menuPanel.IsDrawerHidden
+				if hv.usesStudentRail() {
+					hv.toggleStudentDrawer(navpanel.NavSectionExplorer)
+				} else {
+					hv.menuPanel.IsDrawerHidden = !hv.menuPanel.IsDrawerHidden
+				}
 			}
 
 			if event.Name == "K" && event.Modifiers.Contain(key.ModShortcut) {
@@ -145,6 +216,11 @@ func (hv *HomeView) update(gtx C) {
 
 func (hv *HomeView) Layout(gtx C, th *theme.Theme, deco *widget.Decorations, title string) layout.Dimensions {
 	hv.update(gtx)
+	hv.sidebar.ShowLibrary = hv.studentMode && !hv.usesStudentRail()
+	showLibraryPrompt := hv.studentMode && (hv.libraryActive && hv.libraryRoot == "" || hv.srv.Workspace().Current().Path == "" && hv.CurrentView() == nil)
+	if showLibraryPrompt {
+		hv.menuPanel.IsDrawerHidden = true
+	}
 
 	dims := layout.Flex{
 		Axis:      layout.Vertical,
@@ -177,45 +253,55 @@ func (hv *HomeView) Layout(gtx C, th *theme.Theme, deco *widget.Decorations, tit
 				hv.lastResizeRatio = hv.resizer.Ratio
 			}
 
-			if hv.menuPanel.IsDrawerHidden {
-				return hv.layoutMain(gtx, th)
+			layoutContent := func(gtx C) D {
+				if hv.studentMode && hv.libraryActive || hv.menuPanel.IsDrawerHidden {
+					return hv.layoutMain(gtx, th)
+				}
+
+				return hv.resizer.Layout(gtx,
+					func(gtx C) D {
+						return navpanel.NaviDrawerStyle{
+							NavDrawer: hv.sidebar,
+							Bg:        th.Bg2,
+						}.Layout(gtx, th)
+					},
+					func(gtx C) D {
+						return hv.layoutMain(gtx, th)
+					},
+					func(gtx C) D {
+						if hv.bar == nil {
+							hv.bar = widgets.NewResizeBar(layout.Vertical)
+						}
+						return hv.bar.Layout(gtx, th)
+					},
+				)
 			}
 
-			return hv.resizer.Layout(gtx,
-				// navdrawer
-				func(gtx C) D {
-					return navpanel.NaviDrawerStyle{
-						NavDrawer: hv.sidebar,
-						Bg:        th.Bg2,
-					}.Layout(gtx, th)
+			if !hv.usesStudentRail() {
+				return layoutContent(gtx)
+			}
 
-				},
-				// switchable view
-				func(gtx C) D {
-					return hv.layoutMain(gtx, th)
-				},
-
-				func(gtx C) D {
-					if hv.bar == nil {
-						hv.bar = widgets.NewResizeBar(layout.Vertical)
-					}
-
-					return hv.bar.Layout(gtx, th)
-				},
+			drawerVisible := !hv.libraryActive && !hv.menuPanel.IsDrawerHidden
+			return layout.Flex{Axis: layout.Horizontal}.Layout(gtx,
+				layout.Rigid(func(gtx C) D {
+					return hv.menuPanel.LayoutRail(gtx, th, hv.libraryActive || showLibraryPrompt, drawerVisible, hv.sidebar.CurrentSection())
+				}),
+				layout.Flexed(1, layoutContent),
 			)
 		}),
 		layout.Rigid(func(gtx C) D {
 			rect := clip.Rect{Max: gtx.Constraints.Max}
 			paint.FillShape(gtx.Ops, th.Bg2, rect.Op())
+			showViewStatus := !(hv.studentMode && hv.libraryActive && hv.libraryRoot != "")
 			return layout.Flex{
 				Gap:     gtx.Dp(unit.Dp(4)),
 				Spacing: layout.SpaceBetween,
 			}.Layout(gtx,
 				layout.Rigid(func(gtx C) D {
-					return hv.menuPanel.Layout(gtx, th)
+					return hv.menuPanel.Layout(gtx, th, hv.studentMode)
 				}),
 				layout.Flexed(1, func(gtx C) D {
-					return hv.statusBar.Layout(gtx, th)
+					return hv.statusBar.Layout(gtx, th, showViewStatus)
 
 				}),
 			)
@@ -267,6 +353,29 @@ func (hv *HomeView) layoutMain(gtx C, th *theme.Theme) D {
 	gtx.Constraints.Min = gtx.Constraints.Max
 	rect := clip.Rect{Max: gtx.Constraints.Max}
 	paint.FillShape(gtx.Ops, th.Bg, rect.Op())
+	if hv.studentMode && (hv.libraryActive && hv.libraryRoot == "" || hv.srv.Workspace().Current().Path == "" && hv.CurrentView() == nil) {
+		hv.srv.ViewAreaTopOffset = 0
+		return hv.layoutLibraryPrompt(gtx, th)
+	}
+
+	if hv.libraryRequested {
+		hv.libraryActive = true
+		hv.menuPanel.IsDrawerHidden = true
+		if filepath.Clean(hv.srv.Workspace().Current().Path) == filepath.Clean(hv.libraryRoot) {
+			hv.libraryRequested = false
+		}
+	}
+	if hv.studentMode && hv.libraryActive && hv.libraryRoot != "" {
+		workspace := hv.srv.Workspace().Current()
+		restorePreferred := filepath.Clean(workspace.Path) == filepath.Clean(hv.libraryRoot)
+		preferred := ""
+		if restorePreferred {
+			preferred = workspace.LibraryPath
+		}
+		hv.library.SetWorkspace(hv.libraryRoot, preferred, restorePreferred)
+		hv.srv.ViewAreaTopOffset = 0
+		return hv.library.Layout(gtx, th)
+	}
 
 	rightPanelH := gtx.Constraints.Max.Y
 
@@ -320,6 +429,38 @@ func (hv *HomeView) layoutMain(gtx C, th *theme.Theme) D {
 		}),
 	)
 
+}
+
+func (hv *HomeView) layoutLibraryPrompt(gtx C, th *theme.Theme) D {
+	return layout.Center.Layout(gtx, func(gtx C) D {
+		gtx.Constraints.Min = image.Point{}
+		gtx.Constraints.Max.X = min(gtx.Constraints.Max.X, gtx.Dp(unit.Dp(480)))
+		return widget.Border{Color: misc.WithAlpha(th.Fg, 0x30), Width: unit.Dp(1), CornerRadius: unit.Dp(10)}.Layout(gtx, func(gtx C) D {
+			return layout.Inset{Top: unit.Dp(30), Bottom: unit.Dp(30), Left: unit.Dp(34), Right: unit.Dp(34)}.Layout(gtx, func(gtx C) D {
+				return layout.Flex{Axis: layout.Vertical, Alignment: layout.Middle}.Layout(gtx,
+					layout.Rigid(func(gtx C) D {
+						return libraryPromptIcon.Layout(gtx, th.ContrastBg, th.TextSize*3)
+					}),
+					layout.Rigid(layout.Spacer{Height: unit.Dp(18)}.Layout),
+					layout.Rigid(func(gtx C) D {
+						label := material.H4(th.Theme, i18n.Translate("Choose your Library folder"))
+						label.Font.Weight = font.SemiBold
+						label.Alignment = text.Middle
+						return label.Layout(gtx)
+					}),
+					layout.Rigid(layout.Spacer{Height: unit.Dp(10)}.Layout),
+					layout.Rigid(func(gtx C) D {
+						label := material.Body1(th.Theme, i18n.Translate("Select the folder that contains your courses, notebooks, and documents. Typstify keeps it as a normal folder."))
+						label.Color = misc.WithAlpha(th.Fg, 0xb0)
+						label.Alignment = text.Middle
+						return label.Layout(gtx)
+					}),
+					layout.Rigid(layout.Spacer{Height: unit.Dp(22)}.Layout),
+					layout.Rigid(material.Button(th.Theme, &hv.chooseLibraryBtn, i18n.Translate("Choose folder")).Layout),
+				)
+			})
+		})
+	})
 }
 
 func (hv *HomeView) layoutView(gtx C, th *theme.Theme) D {
@@ -409,6 +550,8 @@ func (hv *HomeView) layoutAccountInfo(gtx C, th *theme.Theme) D {
 
 func (hv *HomeView) OnClose() {
 	hv.sidebar.Close()
+	hv.library.Close()
+	hv.srv.EventBus().Unsubscribe(hv)
 	if hv.previewer != nil {
 		hv.previewer.Destroy()
 	}
@@ -416,18 +559,88 @@ func (hv *HomeView) OnClose() {
 
 func newHome(window *app.Window, srv *service.ServiceFacade) *HomeView {
 	vm := view.DefaultViewManager(window)
-
-	return &HomeView{
+	fileInterface := srv.Settings().FileInterface()
+	hv := &HomeView{
 		ViewManager:  vm,
 		srv:          srv,
-		tabbar:       navpanel.NewTabbar(vm, nil),
-		sidebar:      navpanel.NewNavDrawer(vm, srv),
-		statusBar:    statusbar.NewStatusBar(srv, vm),
 		consolePanel: console.NewConsolePanel(srv.Console()),
-		menuPanel:    navpanel.NewMenuPanel(vm, srv),
 		yresizer:     &widgets.Resize{Axis: layout.Vertical, Ratio: 1.0},
 		lastYRatio:   0.7,
-		welcome:      WelcomeView{vm: vm, srv: srv},
 		previewer:    preview.NewPreviewer(srv),
+		studentMode:  fileInterface.Mode == settingsmodel.FileInterfaceModeStudent,
+		libraryRoot:  fileInterface.LibraryRoot,
 	}
+	hv.tabbar = navpanel.NewTabbar(hv, nil)
+	hv.sidebar = navpanel.NewNavDrawer(hv, srv)
+	hv.sidebar.OnLibrary = hv.showLibrary
+	hv.statusBar = statusbar.NewStatusBar(srv, hv)
+	hv.menuPanel = navpanel.NewMenuPanel(hv, srv)
+	hv.menuPanel.OnLibrary = hv.showLibrary
+	hv.menuPanel.OnExplorer = func() { hv.toggleStudentDrawer(navpanel.NavSectionExplorer) }
+	hv.menuPanel.OnOutline = func() { hv.toggleStudentDrawer(navpanel.NavSectionOutline) }
+	hv.menuPanel.OnAssistant = func() { hv.toggleStudentDrawer(navpanel.NavSectionAssistant) }
+	hv.library = navpanel.NewLibrary(srv, hv)
+	hv.library.OnFileOpen = func(scope string, showExplorer bool) {
+		hv.sidebar.ShowFileTree(scope)
+		hv.menuPanel.IsDrawerHidden = !showExplorer
+	}
+	hv.welcome = WelcomeView{vm: hv, srv: srv}
+
+	srv.EventBus().Subscribe(hv, "home.fileInterface", `settings\.updated`, func(topic string, data interface{}) {
+		setting, ok := data.(*settingsmodel.FileInterfaceSettings)
+		if !ok {
+			return
+		}
+		studentMode := setting.Mode == settingsmodel.FileInterfaceModeStudent
+		if studentMode && !hv.studentMode {
+			hv.studentMode = true
+			hv.showLibrary()
+		} else if !studentMode {
+			hv.studentMode = false
+			hv.libraryActive = false
+		} else {
+			hv.libraryRoot = setting.LibraryRoot
+		}
+		hv.Invalidate()
+	})
+	srv.EventBus().Subscribe(hv, "home.workspace", `project\.(switched|create)$`, func(topic string, data interface{}) {
+		if !hv.studentMode {
+			return
+		}
+		if topic == bus.TopicProjectCreate {
+			created, ok := data.(bus.ProjectCreatedEvent)
+			if !ok {
+				return
+			}
+			if created.SwitchWorkspace && hv.libraryRoot == "" {
+				hv.libraryRoot = created.Path
+			}
+			hv.libraryRequested = false
+			hv.libraryActive = false
+			hv.sidebar.ShowSection(navpanel.NavSectionExplorer)
+			hv.menuPanel.IsDrawerHidden = false
+			hv.Invalidate()
+			return
+		}
+
+		root, ok := data.(string)
+		if ok {
+			setting := srv.Settings().FileInterface()
+			if setting.LibraryRoot != root {
+				setting.LibraryRoot = root
+				if err := setting.Save(); err != nil {
+					srv.EventBus().Emit(bus.TopicStatusbarNotifyEvent, statusbar.Notification{Content: err.Error(), Level: 1})
+				}
+			}
+			hv.libraryRoot = root
+			hv.libraryRequested = true
+			hv.menuPanel.IsDrawerHidden = true
+		}
+		hv.Invalidate()
+	})
+	if hv.studentMode && hv.libraryRoot != "" {
+		srv.EventBus().Emit(bus.TopicProjectSwitched, hv.libraryRoot)
+	}
+
+	return hv
 }

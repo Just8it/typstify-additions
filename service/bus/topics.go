@@ -12,6 +12,11 @@ const (
 	TopicPreviewToggle        = "preview.toggle" // for agent tool
 )
 
+type ProjectCreatedEvent struct {
+	Path            string
+	SwitchWorkspace bool
+}
+
 type FileChangedEvent struct {
 	Path string
 }

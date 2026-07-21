@@ -34,14 +34,27 @@ type NavSection interface {
 	OnClose()
 }
 
+type NavSectionID int
+
+const (
+	NavSectionExplorer NavSectionID = iota
+	NavSectionOutline
+	NavSectionAssistant
+)
+
 type NavDrawer struct {
 	srv                *service.ServiceFacade
 	vm                 view.ViewManager
 	sections           []NavSection
+	fileTree           *FileTreeNav
 	currentSectionIdx  int
 	switchSectionBtn   widget.Clickable
 	sectionSwitchPopup *widgets.Popup
 	updateTips         *UpdateTips
+	libraryBtn         widget.Clickable
+	libraryTip         widgets.TipArea
+	ShowLibrary        bool
+	OnLibrary          func()
 }
 
 func NewNavDrawer(vm view.ViewManager, srv *service.ServiceFacade) *NavDrawer {
@@ -51,7 +64,8 @@ func NewNavDrawer(vm view.ViewManager, srv *service.ServiceFacade) *NavDrawer {
 		updateTips: &UpdateTips{srv: srv},
 	}
 
-	drawer.AddSection(NewFileTreeNav(i18n.Translate("File Explorer"), srv, vm))
+	drawer.fileTree = NewFileTreeNav(i18n.Translate("File Explorer"), srv, vm)
+	drawer.AddSection(drawer.fileTree)
 
 	outlineNav := NewOutlineNav()
 	outlineNav.SetProvider(func() OutlineProvider {
@@ -85,7 +99,31 @@ func (nv *NavDrawer) AddSection(section NavSection) {
 	nv.sections = append(nv.sections, section)
 }
 
+func (nv *NavDrawer) ShowFileTree(scope string) {
+	nv.ShowSection(NavSectionExplorer)
+	nv.fileTree.FocusScope(scope)
+}
+
+func (nv *NavDrawer) ShowSection(section NavSectionID) {
+	idx := int(section)
+	if idx >= 0 && idx < len(nv.sections) {
+		nv.currentSectionIdx = idx
+	}
+}
+
+func (nv *NavDrawer) CurrentSection() NavSectionID {
+	return NavSectionID(nv.currentSectionIdx)
+}
+
+func (nv *NavDrawer) Update(gtx C) {
+	nv.fileTree.Update(gtx)
+}
+
 func (nv *NavDrawer) Layout(gtx C, th *theme.Theme) D {
+	nv.libraryTip.Direction = layout.S
+	if nv.libraryBtn.Clicked(gtx) && nv.OnLibrary != nil {
+		nv.OnLibrary()
+	}
 	section := nv.sections[nv.currentSectionIdx]
 
 	if nv.switchSectionBtn.Clicked(gtx) {
@@ -150,6 +188,20 @@ func (nv *NavDrawer) layoutHeader(gtx C, th *theme.Theme, section NavSection) D 
 							}
 
 							return section.LayoutHeader(gtx, th)
+						}),
+						layout.Rigid(func(gtx C) D {
+							if !nv.ShowLibrary {
+								return D{}
+							}
+							return layout.Inset{Right: unit.Dp(6)}.Layout(gtx, func(gtx C) D {
+								return widgets.TipIconButton(th, &nv.libraryTip, i18n.Translate("Library")).Layout(gtx, func(gtx C) D {
+									return nv.libraryBtn.Layout(gtx, func(gtx C) D {
+										return layout.UniformInset(unit.Dp(2)).Layout(gtx, func(gtx C) D {
+											return libraryIcon.Layout(gtx, th.ContrastBg, th.TextSize)
+										})
+									})
+								})
+							})
 						}),
 
 						layout.Rigid(func(gtx C) D {

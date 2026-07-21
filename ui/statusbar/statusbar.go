@@ -123,7 +123,7 @@ func (s *StatusBar) Update(gtx C) (consoleClicked, chatClicked bool) {
 	return
 }
 
-func (s *StatusBar) Layout(gtx C, th *theme.Theme) D {
+func (s *StatusBar) Layout(gtx C, th *theme.Theme, showViewStatus bool) D {
 	s.Update(gtx)
 
 	return layout.Inset{
@@ -153,6 +153,10 @@ func (s *StatusBar) Layout(gtx C, th *theme.Theme) D {
 					}),
 
 					layout.Rigid(func(gtx C) D {
+						if !showViewStatus {
+							return D{}
+						}
+
 						vw := s.vm.CurrentView()
 						if vw == nil {
 							return D{}
