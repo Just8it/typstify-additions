@@ -9,10 +9,32 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/ledongthuc/pdf"
 	"looz.ws/typstify/typst"
 )
 
 const muchPDFImport = "#import \"@preview/muchpdf:0.1.2\": muchpdf\n"
+
+const nativePDFHelper = `#let typstify-pdf(
+  path,
+  page-count,
+  pages: auto,
+  width: 100%,
+  fit: "contain",
+) = {
+  let pages = if pages == auto {
+    range(1, page-count, inclusive: true)
+  } else if type(pages) == int {
+    (pages,)
+  } else {
+    range(pages.first(), pages.last(), inclusive: true)
+  }
+  for page in pages {
+    image(path, width: width, page: page, fit: fit)
+  }
+}
+
+`
 
 func assetKind(path string, version typst.Version) (folder string, pdf, supported bool, err error) {
 	switch strings.ToLower(filepath.Ext(path)) {
@@ -47,6 +69,13 @@ func importAsset(root, document, source, content string, version typst.Version) 
 	if !info.Mode().IsRegular() {
 		return "", "", fmt.Errorf("pasted item is not a regular file")
 	}
+	pages := 0
+	if pdf && version.AtLeast(0, 14, 0) {
+		pages, err = pdfPageCount(source, info.Size())
+		if err != nil {
+			return "", "", err
+		}
+	}
 
 	destinationDir := filepath.Join(root, folder)
 	if err := os.MkdirAll(destinationDir, 0755); err != nil {
@@ -66,13 +95,39 @@ func importAsset(root, document, source, content string, version typst.Version) 
 		return "#image(" + path + ")", "", nil
 	}
 	if version.AtLeast(0, 14, 0) {
-		return "#image(\n  " + path + ",\n  width: 100%,\n  page: 1,\n  fit: \"contain\",\n)", "", nil
+		if !strings.Contains(content, "#let typstify-pdf(") {
+			header = nativePDFHelper
+		}
+		return "#typstify-pdf(\n  " + path + ",\n  " + strconv.Itoa(pages) + ", // detected page count\n  pages: auto, // all; or (first, last); or one page\n  width: 100%,\n  fit: \"contain\",\n)", header, nil
 	}
 
 	if !strings.Contains(content, strings.TrimSpace(muchPDFImport)) {
 		header = muchPDFImport
 	}
 	return "#muchpdf(read(" + path + ", encoding: none))", header, nil
+}
+
+func pdfPageCount(path string, size int64) (pages int, err error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return 0, fmt.Errorf("read PDF pages: %w", err)
+	}
+	defer file.Close()
+	defer func() {
+		if recovered := recover(); recovered != nil {
+			err = fmt.Errorf("read PDF pages: %v", recovered)
+		}
+	}()
+
+	reader, err := pdf.NewReader(file, size)
+	if err != nil {
+		return 0, fmt.Errorf("read PDF pages: %w", err)
+	}
+	pages = reader.NumPage()
+	if pages < 1 {
+		return 0, fmt.Errorf("read PDF pages: PDF has no pages")
+	}
+	return pages, nil
 }
 
 func copyUnique(source, destinationDir string, sourceInfo os.FileInfo) (string, error) {

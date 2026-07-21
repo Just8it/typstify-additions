@@ -64,6 +64,8 @@ github.com/inkeliz/go_inkwasm v0.1.23-0.20240519174017-989fbe5b10f6 h1:zOY3Po61l
 github.com/inkeliz/go_inkwasm v0.1.23-0.20240519174017-989fbe5b10f6/go.mod h1:68mLNhLJuUItd5PbLmnwC4H5P6wI3l3l8gGnAvXQq9k=
 github.com/kylelemons/godebug v1.1.0 h1:RPNrshWIDI6G2gRW9EHilWtl7Z6Sb1BR0xunSBf0SNc=
 github.com/kylelemons/godebug v1.1.0/go.mod h1:9/0rRGxNHcop5bhtWyNeEfOS8JIWk580+fNqagV/RAw=
+github.com/ledongthuc/pdf v0.0.0-20250511090121-5959a4027728 h1:QwWKgMY28TAXaDl+ExRDqGQltzXqN/xypdKP86niVn8=
+github.com/ledongthuc/pdf v0.0.0-20250511090121-5959a4027728/go.mod h1:1fEHWurg7pvf5SG6XNE5Q8UZmOwex51Mkx3SLhrW5B4=
 github.com/modelcontextprotocol/go-sdk v1.6.1 h1:0zOSupjKUxPKSocPT1Wtago+mUHU2/uZ4xSOY0FGReU=
 github.com/modelcontextprotocol/go-sdk v1.6.1/go.mod h1:kzm3kzFL1/+AziGOE0nUs3gvPoNxMCvkxokMkuFapXQ=
 github.com/mustafaturan/bus/v3 v3.0.3 h1:PMEUVKpfI9FOUw32o3wAHRaBS1XGxh6cFCy/VHktPfo=

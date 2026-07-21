@@ -16,6 +16,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/inkeliz/giohyperlink v0.0.0-20220903215451-2ac5d54abdce
 	github.com/inkeliz/giosvg v0.0.0-20240821232107-3208d4350d55
+	github.com/ledongthuc/pdf v0.0.0-20250511090121-5959a4027728
 	github.com/modelcontextprotocol/go-sdk v1.6.1
 	github.com/mustafaturan/bus/v3 v3.0.3
 	github.com/oligo/gioview v0.9.2
