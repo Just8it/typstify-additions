@@ -1,6 +1,7 @@
 package editors
 
 import (
+	"image"
 	"path/filepath"
 	"strings"
 
@@ -12,6 +13,7 @@ import (
 	"gioui.org/widget/material"
 	"github.com/oligo/gioview/misc"
 	"github.com/oligo/gioview/theme"
+	"looz.ws/typstify/widgets"
 	appIcons "looz.ws/typstify/widgets/icons"
 )
 
@@ -27,7 +29,7 @@ type editorHeaderAction struct {
 
 type ViewActionState struct {
 	btn widget.Clickable
-	//tip wg.TipArea
+	tip widgets.TipArea
 }
 
 type editorHeader struct {
@@ -143,13 +145,29 @@ func (eh *editorHeader) layoutActions(gtx C, th *theme.Theme) D {
 				action.OnClicked(gtx)
 			}
 
-			return layout.UniformInset(unit.Dp(2)).Layout(gtx, func(gtx C) D {
+			state.tip.Direction = layout.S
+			return widgets.TipIconButton(th, &state.tip, action.Name).Layout(gtx, func(gtx C) D {
 				return state.btn.Layout(gtx, func(gtx C) D {
+					size := gtx.Dp(unit.Dp(34))
+					gtx.Constraints = layout.Exact(image.Pt(size, size))
 					iconColor := th.Fg
+					background := th.Bg2
 					if state.btn.Hovered() {
 						iconColor = th.ContrastBg
+						background = misc.WithAlpha(th.ContrastBg, th.HoverAlpha)
 					}
-					return action.Icon.Layout(gtx, iconColor, th.TextSize)
+					return layout.Background{}.Layout(gtx,
+						func(gtx C) D {
+							dims := D{Size: gtx.Constraints.Max}
+							paint.FillShape(gtx.Ops, background, clip.UniformRRect(image.Rectangle{Max: dims.Size}, gtx.Dp(unit.Dp(6))).Op(gtx.Ops))
+							return dims
+						},
+						func(gtx C) D {
+							return layout.Center.Layout(gtx, func(gtx C) D {
+								return action.Icon.Layout(gtx, iconColor, th.TextSize)
+							})
+						},
+					)
 				})
 			})
 
