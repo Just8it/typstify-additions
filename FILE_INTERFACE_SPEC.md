@@ -67,6 +67,8 @@ Classic is the backwards-compatible master default. In Classic mode, Student pre
 
 The settings page presents the master interface choice first. When Classic is selected, hide the inactive Student preferences while retaining their saved values. When Student is selected, show editor scope, Library view, and navigation layout together as one clearly labeled Student preferences group.
 
+The shared Editor settings include a persisted inline-preview width from 20% to 60%, with 30% as the backwards-compatible default. Opening the preview applies that saved width; dragging the existing divider remains a temporary adjustment, and reopening the preview restores the configured width. This behavior is shared by Classic and Student modes.
+
 Keep navigation state separate:
 
 - Classic retains its expanded-node snapshot.
@@ -74,7 +76,7 @@ Keep navigation state separate:
 - A missing focused directory falls back to its closest existing ancestor inside the workspace, then the workspace root.
 - A workspace switch selects that workspace's valid focused directory without changing Classic expansion state.
 
-In Student mode, Library-style navigation is the default: a narrow persistent rail is the stable navigation anchor, and a secondary resizable drawer appears only beside the editor when requested or when a marked project is opened. The rail exposes Library, Explorer, Outline, Assistant Sessions, Open Folder, New Project, Packages, and Settings. If Classic navigation is selected, the existing drawer and bottom menu remain and gain only a Library entry point.
+In Student mode, Library-style navigation is the default: a narrow persistent rail is the stable navigation anchor, and a secondary resizable drawer appears only beside the editor when requested or when a marked project is opened. The rail exposes Library, Files, Outline, Assistant, a More menu, and Settings. More begins with Local Templates, which reads Typst's configured local package directory—or the platform default data directory when no override is configured—and lists all personal packages there, including `@local` packages without a formal `[template]` manifest section. This local view never requires TPIX login, a subscription, or a network request. Open Folder, New Project, and Package Center follow it in More. These less frequent tools remain available without competing with everyday navigation. The drawer header does not repeat the rail's section switcher, and update notices do not occupy drawer space. If Classic navigation is selected, the existing drawer and bottom menu remain and gain only a Library entry point.
 
 ### Student shell transitions
 
@@ -83,6 +85,7 @@ In Student mode, Library-style navigation is the default: a narrow persistent ra
 - **Notebook cover or document inside a marked project opened:** show the editor and automatically open the contextual project drawer.
 - **Loose document opened:** show the editor with the secondary drawer closed. Its containing folder is prepared as the contextual scope but is shown only after Files or `Ctrl+D` is pressed.
 - **Files, Outline, or Assistant selected:** leave the Library, retain the active editor tab, and show the selected secondary drawer. Selecting the active drawer action again closes it.
+- **Assistant drawer:** show a primary New chat action above session search/history. New chat replaces the active Assistant chat with a fresh session for the current project; existing saved sessions remain available in history.
 - **Library selected from the editor:** return to the Library and close the secondary drawer without closing editor tabs.
 - **Tab switched:** remain in the editor; update an already-visible contextual scope without forcing a closed drawer open.
 
