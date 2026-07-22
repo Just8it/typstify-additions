@@ -117,6 +117,7 @@ func (tn *FileTreeNav) switchRoot() {
 
 	// set callbacks for file operations
 	newTree.OnFileSelectedFunc = tn.onFileSelected
+	newTree.ShortcutSettings = tn.srv.Settings().Editor()
 	newTree.OnDropConfirmFunc = onDropConfirmFunc(tn.vm, newTree.Root())
 	newTree.OnFileUpdatedFunc = tn.onFileUpdated
 	newTree.OnFileRemoveFunc = tn.onFileDeleted

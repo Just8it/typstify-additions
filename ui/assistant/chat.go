@@ -140,7 +140,7 @@ func (cv *AgentChatView) init() {
 				return
 			}
 
-			cv.chat = agentview.NewAgentChat(session)
+			cv.chat = agentview.NewAgentChat(session, cv.srv.Settings().Editor())
 			cv.chat.SetInvalidator(func() {
 				cv.srv.RefreshWindow()
 			})
@@ -175,7 +175,7 @@ func (cv *AgentChatView) loadExisting(sn *agent.ACPSession) {
 				return
 			}
 
-			cv.chat = agentview.NewAgentChat(session)
+			cv.chat = agentview.NewAgentChat(session, cv.srv.Settings().Editor())
 			cv.chat.SetInvalidator(func() {
 				cv.srv.RefreshWindow()
 			})
