@@ -2,6 +2,8 @@ package pkgmgmt
 
 import (
 	"errors"
+	"sort"
+	"strings"
 	"sync/atomic"
 
 	"gioui.org/font"
@@ -21,6 +23,7 @@ import (
 	"looz.ws/typstify/service"
 	"looz.ws/typstify/service/bus"
 	"looz.ws/typstify/typst/pkg"
+	"looz.ws/typstify/ui/dialog"
 	"looz.ws/typstify/ui/statusbar"
 	"looz.ws/typstify/widgets"
 )
@@ -35,6 +38,8 @@ var (
 	searchIcon, _ = widget.NewIcon(icons.ActionSearch)
 )
 
+const LocalTemplatesParam = "localTemplates"
+
 type PkgListView struct {
 	*view.BaseView
 	srv              *service.ServiceFacade
@@ -47,6 +52,7 @@ type PkgListView struct {
 	lastFetched      atomic.Pointer[[]*PkgCard]
 	lastFetchedCount int
 	lastFetchErr     error
+	localTemplates   bool
 }
 
 func (vw *PkgListView) ID() view.ViewID {
@@ -54,13 +60,21 @@ func (vw *PkgListView) ID() view.ViewID {
 }
 
 func (vw *PkgListView) Title() string {
+	if vw.localTemplates {
+		return i18n.Translate("Local Templates")
+	}
 	return "Typst Packages"
 }
 
 func (vw *PkgListView) OnNavTo(intent view.Intent) error {
 	vw.BaseView.OnNavTo(intent)
+	vw.localTemplates, _ = intent.Params[LocalTemplatesParam].(bool)
 
 	go func() {
+		if vw.localTemplates {
+			vw.loadLocalTemplates(vw.searchInput.Text())
+			return
+		}
 		vw.loadData(vw.kindSelect.Value(), vw.categoryList.GetChecked(), vw.searchInput.Text())
 	}()
 
@@ -69,6 +83,14 @@ func (vw *PkgListView) OnNavTo(intent view.Intent) error {
 
 func (vw *PkgListView) Layout(gtx C, th *theme.Theme) D {
 	vw.update(gtx)
+	heading := i18n.Translate("Search packages/templates on TPIX")
+	description := i18n.Translate("Browsing thousands of packages and templates on TPIX server, including public namespaces, and private namespaces of your teams.")
+	searchHint := i18n.Translate("Search TPIX...")
+	if vw.localTemplates {
+		heading = i18n.Translate("Local Templates")
+		description = i18n.Translate("Personal @local packages and templates from Typst's local package folder. No account or network connection is required.")
+		searchHint = i18n.Translate("Search local templates...")
+	}
 
 	return layout.Inset{
 		Top:    unit.Dp(36),
@@ -81,6 +103,9 @@ func (vw *PkgListView) Layout(gtx C, th *theme.Theme) D {
 			Alignment: layout.Start,
 		}.Layout(gtx,
 			layout.Rigid(func(gtx C) D {
+				if vw.localTemplates {
+					return D{}
+				}
 				gtx.Constraints.Max.X = gtx.Dp(unit.Dp(220))
 				gtx.Constraints.Min.X = gtx.Dp(unit.Dp(180))
 
@@ -113,7 +138,12 @@ func (vw *PkgListView) Layout(gtx C, th *theme.Theme) D {
 					}),
 				)
 			}),
-			layout.Rigid(layout.Spacer{Width: unit.Dp(24)}.Layout),
+			layout.Rigid(func(gtx C) D {
+				if vw.localTemplates {
+					return D{}
+				}
+				return layout.Spacer{Width: unit.Dp(24)}.Layout(gtx)
+			}),
 			layout.Flexed(1, func(gtx C) D {
 				return layout.Flex{
 					Axis: layout.Vertical,
@@ -128,7 +158,7 @@ func (vw *PkgListView) Layout(gtx C, th *theme.Theme) D {
 									return packageSearchIcon.Layout(gtx, th.Fg, th.TextSize*20.0/16.0)
 								}),
 								layout.Rigid(func(gtx C) D {
-									return material.H6(th.Theme, i18n.Translate("Search packages/templates on TPIX")).Layout(gtx)
+									return material.H6(th.Theme, heading).Layout(gtx)
 								}),
 							)
 						})
@@ -139,7 +169,7 @@ func (vw *PkgListView) Layout(gtx C, th *theme.Theme) D {
 
 					layout.Rigid(func(gtx C) D {
 						return layout.Center.Layout(gtx, func(gtx C) D {
-							label := material.Label(th.Theme, th.TextSize, i18n.Translate("Browsing thousands of packages and templates on TPIX server, including public namespaces, and private namespaces of your teams."))
+							label := material.Label(th.Theme, th.TextSize, description)
 							label.LineHeightScale = 1.5
 							return label.Layout(gtx)
 						})
@@ -153,7 +183,7 @@ func (vw *PkgListView) Layout(gtx C, th *theme.Theme) D {
 							vw.searchInput.Leading = func(gtx C) D {
 								return misc.Icon{Icon: searchIcon, Size: unit.Dp(18), Color: misc.WithAlpha(th.Fg, 0xb0)}.Layout(gtx, th)
 							}
-							return vw.searchInput.Layout(gtx, th, i18n.Translate("Search TPIX..."))
+							return vw.searchInput.Layout(gtx, th, searchHint)
 						})
 					}),
 
@@ -183,11 +213,13 @@ func (vw *PkgListView) update(gtx C) {
 	if vw.searchInput.Changed() || vw.searchInput.Submitted() {
 		reload = true
 	}
-	if vw.categoryList.Update(gtx) {
-		reload = true
-	}
-	if vw.kindSelect.Update(gtx) {
-		reload = true
+	if !vw.localTemplates {
+		if vw.categoryList.Update(gtx) {
+			reload = true
+		}
+		if vw.kindSelect.Update(gtx) {
+			reload = true
+		}
 	}
 
 	if reload {
@@ -195,6 +227,10 @@ func (vw *PkgListView) update(gtx C) {
 		vw.packageList = newPkgList(nil, true)
 
 		go func() {
+			if vw.localTemplates {
+				vw.loadLocalTemplates(vw.searchInput.Text())
+				return
+			}
 			vw.loadData(vw.kindSelect.Value(), vw.categoryList.GetChecked(), vw.searchInput.Text())
 		}()
 	}
@@ -204,6 +240,52 @@ func (vw *PkgListView) update(gtx C) {
 		vw.packageList = newPkgList(vw.cards, false)
 	}
 
+}
+
+func (vw *PkgListView) loadLocalTemplates(query string) {
+	packages, err := vw.srv.PkgService().LocalPkgs()
+	cards := make([]*PkgCard, 0)
+	if err == nil {
+		for _, p := range filterLocalPackages(packages, query) {
+			var action func(*pkg.TypstPkg)
+			if p.IsTemplate {
+				action = vw.useTemplate
+			}
+			card := newPkgCard(p, action)
+			if p.IsTemplate {
+				card.actionLabel = i18n.Translate("Use template")
+			}
+			cards = append(cards, card)
+		}
+	}
+	vw.lastFetchErr = err
+	vw.lastFetchedCount = len(cards)
+	vw.lastFetched.Store(&cards)
+}
+
+func filterLocalPackages(packages []pkg.TypstPkg, query string) []pkg.TypstPkg {
+	query = strings.ToLower(strings.TrimSpace(query))
+	result := make([]pkg.TypstPkg, 0)
+	for _, p := range packages {
+		if query != "" && !strings.Contains(strings.ToLower(p.Namespace+" "+p.Name+" "+p.Description), query) {
+			continue
+		}
+		result = append(result, p)
+	}
+	sort.Slice(result, func(i, j int) bool {
+		return strings.ToLower(result[i].Name) < strings.ToLower(result[j].Name)
+	})
+	return result
+}
+
+func (vw *PkgListView) useTemplate(pkgInfo *pkg.TypstPkg) {
+	vw.vm.RequestSwitch(view.Intent{
+		Target:      dialog.CreateProjectDialogViewID,
+		ShowAsModal: true,
+		Params: map[string]any{
+			"template": pkgInfo.ImportPath(),
+		},
+	})
 }
 
 func (vw *PkgListView) loadData(kind string, category string, query string) {
@@ -258,6 +340,9 @@ func (vw *PkgListView) downloadPkg(pkgInfo *pkg.TypstPkg) {
 
 func (vw *PkgListView) LayoutStatus(gtx C, th *theme.Theme) D {
 	pkgStatus := i18n.Translate("Found %d packages.", vw.lastFetchedCount)
+	if vw.localTemplates {
+		pkgStatus = i18n.Translate("Found %d local templates.", vw.lastFetchedCount)
+	}
 	return material.Label(th.Theme, th.TextSize*0.9, pkgStatus).Layout(gtx)
 }
 

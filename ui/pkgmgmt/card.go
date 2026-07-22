@@ -36,6 +36,7 @@ type PkgCard struct {
 	docBtn      widget.Clickable
 
 	onDownloadClicked func(pkgInfo *pkg.TypstPkg)
+	actionLabel       string
 }
 
 type PkgThumb struct {
@@ -50,6 +51,7 @@ func newPkgCard(pkg pkg.TypstPkg, onDownloadClicked func(pkgInfo *pkg.TypstPkg))
 	return &PkgCard{
 		pkgInfo:           pkg,
 		onDownloadClicked: onDownloadClicked,
+		actionLabel:       i18n.Translate("Download"),
 	}
 }
 
@@ -196,6 +198,9 @@ func (c *PkgCard) layout(gtx C, th *theme.Theme) D {
 							Spacing:   layout.SpaceBetween,
 						}.Layout(gtx,
 							layout.Rigid(func(gtx C) D {
+								if c.pkgInfo.IsCached {
+									return D{}
+								}
 								btn := material.Button(th.Theme, &c.docBtn, "Read the docs")
 								btn.Inset = layout.Inset{Top: unit.Dp(2), Bottom: unit.Dp(2), Left: unit.Dp(4), Right: unit.Dp(4)}
 								return btn.Layout(gtx)
@@ -210,8 +215,11 @@ func (c *PkgCard) layout(gtx C, th *theme.Theme) D {
 							layout.Rigid(layout.Spacer{Width: unit.Dp(12)}.Layout),
 
 							layout.Rigid(func(gtx C) D {
+								if c.onDownloadClicked == nil {
+									return D{}
+								}
 
-								btn := material.Button(th.Theme, &c.downloadBtn, "Download")
+								btn := material.Button(th.Theme, &c.downloadBtn, c.actionLabel)
 								btn.Inset = layout.Inset{Top: unit.Dp(2), Bottom: unit.Dp(2), Left: unit.Dp(4), Right: unit.Dp(4)}
 								return btn.Layout(gtx)
 							}),

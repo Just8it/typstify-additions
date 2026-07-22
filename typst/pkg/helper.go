@@ -4,7 +4,6 @@ import (
 	_ "embed"
 	"errors"
 	"fmt"
-	"io"
 	"log"
 	"os"
 	"path/filepath"
@@ -76,13 +75,7 @@ func scanPackages(pkgDir string) (map[string]map[string]TypstPkg, error) {
 					continue
 				}
 				version := verEntry.Name()
-				metaFile, err := os.Open(filepath.Join(pkgDir, namespace, packageName, version, "typst.toml"))
-				if err != nil {
-					log.Println("scan package error: ", err)
-					continue
-				}
-
-				metadata, err := io.ReadAll(metaFile)
+				metadata, err := os.ReadFile(filepath.Join(pkgDir, namespace, packageName, version, "typst.toml"))
 				if err != nil {
 					log.Println("read package metadata error: ", err)
 					continue
@@ -101,17 +94,19 @@ func scanPackages(pkgDir string) (map[string]map[string]TypstPkg, error) {
 					p = TypstPkg{
 						IsCached: true,
 						SearchResult: api.SearchResult{
-							Namespace:   namespace,
-							Name:        pkgInfo.Package.Name,
-							Description: pkgInfo.Package.Description,
-							License:     pkgInfo.Package.License,
-							IsTemplate:  pkgInfo.Template != nil,
-							Authors:     pkgInfo.Package.Authors,
-							Categories:  pkgInfo.Package.Categories,
-							Disciplines: pkgInfo.Package.Disciplines,
+							Namespace:     namespace,
+							Name:          pkgInfo.Package.Name,
+							LatestVersion: pkgInfo.Package.Version,
+							Description:   pkgInfo.Package.Description,
+							License:       pkgInfo.Package.License,
+							IsTemplate:    pkgInfo.Template != nil,
+							Authors:       pkgInfo.Package.Authors,
+							Categories:    pkgInfo.Package.Categories,
+							Disciplines:   pkgInfo.Package.Disciplines,
 						},
 					}
 				}
+				p.LatestVersion = pkgInfo.Package.Version
 
 				p.Versions = append(p.Versions, api.PackageVersionInfo{
 					Version: pkgInfo.Package.Version,

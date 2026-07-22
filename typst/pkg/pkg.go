@@ -2,9 +2,11 @@
 package pkg
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 
 	cli "github.com/typstify/tpix-cli"
 	tpix "github.com/typstify/tpix-cli"
@@ -25,6 +27,7 @@ func (p *TypstPkg) ImportPath() string {
 
 type TypstPkgService struct {
 	cacheDir   string
+	packageDir string
 	tpixConfig *settings.TpixSettings
 	remoteRepo
 
@@ -55,15 +58,36 @@ func DefaultCacheDir() string {
 	return filepath.Join(dir, "typst", "packages")
 }
 
+func DefaultPackageDir() string {
+	var dir string
+	var err error
+	if runtime.GOOS == "windows" || runtime.GOOS == "darwin" {
+		dir, err = os.UserConfigDir()
+	} else if dir = os.Getenv("XDG_DATA_HOME"); dir == "" {
+		dir, err = os.UserHomeDir()
+		dir = filepath.Join(dir, ".local", "share")
+	}
+	if err != nil {
+		return ""
+	}
+
+	return filepath.Join(dir, "typst", "packages")
+}
+
 func NewTypstPkgService(config *settings.TypstSettings, tpixConfig *settings.TpixSettings) *TypstPkgService {
 	cacheDir := config.PackageCacheDir
 
 	if cacheDir == "" {
 		cacheDir = DefaultCacheDir()
 	}
+	packageDir := config.PackageDir
+	if packageDir == "" {
+		packageDir = DefaultPackageDir()
+	}
 
 	return &TypstPkgService{
 		cacheDir:   cacheDir,
+		packageDir: packageDir,
 		tpixConfig: tpixConfig,
 	}
 }
@@ -85,7 +109,18 @@ func (s *TypstPkgService) CreateSampleDocument(projectDir string, name string) (
 }
 
 func (s *TypstPkgService) CachedPkgs() ([]TypstPkg, error) {
-	pkgMap, err := scanPackages(s.cacheDir)
+	return scanPackageList(s.cacheDir)
+}
+
+func (s *TypstPkgService) LocalPkgs() ([]TypstPkg, error) {
+	return scanPackageList(s.packageDir)
+}
+
+func scanPackageList(dir string) ([]TypstPkg, error) {
+	pkgMap, err := scanPackages(dir)
+	if errors.Is(err, os.ErrNotExist) {
+		return []TypstPkg{}, nil
+	}
 	if err != nil {
 		return nil, err
 	}
