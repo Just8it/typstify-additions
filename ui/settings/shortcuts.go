@@ -195,6 +195,7 @@ func (view *ShortcutsView) layoutRow(gtx C, th *theme.Theme, definition config.S
 }
 
 func (view *ShortcutsView) updateRow(gtx C, definition config.ShortcutDefinition, row *shortcutRow) {
+	event.Op(gtx.Ops, row)
 	if row.enabled.Update(gtx) {
 		view.lastErr = view.setting.SetShortcutEnabled(definition.ID, row.enabled.Value)
 		row.warning = ""
@@ -219,7 +220,6 @@ func (view *ShortcutsView) updateRow(gtx C, definition config.ShortcutDefinition
 	if view.recording != definition.ID {
 		return
 	}
-	event.Op(gtx.Ops, row)
 	if !gtx.Focused(row) {
 		gtx.Execute(key.FocusCmd{Tag: row})
 	}
