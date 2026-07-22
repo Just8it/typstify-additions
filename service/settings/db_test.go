@@ -69,6 +69,22 @@ func TestModelGetDefault(t *testing.T) {
 
 }
 
+func TestAssistantPreferencesPersist(t *testing.T) {
+	root := t.TempDir()
+	db := newSettings(root, nil)
+	config := db.AcpAgent()
+	config.LastModel = "gpt-5.6"
+	config.LastReasoning = "high"
+	if err := config.Save(); err != nil {
+		t.Fatal(err)
+	}
+
+	reloaded := newSettings(root, nil).AcpAgent()
+	if reloaded.LastModel != "gpt-5.6" || reloaded.LastReasoning != "high" {
+		t.Fatalf("reloaded assistant preferences = %q/%q", reloaded.LastModel, reloaded.LastReasoning)
+	}
+}
+
 func TestFileInterfaceSettings(t *testing.T) {
 	root := t.TempDir()
 	db := newSettings(root, nil)

@@ -128,11 +128,13 @@ type TpixSettings struct {
 type AcpAgentSettings struct {
 	baseModel
 
-	AgentID   string `key:"agentId" json:"agentId"`     // registry ID, or empty for custom
-	AgentName string `key:"agentName" json:"agentName"` // display name
-	Cmd       string `key:"cmd" json:"cmd"`             // resolved command, e.g. "npx"
-	Args      string `key:"args" json:"args"`           // resolved args, space-separated
-	Env       string `key:"env" json:"env"`             // extra env vars, space-separated KEY=value pairs
+	AgentID       string `key:"agentId" json:"agentId"`     // registry ID, or empty for custom
+	AgentName     string `key:"agentName" json:"agentName"` // display name
+	Cmd           string `key:"cmd" json:"cmd"`             // resolved command, e.g. "npx"
+	Args          string `key:"args" json:"args"`           // resolved args, space-separated
+	Env           string `key:"env" json:"env"`             // extra env vars, space-separated KEY=value pairs
+	LastModel     string `key:"lastModel" json:"lastModel"`
+	LastReasoning string `key:"lastReasoning" json:"lastReasoning"`
 
 	// MCP server
 	UseStaticMcpPort int `key:"useStaticMcpPort" json:"useStaticMcpPort"` // use fixed port when starting MCP server.

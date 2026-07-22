@@ -181,7 +181,7 @@ func (cv *AgentChatView) loadExisting(sn *agent.ACPSession) {
 
 	if cv.chatReady.CompareAndSwap(false, true) {
 		go func() {
-			session, err := cv.srv.AcpSessionManager().LoadSession(context.Background(), sn)
+			session, err := cv.srv.LoadACPSession(context.Background(), sn)
 			if err != nil {
 				log.Printf("chat: failed to load ACP session: %v", err)
 				cv.chatErr = err

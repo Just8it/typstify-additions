@@ -66,10 +66,11 @@ type ACPSession struct {
 	updatedAt string
 	modeState acp.SessionModeState
 	// Available slash commands supported by the Agent.
-	commands      []acp.AvailableCommand
-	configOptions []acp.SessionConfigOption
-	usage         UsageUpdate
-	mu            sync.Mutex
+	commands       []acp.AvailableCommand
+	configOptions  []acp.SessionConfigOption
+	onConfigUpdate func(acp.SessionConfigOption)
+	usage          UsageUpdate
+	mu             sync.Mutex
 
 	// ongoing prompt turn info
 	hasOngoingTurn atomic.Bool
@@ -222,6 +223,13 @@ func (sn *ACPSession) SetConfigOptions(options []acp.SessionConfigOption) {
 	sn.configOptions = options
 }
 
+func (sn *ACPSession) SetConfigUpdateCallback(callback func(acp.SessionConfigOption)) {
+	sn.mu.Lock()
+	defer sn.mu.Unlock()
+
+	sn.onConfigUpdate = callback
+}
+
 // UpdateConfig update session configs.
 func (sn *ACPSession) UpdateConfig(ctx context.Context, configID acp.SessionConfigId, value any) error {
 	var req acp.SetSessionConfigOptionRequest
@@ -251,10 +259,26 @@ func (sn *ACPSession) UpdateConfig(ctx context.Context, configID acp.SessionConf
 		return err
 	}
 
-	sn.mu.Lock()
-	defer sn.mu.Unlock()
+	var updated acp.SessionConfigOption
+	for _, option := range newOpts.ConfigOptions {
+		if option.Select != nil && option.Select.Id == configID {
+			updated = option
+			break
+		}
+		if option.Boolean != nil && option.Boolean.Id == configID {
+			updated = option
+			break
+		}
+	}
 
+	sn.mu.Lock()
 	sn.configOptions = newOpts.ConfigOptions
+	callback := sn.onConfigUpdate
+	sn.mu.Unlock()
+
+	if callback != nil && (updated.Select != nil || updated.Boolean != nil) {
+		callback(updated)
+	}
 	return nil
 }
 

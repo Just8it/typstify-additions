@@ -360,7 +360,129 @@ func (s *ServiceFacade) StartACPSession(ctx context.Context, projectDir string) 
 		s.acpMu.Unlock()
 	}
 
-	return mgr.NewSession(ctx, projectDir)
+	session, err := mgr.NewSession(ctx, projectDir)
+	if err != nil {
+		return nil, err
+	}
+	s.prepareACPSession(ctx, session)
+	return session, nil
+}
+
+func (s *ServiceFacade) LoadACPSession(ctx context.Context, session *agent.ACPSession) (*agent.ACPSession, error) {
+	mgr := s.AcpSessionManager()
+	if mgr == nil {
+		return nil, errors.New("ACP session manager is unavailable")
+	}
+	loaded, err := mgr.LoadSession(ctx, session)
+	if err != nil || loaded == nil {
+		return loaded, err
+	}
+	s.prepareACPSession(ctx, loaded)
+	return loaded, nil
+}
+
+func (s *ServiceFacade) prepareACPSession(ctx context.Context, session *agent.ACPSession) {
+	session.SetConfigUpdateCallback(s.rememberACPSessionConfig)
+	prefs := s.settings.AcpAgent()
+	for _, preferred := range []struct {
+		category acp.SessionConfigOptionCategory
+		value    string
+	}{
+		{acp.SessionConfigOptionCategoryModel, prefs.LastModel},
+		{acp.SessionConfigOptionCategoryThoughtLevel, prefs.LastReasoning},
+	} {
+		configID, ok := preferredSessionConfig(session.ConfigOptions(), preferred.category, acp.SessionConfigValueId(preferred.value))
+		if !ok {
+			continue
+		}
+		if err := session.UpdateConfig(ctx, configID, acp.SessionConfigValueId(preferred.value)); err != nil {
+			log.Printf("restore ACP %s preference: %v", preferred.category, err)
+		}
+	}
+}
+
+func (s *ServiceFacade) rememberACPSessionConfig(option acp.SessionConfigOption) {
+	if option.Select == nil {
+		return
+	}
+	category, ok := sessionConfigCategory(option.Select)
+	if !ok {
+		return
+	}
+
+	prefs := s.settings.AcpAgent()
+	value := string(option.Select.CurrentValue)
+	switch category {
+	case acp.SessionConfigOptionCategoryModel:
+		if prefs.LastModel == value {
+			return
+		}
+		prefs.LastModel = value
+	case acp.SessionConfigOptionCategoryThoughtLevel:
+		if prefs.LastReasoning == value {
+			return
+		}
+		prefs.LastReasoning = value
+	default:
+		return
+	}
+	if err := prefs.Save(); err != nil {
+		log.Printf("remember ACP %s preference: %v", category, err)
+	}
+}
+
+func preferredSessionConfig(options []acp.SessionConfigOption, category acp.SessionConfigOptionCategory, preferred acp.SessionConfigValueId) (acp.SessionConfigId, bool) {
+	if preferred == "" {
+		return "", false
+	}
+	for _, option := range options {
+		selectOption := option.Select
+		actualCategory, ok := sessionConfigCategory(selectOption)
+		if !ok || actualCategory != category || selectOption.CurrentValue == preferred {
+			continue
+		}
+		if sessionConfigValueAvailable(selectOption.Options, preferred) {
+			return selectOption.Id, true
+		}
+	}
+	return "", false
+}
+
+func sessionConfigCategory(option *acp.SessionConfigOptionSelect) (acp.SessionConfigOptionCategory, bool) {
+	if option == nil {
+		return "", false
+	}
+	if option.Category != nil {
+		return *option.Category, true
+	}
+	switch option.Id {
+	case "model":
+		return acp.SessionConfigOptionCategoryModel, true
+	case "reasoning_effort", "thought_level":
+		return acp.SessionConfigOptionCategoryThoughtLevel, true
+	default:
+		return "", false
+	}
+}
+
+func sessionConfigValueAvailable(options acp.SessionConfigSelectOptions, preferred acp.SessionConfigValueId) bool {
+	if options.Ungrouped != nil {
+		for _, option := range *options.Ungrouped {
+			if option.Value == preferred {
+				return true
+			}
+		}
+	}
+	if options.Grouped != nil {
+		for _, group := range *options.Grouped {
+			for _, option := range group.Options {
+				if option.Value == preferred {
+					return true
+				}
+			}
+		}
+	}
+	return false
 }
 
 func configEqual(a agent.AgentConfig, as *settings.AcpAgentSettings) bool {
