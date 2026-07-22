@@ -449,7 +449,7 @@ func (e *EditorView) Layout(gtx C, th *theme.Theme) D {
 		layout.Rigid(func(gtx C) D {
 			return settingItem{}.Layout(gtx, th,
 				i18n.Translate("Preview width"),
-				i18n.Translate("Set the width used whenever the inline preview opens. Quarter is 25%, third is 33%, and half is 50%. You can still drag the divider while editing."),
+				i18n.Translate("Choose how much editor space the preview uses when it opens. You can still drag the divider while editing."),
 				func(gtx C) D {
 					previewWidth := int(e.previewWidthInput.Value())
 					return layout.Flex{Alignment: layout.Middle}.Layout(gtx,

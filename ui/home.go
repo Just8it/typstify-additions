@@ -599,7 +599,15 @@ func newHome(window *app.Window, srv *service.ServiceFacade) *HomeView {
 	}
 	hv.welcome = WelcomeView{vm: hv, srv: srv}
 
-	srv.EventBus().Subscribe(hv, "home.fileInterface", `settings\.updated`, func(topic string, data interface{}) {
+	srv.EventBus().Subscribe(hv, "home.settings", `settings\.updated`, func(topic string, data interface{}) {
+		if editorSetting, ok := data.(*settingsmodel.EditorSettings); ok {
+			if hv.previewResizer != nil {
+				hv.previewResizer.Ratio = editorRatioForPreviewWidth(editorSetting.PreviewWidth)
+			}
+			hv.Invalidate()
+			return
+		}
+
 		setting, ok := data.(*settingsmodel.FileInterfaceSettings)
 		if !ok {
 			return
