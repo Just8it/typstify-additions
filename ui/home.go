@@ -170,36 +170,31 @@ func (hv *HomeView) update(gtx C) {
 		hv.menuPanel.OpenFolder()
 	}
 
-	// global key handler, without a focused target.
+	shortcutConfig := hv.srv.Settings().Editor()
+	filters := settingsmodel.ShortcutFilters(shortcutConfig, nil,
+		settingsmodel.ShortcutToggleFileExplorer,
+		settingsmodel.ShortcutToggleConsole,
+		settingsmodel.ShortcutToggleAssistant,
+	)
 	for {
-		e, ok := gtx.Event(
-			key.Filter{Name: "D", Required: key.ModShortcut}, // toggle hide/show of drawer.
-			key.Filter{Name: "K", Required: key.ModShortcut}, // toggle hide/show of console.
-			key.Filter{Name: "L", Required: key.ModShortcut}, // toggle hide/show of chat.
-		)
+		e, ok := gtx.Event(filters...)
 		if !ok {
 			break
 		}
 
 		switch event := e.(type) {
 		case key.Event:
-			if event.State != key.Press {
-				continue
-			}
-
-			if event.Name == "D" && event.Modifiers.Contain(key.ModShortcut) {
+			if settingsmodel.ShortcutMatches(shortcutConfig, settingsmodel.ShortcutToggleFileExplorer, event) {
 				if hv.usesStudentRail() {
 					hv.toggleStudentDrawer(navpanel.NavSectionExplorer)
 				} else {
 					hv.menuPanel.IsDrawerHidden = !hv.menuPanel.IsDrawerHidden
 				}
 			}
-
-			if event.Name == "K" && event.Modifiers.Contain(key.ModShortcut) {
+			if settingsmodel.ShortcutMatches(shortcutConfig, settingsmodel.ShortcutToggleConsole, event) {
 				hv.toggleConsole()
 			}
-
-			if event.Name == "L" && event.Modifiers.Contain(key.ModShortcut) {
+			if settingsmodel.ShortcutMatches(shortcutConfig, settingsmodel.ShortcutToggleAssistant, event) {
 				hv.toggleChat()
 			}
 		}
@@ -209,7 +204,7 @@ func (hv *HomeView) update(gtx C) {
 		hv.RequestSwitch(view.Intent{
 			Target: settings.SettingViewID,
 			Params: map[string]any{
-				"tabIdx": 3, // hardcoded tpix tab index in setting page.
+				"tabIdx": settings.TpixTabIndex,
 			},
 		})
 	}

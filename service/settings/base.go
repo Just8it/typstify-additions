@@ -80,7 +80,7 @@ func mergeModel(src, dest Model) error {
 			continue
 		}
 
-		if reflect.Zero(field.Type()).Interface() == field.Interface() {
+		if field.IsZero() {
 			srcField := srcVal.Field(i)
 			fieldVal := srcField.Interface()
 			if err := setFieldValue(field, fieldVal); err != nil {

@@ -258,22 +258,17 @@ func (te *TypstEditor) headerActions() []editorHeaderAction {
 func (te *TypstEditor) update(gtx C) {
 	te.setupLsp(gtx)
 
-	// global key handler.
+	shortcutConfig := te.srv.Settings().Editor()
+	filters := settingsmodel.ShortcutFilters(shortcutConfig, nil, settingsmodel.ShortcutTogglePreview)
 	for {
-		e, ok := gtx.Event(
-			key.Filter{Name: "P", Required: key.ModShortcut}, // toggle hide/show of previewer.
-		)
+		e, ok := gtx.Event(filters...)
 		if !ok {
 			break
 		}
 
 		switch event := e.(type) {
 		case key.Event:
-			if event.State != key.Press {
-				continue
-			}
-
-			if event.Name == "P" && event.Modifiers.Contain(key.ModShortcut) {
+			if settingsmodel.ShortcutMatches(shortcutConfig, settingsmodel.ShortcutTogglePreview, event) {
 				te.togglePreview(gtx)
 				gtx.Execute(op.InvalidateCmd{})
 			}
@@ -568,7 +563,7 @@ func (te *TypstEditor) toggleChat() {
 				return
 			}
 
-			te.chatView = agentview.NewAgentChat(session)
+			te.chatView = agentview.NewAgentChat(session, te.srv.Settings().Editor())
 			te.chatView.SetInvalidator(func() {
 				te.srv.RefreshWindow()
 			})

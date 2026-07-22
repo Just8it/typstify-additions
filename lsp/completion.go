@@ -18,32 +18,34 @@ type LspAutoCompletor struct {
 	client     *Client
 	filePath   string
 	editor     *gvcode.Editor
+	keyBinding struct {
+		Name      key.Name
+		Modifiers key.Modifiers
+	}
 	candicates []gvcode.CompletionCandidate
 	resultBuf  []gvcode.CompletionCandidate
 }
 
-func NewLspAutoCompletor(client *Client, filePath string, editor *gvcode.Editor) *LspAutoCompletor {
+func NewLspAutoCompletor(client *Client, filePath string, editor *gvcode.Editor, name key.Name, modifiers key.Modifiers) *LspAutoCompletor {
 	if client == nil {
 		log.Println("LSP client is not initialized!")
 		return nil
 	}
 
-	return &LspAutoCompletor{
+	completor := &LspAutoCompletor{
 		filePath: filePath,
 		client:   client,
 		editor:   editor,
 	}
+	completor.keyBinding.Name = name
+	completor.keyBinding.Modifiers = modifiers
+	return completor
 }
 
 func (c *LspAutoCompletor) Trigger() gvcode.Trigger {
 	trigger := gvcode.Trigger{
 		Characters: []string{},
-		KeyBinding: struct {
-			Name      key.Name
-			Modifiers key.Modifiers
-		}{
-			Name: "P", Modifiers: key.ModShortcut,
-		}}
+		KeyBinding: c.keyBinding}
 
 	if c.client.ServerCapabilities() != nil {
 		trigger.Characters = c.client.ServerCapabilities().CompletionProvider.TriggerCharacters

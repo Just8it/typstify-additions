@@ -71,15 +71,16 @@ type GeneralSettings struct {
 type EditorSettings struct {
 	baseModel
 	// typeface for editing
-	TypeFace         string  `key:"fontType" json:"fontType"`
-	TextSize         float32 `key:"fontSize" json:"fontSize"`
-	Weight           int     `key:"fontWeight" json:"fontWeight"`
-	LineHeightScale  float32 `key:"lineHeightScale" json:"lineHeightScale"`
-	TabSize          int     `key:"tabSize" json:"tabSize"`
-	UseSoftTab       string  `key:"softTab" json:"softTab"`
-	WrapLine         string  `key:"wrapLine" json:"wrapLine"`
-	AutoSaveInterval int     `key:"autoSaveInterval" json:"autoSaveInterval"`
-	PreviewWidth     int     `key:"previewWidth" json:"previewWidth"`
+	TypeFace          string                          `key:"fontType" json:"fontType"`
+	TextSize          float32                         `key:"fontSize" json:"fontSize"`
+	Weight            int                             `key:"fontWeight" json:"fontWeight"`
+	LineHeightScale   float32                         `key:"lineHeightScale" json:"lineHeightScale"`
+	TabSize           int                             `key:"tabSize" json:"tabSize"`
+	UseSoftTab        string                          `key:"softTab" json:"softTab"`
+	WrapLine          string                          `key:"wrapLine" json:"wrapLine"`
+	ShortcutOverrides map[ShortcutID]ShortcutOverride `key:"shortcutOverrides" json:"shortcutOverrides,omitempty"`
+	AutoSaveInterval  int                             `key:"autoSaveInterval" json:"autoSaveInterval"`
+	PreviewWidth      int                             `key:"previewWidth" json:"previewWidth"`
 }
 
 type FileInterfaceSettings struct {
@@ -207,6 +208,7 @@ func (e *EditorSettings) Save() error {
 }
 
 func (e *EditorSettings) Load() error {
+	e.ShortcutOverrides = nil
 	if err := e.baseModel.load(e, defaultEditorSettings); err != nil {
 		return err
 	}

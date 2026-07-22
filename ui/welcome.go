@@ -4,7 +4,6 @@ import (
 	"log"
 
 	"gioui.org/font"
-	"gioui.org/io/key"
 	"gioui.org/layout"
 	"gioui.org/unit"
 	"gioui.org/widget"
@@ -17,6 +16,7 @@ import (
 	"looz.ws/typstify/i18n"
 	"looz.ws/typstify/service"
 	"looz.ws/typstify/service/bus"
+	config "looz.ws/typstify/service/settings"
 	"looz.ws/typstify/ui/dialog"
 	"looz.ws/typstify/ui/pkgmgmt"
 	"looz.ws/typstify/widgets/icons"
@@ -254,6 +254,7 @@ func (vw *WelcomeView) update(gtx C) {
 }
 
 func (vw *WelcomeView) layoutShortcuts(gtx C, th *theme.Theme) D {
+	shortcuts := vw.srv.Settings().Editor()
 	shortcutLabel := func(gtx C, text string) D {
 		label := material.Caption(th.Theme, text)
 		label.Color = misc.WithAlpha(th.Fg, 0xb0)
@@ -269,16 +270,16 @@ func (vw *WelcomeView) layoutShortcuts(gtx C, th *theme.Theme) D {
 			Gap:  gtx.Dp(unit.Dp(8)),
 		}.Layout(gtx,
 			layout.Rigid(func(gtx C) D {
-				return shortcutLabel(gtx, i18n.Translate("Open/Hide File Explorer: %s + D", key.ModShortcut.String()))
+				return shortcutLabel(gtx, i18n.Translate("Open/Hide File Explorer: %s", config.ShortcutDisplay(shortcuts, config.ShortcutToggleFileExplorer)))
 			}),
 			layout.Rigid(func(gtx C) D {
-				return shortcutLabel(gtx, i18n.Translate("Open/Hide Console: %s + K", key.ModShortcut.String()))
+				return shortcutLabel(gtx, i18n.Translate("Open/Hide Console: %s", config.ShortcutDisplay(shortcuts, config.ShortcutToggleConsole)))
 			}),
 			layout.Rigid(func(gtx C) D {
-				return shortcutLabel(gtx, i18n.Translate("Open/Hide Previewer: %s + P", key.ModShortcut.String()))
+				return shortcutLabel(gtx, i18n.Translate("Open/Hide Previewer: %s", config.ShortcutDisplay(shortcuts, config.ShortcutTogglePreview)))
 			}),
 			layout.Rigid(func(gtx C) D {
-				return shortcutLabel(gtx, i18n.Translate("Open AI Assistant: %s + L", key.ModShortcut.String()))
+				return shortcutLabel(gtx, i18n.Translate("Open AI Assistant: %s", config.ShortcutDisplay(shortcuts, config.ShortcutToggleAssistant)))
 			}),
 		)
 	})

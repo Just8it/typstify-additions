@@ -28,6 +28,7 @@ import (
 	"github.com/oligo/gioview/explorer"
 	"github.com/oligo/gioview/misc"
 	"github.com/oligo/gioview/theme"
+	"looz.ws/typstify/service/settings"
 	"looz.ws/typstify/utils"
 	"looz.ws/typstify/widgets"
 	"looz.ws/typstify/widgets/menu"
@@ -43,8 +44,9 @@ type MenuOptionFunc func(node *FileNode) [][]menu.MenuOption
 
 // TreeView is the view controller of file nodes.
 type TreeView struct {
-	root     *FileNode
-	HideRoot bool
+	root             *FileNode
+	HideRoot         bool
+	ShortcutSettings *settings.EditorSettings
 	// states maps a file path to its persistent UI state.
 	states     map[string]*NodeState
 	statesLock sync.Mutex
@@ -346,14 +348,16 @@ func (t *TreeView) PrepareNode(node *FileNode) *NodeState {
 func (t *TreeView) processKeyEvents(gtx layout.Context) error {
 	filters := []event.Filter{
 		key.FocusFilter{Target: t},
-		key.Filter{Focus: t, Name: "C", Required: key.ModShortcut},
-		key.Filter{Focus: t, Name: "V", Required: key.ModShortcut},
-		key.Filter{Focus: t, Name: "X", Required: key.ModShortcut},
 		transfer.TargetFilter{Target: t, Type: mimeText},
 		transfer.TargetFilter{Target: t, Type: mimeDnd},
 		// Detect if pointer is inside of the dir item, so we can highlight it when dropping items to it.
 		pointer.Filter{Target: t, Kinds: pointer.Enter | pointer.Leave | pointer.Press},
 	}
+	filters = append(filters, settings.ShortcutFilters(t.ShortcutSettings, t,
+		settings.ShortcutFileCopy,
+		settings.ShortcutFileCut,
+		settings.ShortcutFilePaste,
+	)...)
 
 	for {
 		ke, ok := gtx.Event(filters...)
@@ -363,18 +367,14 @@ func (t *TreeView) processKeyEvents(gtx layout.Context) error {
 
 		switch event := ke.(type) {
 		case key.Event:
-			if !event.Modifiers.Contain(key.ModShortcut) {
-				break
-			}
-
-			switch event.Name {
-			// Initiate a paste operation, by requesting the clipboard contents; other
-			// half is in DataEvent.
-			case "V":
+			if settings.ShortcutMatches(t.ShortcutSettings, settings.ShortcutFilePaste, event) {
 				t.onPasteByShortcut(gtx)
-			// Copy or Cut selection -- ignored if nothing selected.
-			case "C", "X":
-				t.OnCopyOrCut(gtx, t.selectedNode, event.Name == "X")
+			}
+			if settings.ShortcutMatches(t.ShortcutSettings, settings.ShortcutFileCopy, event) {
+				t.OnCopyOrCut(gtx, t.selectedNode, false)
+			}
+			if settings.ShortcutMatches(t.ShortcutSettings, settings.ShortcutFileCut, event) {
+				t.OnCopyOrCut(gtx, t.selectedNode, true)
 			}
 
 		case pointer.Event:

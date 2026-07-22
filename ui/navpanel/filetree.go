@@ -170,6 +170,7 @@ func (tn *FileTreeNav) switchRoot() {
 
 func configureFileTree(tree *filetree.TreeView, srv *service.ServiceFacade, vm view.ViewManager) {
 	controller := &FileTreeNav{tree: tree, srv: srv, vm: vm}
+	tree.ShortcutSettings = srv.Settings().Editor()
 	tree.OnFileSelectedFunc = controller.onFileSelected
 	tree.OnDropConfirmFunc = onDropConfirmFunc(vm, tree.Root())
 	tree.OnFileUpdatedFunc = controller.onFileUpdated

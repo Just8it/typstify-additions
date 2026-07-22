@@ -26,18 +26,20 @@ import (
 
 	"looz.ws/typstify/agent"
 	"looz.ws/typstify/i18n"
+	"looz.ws/typstify/service/settings"
 )
 
 type InputBox struct {
 	rootDir string
 	*gvcode.Editor
-	colorScheme *syntax.ColorScheme
-	cmdPopup    *completion.CompletionPopup
-	rsPopup     *completion.CompletionPopup
-	submit      bool
+	colorScheme      *syntax.ColorScheme
+	cmdPopup         *completion.CompletionPopup
+	rsPopup          *completion.CompletionPopup
+	shortcutSettings *settings.EditorSettings
+	submit           bool
 }
 
-func newInputBox(session *agent.ACPSession) *InputBox {
+func newInputBox(session *agent.ACPSession, shortcutSettings *settings.EditorSettings) *InputBox {
 	ed := &gvcode.Editor{}
 
 	ed.WithOptions(
@@ -59,25 +61,12 @@ func newInputBox(session *agent.ACPSession) *InputBox {
 	ed.WithOptions(gvcode.WithAutoCompletion(cm))
 
 	b := &InputBox{
-		rootDir:  session.Cwd,
-		Editor:   ed,
-		cmdPopup: cmdPopup,
-		rsPopup:  rsPopup,
+		rootDir:          session.Cwd,
+		Editor:           ed,
+		cmdPopup:         cmdPopup,
+		rsPopup:          rsPopup,
+		shortcutSettings: shortcutSettings,
 	}
-
-	ed.RegisterCommand("input-box",
-		key.Filter{Name: key.NameEnter, Required: key.ModShift},
-		func(gtx layout.Context, evt key.Event) gvcode.EditorEvent {
-			b.submit = true
-			return nil
-		})
-
-	ed.RegisterCommand("input-box",
-		key.Filter{Name: key.NameReturn, Required: key.ModShift},
-		func(gtx layout.Context, evt key.Event) gvcode.EditorEvent {
-			b.submit = true
-			return nil
-		})
 
 	return b
 }
@@ -96,6 +85,15 @@ func (b *InputBox) Update(gtx C) bool {
 }
 
 func (b *InputBox) Layout(gtx C, th *theme.Theme) D {
+	b.Editor.RemoveCommands(b)
+	if binding, enabled := settings.EffectiveShortcut(b.shortcutSettings, settings.ShortcutSendPrompt); enabled {
+		for _, filter := range binding.KeyFilters(nil) {
+			b.Editor.RegisterCommand(b, filter, func(layout.Context, key.Event) gvcode.EditorEvent {
+				b.submit = true
+				return nil
+			})
+		}
+	}
 	cs := syntax.ColorScheme{}
 	cs.Background = gvcolor.MakeColor(th.Bg)
 	cs.Foreground = gvcolor.MakeColor(th.Fg)

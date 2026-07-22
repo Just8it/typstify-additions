@@ -18,6 +18,8 @@ var (
 	SettingViewID = view.NewViewID("Settings")
 )
 
+const TpixTabIndex = 5
+
 type (
 	C = layout.Context
 	D = layout.Dimensions
@@ -77,6 +79,7 @@ func NewSettingsView(srv *service.ServiceFacade) *SettingsView {
 		&GeneralView{setting: general},
 		&EditorView{setting: editor},
 		&FileInterfaceView{srv: srv, setting: srv.Settings().FileInterface()},
+		&ShortcutsView{setting: editor},
 		&TypstSettingsView{setting: srv.Settings().Typst()},
 		&LspSettingsView{setting: srv.Settings().Lsp()},
 		&TpixSettingsView{srv: srv.TpixSessionService()},

@@ -1,12 +1,10 @@
 package editor
 
 import (
-	"fmt"
 	"io"
 	"strings"
 
 	"gioui.org/io/clipboard"
-	"gioui.org/io/key"
 	"gioui.org/layout"
 	"gioui.org/op"
 	"gioui.org/unit"
@@ -15,6 +13,7 @@ import (
 	"github.com/oligo/gioview/theme"
 	"github.com/oligo/gvcode"
 	"looz.ws/typstify/i18n"
+	"looz.ws/typstify/service/settings"
 )
 
 func EditorMenuOptions(gtx C, editor *TextEditor) [][]menu.MenuOption {
@@ -31,7 +30,7 @@ func EditorMenuOptions(gtx C, editor *TextEditor) [][]menu.MenuOption {
 				},
 
 				Layout: func(gtx C, th *theme.Theme) D {
-					return layoutOption(gtx, th, i18n.Translate("Copy"), "C")
+					return layoutOption(gtx, th, i18n.Translate("Copy"), settings.ShortcutDisplay(editor.shortcutSettings, settings.ShortcutEditorCopy))
 				},
 			},
 			// cut
@@ -46,7 +45,7 @@ func EditorMenuOptions(gtx C, editor *TextEditor) [][]menu.MenuOption {
 				},
 
 				Layout: func(gtx C, th *theme.Theme) D {
-					return layoutOption(gtx, th, i18n.Translate("Cut"), "X")
+					return layoutOption(gtx, th, i18n.Translate("Cut"), settings.ShortcutDisplay(editor.shortcutSettings, settings.ShortcutEditorCut))
 				},
 			},
 			// paste
@@ -61,7 +60,7 @@ func EditorMenuOptions(gtx C, editor *TextEditor) [][]menu.MenuOption {
 				},
 
 				Layout: func(gtx C, th *theme.Theme) D {
-					return layoutOption(gtx, th, i18n.Translate("Paste"), "V")
+					return layoutOption(gtx, th, i18n.Translate("Paste"), settings.ShortcutDisplay(editor.shortcutSettings, settings.ShortcutEditorPaste))
 				},
 			},
 			// search & replace
@@ -72,7 +71,7 @@ func EditorMenuOptions(gtx C, editor *TextEditor) [][]menu.MenuOption {
 				},
 
 				Layout: func(gtx C, th *theme.Theme) D {
-					return layoutOption(gtx, th, i18n.Translate("Find & Replace"), "F")
+					return layoutOption(gtx, th, i18n.Translate("Find & Replace"), settings.ShortcutDisplay(editor.shortcutSettings, settings.ShortcutFind))
 				},
 			},
 			// Lock & Unlock
@@ -87,7 +86,7 @@ func EditorMenuOptions(gtx C, editor *TextEditor) [][]menu.MenuOption {
 					if editor.state.Mode() == gvcode.ModeReadOnly {
 						label = i18n.Translate("Unlock")
 					}
-					return layoutOption(gtx, th, label, "L")
+					return layoutOption(gtx, th, label, settings.ShortcutDisplay(editor.shortcutSettings, settings.ShortcutToggleReadOnly))
 				},
 			},
 			// wrap line
@@ -103,14 +102,14 @@ func EditorMenuOptions(gtx C, editor *TextEditor) [][]menu.MenuOption {
 					if !editor.wrapLine {
 						label = i18n.Translate("Wrap Lines")
 					}
-					return layoutOption(gtx, th, label, "W")
+					return layoutOption(gtx, th, label, settings.ShortcutDisplay(editor.shortcutSettings, settings.ShortcutToggleWrap))
 				},
 			},
 		},
 	}
 }
 
-func layoutOption(gtx C, th *theme.Theme, name string, shortcutKey string) D {
+func layoutOption(gtx C, th *theme.Theme, name string, shortcut string) D {
 	return layout.Flex{
 		Axis:      layout.Horizontal,
 		Alignment: layout.Middle,
@@ -120,15 +119,6 @@ func layoutOption(gtx C, th *theme.Theme, name string, shortcutKey string) D {
 			return material.Label(th.Theme, th.TextSize, name).Layout(gtx)
 		}),
 		layout.Rigid(layout.Spacer{Width: unit.Dp(20)}.Layout),
-		layout.Rigid(func(gtx C) D {
-			var modKey key.Name
-			if key.ModShortcut == key.ModCommand {
-				modKey = key.NameCommand
-			} else {
-				modKey = key.NameCtrl
-			}
-
-			return material.Label(th.Theme, th.TextSize, fmt.Sprintf("%s+%s", modKey, shortcutKey)).Layout(gtx)
-		}),
+		layout.Rigid(material.Label(th.Theme, th.TextSize, shortcut).Layout),
 	)
 }
