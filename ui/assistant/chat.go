@@ -40,6 +40,8 @@ var (
 	chatIcon        = appIcons.NewSvgIcon(appIcons.Sparkles)
 )
 
+const newChatParam = "newChat"
+
 var _ view.View = (*AgentChatView)(nil)
 
 type AgentChatView struct {
@@ -68,8 +70,11 @@ func (cv *AgentChatView) Title() string {
 
 func (cv *AgentChatView) OnNavTo(intent view.Intent) error {
 	cv.BaseView.OnNavTo(intent)
-	sn, ok := intent.Params["session"].(*agent.ACPSession)
-	if !ok {
+	newChat, _ := intent.Params[newChatParam].(bool)
+	sn, hasSession := intent.Params["session"].(*agent.ACPSession)
+	if newChat {
+		cv.startNewChat()
+	} else if !hasSession {
 		cv.init()
 	} else {
 		cv.loadExisting(sn)
@@ -83,6 +88,19 @@ func (cv *AgentChatView) OnNavTo(intent view.Intent) error {
 	cv.lspClient = client
 
 	return nil
+}
+
+func (cv *AgentChatView) startNewChat() {
+	if cv.chat == nil && cv.chatReady.Load() {
+		return
+	}
+	if cv.chat != nil {
+		cv.closeChat()
+	}
+	cv.chatReady.Store(false)
+	cv.chatErr = nil
+	cv.pendingLoadSession = nil
+	cv.init()
 }
 
 func (cv *AgentChatView) OnResume() {

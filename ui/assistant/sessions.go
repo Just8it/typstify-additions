@@ -2,7 +2,6 @@ package assistant
 
 import (
 	"context"
-	"errors"
 	"image/color"
 	"strings"
 	"sync/atomic"
@@ -43,6 +42,7 @@ type SessionHistory struct {
 	fetchErr         error
 	labels           []widgets.InteractiveLabel
 	selectedIdx      int
+	newChatBtn       widget.Clickable
 
 	// OnSessionSelected is called when the user clicks Load or Resume.
 	// sessionID is the selected session ID; load is true for Load, false for Resume.
@@ -90,11 +90,20 @@ func (s *SessionHistory) Title() string {
 }
 
 func (s *SessionHistory) Layout(gtx C, th *theme.Theme) D {
+	if s.newChatBtn.Clicked(gtx) {
+		s.startNewChat()
+	}
 	s.fetchSessions()
 
 	return layout.Flex{
 		Axis: layout.Vertical,
 	}.Layout(gtx,
+		layout.Rigid(func(gtx C) D {
+			return layout.Inset{Top: unit.Dp(8), Bottom: unit.Dp(6), Left: unit.Dp(8), Right: unit.Dp(8)}.Layout(gtx, func(gtx C) D {
+				gtx.Constraints.Min.X = gtx.Constraints.Max.X
+				return material.Button(th.Theme, &s.newChatBtn, i18n.Translate("New chat")).Layout(gtx)
+			})
+		}),
 		layout.Rigid(func(gtx C) D {
 			s.searchInput.Leading = func(gtx C) D {
 				return searchIcon.Layout(gtx, th.Fg, th.TextSize)
@@ -111,6 +120,22 @@ func (s *SessionHistory) Layout(gtx C, th *theme.Theme) D {
 			return s.layout(gtx, th)
 		}),
 	)
+}
+
+func (s *SessionHistory) startNewChat() {
+	if s.srv.CurrentProjectDir() == "" {
+		return
+	}
+	s.fetchErr = nil
+	s.fetched.Store(false)
+	s.srv.RequestSwitch(view.Intent{
+		Target:      AgentChatViewID,
+		ShowAsModal: false,
+		RequireNew:  false,
+		Params: map[string]any{
+			newChatParam: true,
+		},
+	})
 }
 
 func (s *SessionHistory) layout(gtx C, th *theme.Theme) D {
@@ -133,7 +158,7 @@ func (s *SessionHistory) layout(gtx C, th *theme.Theme) D {
 
 	if len(s.filteredSessions) == 0 {
 		return layout.Center.Layout(gtx, func(gtx C) D {
-			label := material.Label(th.Theme, th.TextSize, "No previous sessions")
+			label := material.Label(th.Theme, th.TextSize, i18n.Translate("No previous chats yet."))
 			label.Color = misc.WithAlpha(th.Fg, 0x60)
 			return label.Layout(gtx)
 		})
@@ -224,7 +249,9 @@ func (s *SessionHistory) fetchSessions() {
 	if s.fetched.CompareAndSwap(false, true) {
 		manager := s.srv.AcpSessionManager()
 		if manager == nil {
-			s.fetchErr = errors.New("no session manager.")
+			s.fetchErr = nil
+			s.sessions = nil
+			s.filteredSessions = nil
 			s.fetched.Store(false)
 			return
 		}
