@@ -195,7 +195,6 @@ func (view *ShortcutsView) layoutRow(gtx C, th *theme.Theme, definition config.S
 }
 
 func (view *ShortcutsView) updateRow(gtx C, definition config.ShortcutDefinition, row *shortcutRow) {
-	event.Op(gtx.Ops, row)
 	if row.enabled.Update(gtx) {
 		view.lastErr = view.setting.SetShortcutEnabled(definition.ID, row.enabled.Value)
 		row.warning = ""
@@ -214,16 +213,16 @@ func (view *ShortcutsView) updateRow(gtx C, definition config.ShortcutDefinition
 	if row.capture.Clicked(gtx) && row.enabled.Value {
 		view.recording = definition.ID
 		row.warning = ""
-		gtx.Execute(key.FocusCmd{Tag: row})
+		gtx.Execute(key.FocusCmd{Tag: &row.capture})
 	}
 
 	if view.recording != definition.ID {
 		return
 	}
-	if !gtx.Focused(row) {
-		gtx.Execute(key.FocusCmd{Tag: row})
+	if !gtx.Focused(&row.capture) {
+		gtx.Execute(key.FocusCmd{Tag: &row.capture})
 	}
-	filters := shortcutRecorderFilters(row)
+	filters := shortcutRecorderFilters(&row.capture)
 	for {
 		event, ok := gtx.Event(filters...)
 		if !ok {
