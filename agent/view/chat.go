@@ -23,6 +23,7 @@ import (
 	"github.com/oligo/gioview/theme"
 	"looz.ws/typstify/agent"
 	"looz.ws/typstify/i18n"
+	"looz.ws/typstify/service/settings"
 )
 
 type (
@@ -189,7 +190,12 @@ func (v *AgentChat) layoutMessages(gtx C, th *theme.Theme, padding unit.Dp) D {
 
 	if len(msgs) == 0 {
 		return layout.Center.Layout(gtx, func(gtx C) D {
-			label := material.Label(th.Theme, th.TextSize, i18n.Translate("Type to start a conversation, press Shift+Enter to send"))
+			shortcut := settings.ShortcutDisplay(v.inputEditor.shortcutSettings, settings.ShortcutSendPrompt)
+			text := i18n.Translate("Type to start a conversation")
+			if shortcut != "" {
+				text = i18n.Translate("Type to start a conversation, press %s to send", shortcut)
+			}
+			label := material.Label(th.Theme, th.TextSize, text)
 			label.Color = misc.WithAlpha(th.Fg, 0xb0)
 			return label.Layout(gtx)
 		})
@@ -458,7 +464,7 @@ func (v *AgentChat) Close() {
 }
 
 // NewAgentChat creates a chat view and subscribes to session updates.
-func NewAgentChat(session *agent.ACPSession) *AgentChat {
+func NewAgentChat(session *agent.ACPSession, shortcutSettings *settings.EditorSettings) *AgentChat {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	chat := &AgentChat{
@@ -471,7 +477,7 @@ func NewAgentChat(session *agent.ACPSession) *AgentChat {
 		},
 		MaxWidth:    unit.Dp(760),
 		configStyle: SessionConfigStyle{Session: session},
-		inputEditor: newInputBox(session),
+		inputEditor: newInputBox(session, shortcutSettings),
 	}
 
 	// Start with a no-op invalidator; callers should set a real one.

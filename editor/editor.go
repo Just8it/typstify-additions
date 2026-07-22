@@ -19,6 +19,7 @@ import (
 
 	"gioui.org/f32"
 	"gioui.org/font"
+	"gioui.org/io/clipboard"
 	"gioui.org/io/event"
 	"gioui.org/io/key"
 	"gioui.org/layout"
@@ -55,13 +56,14 @@ type (
 var errHighlightColor, _ = gvcolor.Hex2Color("#e74c3c")
 
 type TextEditor struct {
-	state        *gvcode.Editor
-	filename     string // for syntax highlight
-	originalHash string
-	autoSaver    *AutoSaver
-	highlighter  *Highlighter
-	colorScheme  *syntax.ColorScheme
-	wrapLine     bool
+	state            *gvcode.Editor
+	filename         string // for syntax highlight
+	originalHash     string
+	autoSaver        *AutoSaver
+	highlighter      *Highlighter
+	colorScheme      *syntax.ColorScheme
+	wrapLine         bool
+	shortcutSettings *settings.EditorSettings
 
 	contextMenu *menu.ContextMenu
 	//editorConf  *editor.EditorConf
@@ -71,9 +73,12 @@ type TextEditor struct {
 	yScroll   widget.Scrollbar
 
 	// features relying on LSP.
-	lspClient *lsp.Client
-	hoverTips *HoverTips
-	popup     *completion.CompletionPopup
+	lspClient         *lsp.Client
+	hoverTips         *HoverTips
+	popup             *completion.CompletionPopup
+	completion        *completion.DefaultCompletion
+	completionBinding settings.ShortcutBinding
+	completionEnabled bool
 	// diagnostics decorations
 	diagnosticsDecos []decoration.Decoration
 	overviewRuler    OverviewRuler
@@ -93,6 +98,7 @@ func (me *TextEditor) File() string {
 }
 
 func (me *TextEditor) Layout(gtx layout.Context, th *theme.Theme, settings *settings.EditorSettings) layout.Dimensions {
+	me.shortcutSettings = settings
 	if me.contextMenu == nil {
 		me.contextMenu = menu.NewContextMenu(EditorMenuOptions(gtx, me), false)
 		// me.contextMenu.Background = misc.WithAlpha(th.Fg, th.HoverAlpha)
@@ -137,6 +143,8 @@ func (me *TextEditor) layoutEditor(gtx C, th *theme.Theme, settings *settings.Ed
 								gvcode.WithTextSize(unit.Sp(settings.TextSize)),
 								gvcode.WithLineHeight(0, settings.LineHeightScale),
 							)
+							me.registerShortcutCommands()
+							me.refreshCompletion(gtx)
 
 							dims := me.state.Layout(gtx, th.Shaper)
 
@@ -319,45 +327,119 @@ func (me *TextEditor) handleEvents(gtx layout.Context) {
 		}
 	}
 
-	// key and pointer handler
+	// Escape always closes the search UI; configurable actions are registered on gvcode.
 	for {
-		e, ok := gtx.Event(
-			key.Filter{Focus: me.state, Name: "S", Required: key.ModShortcut},
-			key.Filter{Focus: me.state, Name: "F", Required: key.ModShortcut},
-			key.Filter{Focus: me.state, Name: "L", Required: key.ModShortcut},
-			key.Filter{Focus: me.state, Name: "W", Required: key.ModShortcut},
-			key.Filter{Focus: me.state, Name: key.NameEscape},
-		)
+		e, ok := gtx.Event(key.Filter{Focus: me.state, Name: key.NameEscape})
 		if !ok {
 			break
 		}
 
 		switch event := e.(type) {
 		case key.Event:
-			if event.Modifiers == key.ModShortcut && event.State == key.Press {
-				if event.Name == "S" {
-					if me.state.Mode() != gvcode.ModeReadOnly {
-						me.onTextChanged()
-					}
-				}
-				if event.Name == "F" {
-					me.searchbar.Show(gtx)
-				}
-				if event.Name == "L" {
-					me.state.WithOptions(gvcode.ReadOnlyMode(me.state.Mode() != gvcode.ModeReadOnly))
-				}
-				if event.Name == "W" {
-					me.state.WithOptions(gvcode.WrapLine(!me.wrapLine))
-					me.wrapLine = !me.wrapLine
-				}
-			}
-
 			if event.Name == key.NameEscape {
 				me.searchbar.Hide(gtx)
 			}
 		}
 	}
 
+}
+
+func (me *TextEditor) registerShortcutCommands() {
+	me.state.RemoveCommands(me)
+	me.registerShortcut(settings.ShortcutSave, func(layout.Context, key.Event) gvcode.EditorEvent {
+		if me.state.Mode() != gvcode.ModeReadOnly {
+			me.onTextChanged()
+		}
+		return nil
+	})
+	me.registerShortcut(settings.ShortcutFind, func(gtx layout.Context, _ key.Event) gvcode.EditorEvent {
+		me.searchbar.Show(gtx)
+		return nil
+	})
+	me.registerShortcut(settings.ShortcutToggleReadOnly, func(layout.Context, key.Event) gvcode.EditorEvent {
+		me.state.WithOptions(gvcode.ReadOnlyMode(me.state.Mode() != gvcode.ModeReadOnly))
+		return nil
+	})
+	me.registerShortcut(settings.ShortcutToggleWrap, func(layout.Context, key.Event) gvcode.EditorEvent {
+		me.state.WithOptions(gvcode.WrapLine(!me.wrapLine))
+		me.wrapLine = !me.wrapLine
+		return nil
+	})
+
+	me.maskBuiltinShortcut(settings.ShortcutEditorCopy)
+	me.maskBuiltinShortcut(settings.ShortcutEditorCut)
+	me.maskBuiltinShortcut(settings.ShortcutEditorPaste)
+	me.registerShortcut(settings.ShortcutEditorCopy, func(gtx layout.Context, _ key.Event) gvcode.EditorEvent {
+		me.copySelection(gtx, false)
+		return nil
+	})
+	me.registerShortcut(settings.ShortcutEditorCut, func(gtx layout.Context, _ key.Event) gvcode.EditorEvent {
+		if me.copySelection(gtx, true) {
+			return gvcode.ChangeEvent{}
+		}
+		return nil
+	})
+	me.registerShortcut(settings.ShortcutEditorPaste, func(gtx layout.Context, _ key.Event) gvcode.EditorEvent {
+		if me.state.Mode() != gvcode.ModeReadOnly {
+			gtx.Execute(clipboard.ReadCmd{Tag: me.state})
+		}
+		return nil
+	})
+
+	if filepath.Ext(me.filename) == ".typ" {
+		me.registerShortcut(settings.ShortcutTypstLineBreak, func(layout.Context, key.Event) gvcode.EditorEvent {
+			if me.insertTypstLineBreak() {
+				return gvcode.ChangeEvent{}
+			}
+			return nil
+		})
+	}
+}
+
+func (me *TextEditor) registerShortcut(id settings.ShortcutID, handler gvcode.CommandHandler) {
+	binding, enabled := settings.EffectiveShortcut(me.shortcutSettings, id)
+	if !enabled {
+		return
+	}
+	for _, filter := range binding.KeyFilters(nil) {
+		me.state.RegisterCommand(me, filter, handler)
+	}
+}
+
+func (me *TextEditor) maskBuiltinShortcut(id settings.ShortcutID) {
+	definition, ok := settings.ShortcutDefinitionFor(id)
+	if !ok {
+		return
+	}
+	for _, filter := range definition.Default.KeyFilters(nil) {
+		me.state.RegisterCommand(me, filter, func(layout.Context, key.Event) gvcode.EditorEvent { return nil })
+	}
+}
+
+func (me *TextEditor) copySelection(gtx layout.Context, cut bool) bool {
+	selected := me.state.SelectedText()
+	if selected == "" || (cut && me.state.Mode() == gvcode.ModeReadOnly) {
+		return false
+	}
+	gtx.Execute(clipboard.WriteCmd{Type: "application/text", Data: io.NopCloser(strings.NewReader(selected))})
+	return cut && me.state.Delete(1) != 0
+}
+
+func (me *TextEditor) insertTypstLineBreak() bool {
+	if me.state.Mode() == gvcode.ModeReadOnly {
+		return false
+	}
+	start, end := me.state.Selection()
+	caret := min(start, end)
+	before := me.state.ReadTextBetween(0, caret)
+	line := before[strings.LastIndex(before, "\n")+1:]
+	indent := line[:len(line)-len(strings.TrimLeft(line, " \t"))]
+	separator := " \\"
+	if strings.HasSuffix(before, " ") || strings.HasSuffix(before, "\t") {
+		separator = "\\"
+	}
+	me.state.Insert(separator + "\n" + indent)
+	return true
 }
 
 func (me *TextEditor) queryDocOnHover(pos gvcode.Position) (string, f32.Point) {
@@ -682,11 +764,31 @@ func (me *TextEditor) Close() error {
 
 func (te *TextEditor) SetupLsp(gtx layout.Context, client *lsp.Client) {
 	te.lspClient = client
+	te.setupCompletion(gtx)
+	client.OnEditorUpdated(te.filename, te.state.GetReader())
+}
+
+func (te *TextEditor) refreshCompletion(gtx layout.Context) {
+	if te.lspClient == nil {
+		return
+	}
+	binding, enabled := settings.EffectiveShortcut(te.shortcutSettings, settings.ShortcutCompletion)
+	if enabled == te.completionEnabled && binding.Equal(te.completionBinding) {
+		return
+	}
+	te.setupCompletion(gtx)
+}
+
+func (te *TextEditor) setupCompletion(gtx layout.Context) {
+	binding, enabled := settings.EffectiveShortcut(te.shortcutSettings, settings.ShortcutCompletion)
+	if te.completion != nil {
+		te.state.RemoveCommands(te.completion)
+	}
 
 	// Setting up auto-completion.
 	cm := &completion.DefaultCompletion{Editor: te.state}
 	//cm.SetDelay(10 * time.Millisecond)
-	completor := lsp.NewLspAutoCompletor(client, te.filename, te.state)
+	completor := lsp.NewLspAutoCompletor(te.lspClient, te.filename, te.state, binding.Name, binding.Modifiers)
 	if completor == nil {
 		log.Println("failed to setup auto completor")
 		return
@@ -699,9 +801,14 @@ func (te *TextEditor) SetupLsp(gtx layout.Context, client *lsp.Client) {
 		Y: min(gtx.Dp(unit.Dp(350)), maxSize.Y),
 	}
 
-	cm.AddCompletor(completor, te.popup)
+	if err := cm.AddCompletor(completor, te.popup); err != nil {
+		log.Printf("failed to add auto completor: %v", err)
+		return
+	}
 	te.state.WithOptions(gvcode.WithAutoCompletion(cm))
-	client.OnEditorUpdated(te.filename, te.state.GetReader())
+	te.completion = cm
+	te.completionBinding = binding
+	te.completionEnabled = enabled
 }
 
 func (me *TextEditor) updateDiff() {
@@ -714,11 +821,12 @@ func (me *TextEditor) updateDiff() {
 
 func NewTextEditor(path string, showDiff bool, settings *settings.EditorSettings) (*TextEditor, error) {
 	ed := &TextEditor{
-		filename:     path,
-		highlighter:  NewHighlighter(path),
-		state:        &gvcode.Editor{},
-		wrapLine:     false,
-		diffProvider: providers.NewVCSDiffProvider(),
+		filename:         path,
+		highlighter:      NewHighlighter(path),
+		state:            &gvcode.Editor{},
+		wrapLine:         false,
+		shortcutSettings: settings,
+		diffProvider:     providers.NewVCSDiffProvider(),
 	}
 
 	ed.state.WithOptions(

@@ -7,6 +7,7 @@ import (
 	"github.com/oligo/gioview/view"
 	"looz.ws/typstify/i18n"
 	"looz.ws/typstify/service"
+	config "looz.ws/typstify/service/settings"
 	"looz.ws/typstify/ui/assistant"
 	"looz.ws/typstify/ui/navpanel"
 	"looz.ws/typstify/ui/preview"
@@ -102,32 +103,27 @@ func (hv *HomeView) update(gtx C) {
 		hv.toggleChat()
 	}
 
-	// global key handler, without a focused target.
+	shortcutConfig := hv.srv.Settings().Editor()
+	filters := config.ShortcutFilters(shortcutConfig, nil,
+		config.ShortcutToggleFileExplorer,
+		config.ShortcutToggleConsole,
+		config.ShortcutToggleAssistant,
+	)
 	for {
-		e, ok := gtx.Event(
-			key.Filter{Name: "D", Required: key.ModShortcut}, // toggle hide/show of drawer.
-			key.Filter{Name: "K", Required: key.ModShortcut}, // toggle hide/show of console.
-			key.Filter{Name: "L", Required: key.ModShortcut}, // toggle hide/show of chat.
-		)
+		e, ok := gtx.Event(filters...)
 		if !ok {
 			break
 		}
 
 		switch event := e.(type) {
 		case key.Event:
-			if event.State != key.Press {
-				continue
-			}
-
-			if event.Name == "D" && event.Modifiers.Contain(key.ModShortcut) {
+			if config.ShortcutMatches(shortcutConfig, config.ShortcutToggleFileExplorer, event) {
 				hv.menuPanel.IsDrawerHidden = !hv.menuPanel.IsDrawerHidden
 			}
-
-			if event.Name == "K" && event.Modifiers.Contain(key.ModShortcut) {
+			if config.ShortcutMatches(shortcutConfig, config.ShortcutToggleConsole, event) {
 				hv.toggleConsole()
 			}
-
-			if event.Name == "L" && event.Modifiers.Contain(key.ModShortcut) {
+			if config.ShortcutMatches(shortcutConfig, config.ShortcutToggleAssistant, event) {
 				hv.toggleChat()
 			}
 		}
@@ -137,7 +133,7 @@ func (hv *HomeView) update(gtx C) {
 		hv.RequestSwitch(view.Intent{
 			Target: settings.SettingViewID,
 			Params: map[string]any{
-				"tabIdx": 3, // hardcoded tpix tab index in setting page.
+				"tabIdx": settings.TpixTabIndex,
 			},
 		})
 	}

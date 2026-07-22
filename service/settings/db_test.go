@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"gioui.org/io/key"
 	bolt "go.etcd.io/bbolt"
 
 	"looz.ws/typstify/utils"
@@ -66,6 +67,30 @@ func TestModelGetDefault(t *testing.T) {
 		db.Close()
 	})
 
+}
+
+func TestShortcutOverrides(t *testing.T) {
+	root := t.TempDir()
+	config := newSettings(root, nil).Editor()
+
+	if binding, enabled := EffectiveShortcut(config, ShortcutSave); !enabled || binding.Display() != "Ctrl+S" {
+		t.Fatalf("default save shortcut = %q, enabled %t", binding.Display(), enabled)
+	}
+	custom := ShortcutBinding{Name: "S", Modifiers: key.ModCtrl | key.ModShift}
+	if err := config.SetShortcut(ShortcutSave, custom); err != nil {
+		t.Fatal(err)
+	}
+	if err := config.SetShortcutEnabled(ShortcutFind, false); err != nil {
+		t.Fatal(err)
+	}
+
+	reloaded := newSettings(root, nil).Editor()
+	if binding, enabled := EffectiveShortcut(reloaded, ShortcutSave); !enabled || !binding.Equal(custom) {
+		t.Fatalf("custom save shortcut was not persisted: %+v", binding)
+	}
+	if _, enabled := EffectiveShortcut(reloaded, ShortcutFind); enabled {
+		t.Fatal("disabled find shortcut was not persisted")
+	}
 }
 
 func TestLegacySettingsMigration(t *testing.T) {
