@@ -10,6 +10,7 @@ import (
 	"gioui.org/op/paint"
 	"gioui.org/unit"
 	"gioui.org/widget"
+	"gioui.org/widget/material"
 	"github.com/oligo/gioview/misc"
 	"github.com/oligo/gioview/theme"
 	"github.com/oligo/gioview/view"
@@ -59,6 +60,9 @@ type MenuPanel struct {
 	openOutlineTip    wg.TipArea
 	openAssistantBtn  widget.Clickable
 	openAssistantTip  wg.TipArea
+	moreBtn           widget.Clickable
+	moreTip           wg.TipArea
+	morePopup         *wg.Popup
 
 	IsDrawerHidden bool
 	OnLibrary      func()
@@ -138,6 +142,7 @@ func (cp *MenuPanel) Layout(gtx C, th *theme.Theme, studentMode bool) D {
 func (cp *MenuPanel) LayoutRail(gtx C, th *theme.Theme, libraryActive, drawerVisible bool, section NavSectionID) D {
 	cp.update(gtx)
 
+	popupMaxWidth := gtx.Constraints.Max.X
 	width := gtx.Dp(unit.Dp(46))
 	gtx.Constraints.Min.X = width
 	gtx.Constraints.Max.X = width
@@ -163,17 +168,19 @@ func (cp *MenuPanel) LayoutRail(gtx C, th *theme.Theme, libraryActive, drawerVis
 						return cp.layoutRailButton(gtx, th, &cp.openOutlineBtn, &cp.openOutlineTip, i18n.Translate("Outline"), railOutlineIcon, drawerVisible && section == NavSectionOutline)
 					}),
 					layout.Rigid(func(gtx C) D {
-						return cp.layoutRailButton(gtx, th, &cp.openAssistantBtn, &cp.openAssistantTip, i18n.Translate("Assistant Sessions"), railAssistantIcon, drawerVisible && section == NavSectionAssistant)
+						return cp.layoutRailButton(gtx, th, &cp.openAssistantBtn, &cp.openAssistantTip, i18n.Translate("Assistant"), railAssistantIcon, drawerVisible && section == NavSectionAssistant)
 					}),
 					layout.Flexed(1, func(gtx C) D { return D{} }),
 					layout.Rigid(func(gtx C) D {
-						return cp.layoutRailButton(gtx, th, &cp.openDirBtn, &cp.openDirTip, i18n.Translate("Open Folder"), openFolder, false)
-					}),
-					layout.Rigid(func(gtx C) D {
-						return cp.layoutRailButton(gtx, th, &cp.newProjectBtn, &cp.newProjectTip, i18n.Translate("New Project"), newFolder, false)
-					}),
-					layout.Rigid(func(gtx C) D {
-						return cp.layoutRailButton(gtx, th, &cp.openPkgManagerBtn, &cp.openPkgManagerTip, i18n.Translate("Typst Package Center"), pkgManagerIcon, false)
+						gtx.Constraints.Max.X = popupMaxWidth
+						return cp.morePopup.Layout(gtx, th, func(gtx C) D {
+							return cp.layoutRailButton(gtx, th, &cp.moreBtn, &cp.moreTip, i18n.Translate("More"), ellipsisIcon, false)
+						},
+							railMenuItem{name: i18n.Translate("Local Templates"), icon: pkgManagerIcon, onClick: cp.openLocalTemplates},
+							railMenuItem{name: i18n.Translate("Open Folder"), icon: openFolder, onClick: cp.OpenFolder},
+							railMenuItem{name: i18n.Translate("New Project"), icon: newFolder, onClick: cp.openNewProject},
+							railMenuItem{name: i18n.Translate("Typst Package Center"), icon: pkgManagerIcon, onClick: cp.openPackageManager},
+						)
 					}),
 					layout.Rigid(func(gtx C) D {
 						return cp.layoutRailButton(gtx, th, &cp.openSettingBtn, &cp.openSettingTip, i18n.Translate("Settings"), settingsIcon, false)
@@ -231,6 +238,7 @@ func (cp *MenuPanel) update(gtx C) {
 	cp.openExplorerTip.Direction = layout.E
 	cp.openOutlineTip.Direction = layout.E
 	cp.openAssistantTip.Direction = layout.E
+	cp.moreTip.Direction = layout.E
 
 	if cp.openLibraryBtn.Clicked(gtx) && cp.OnLibrary != nil {
 		cp.OnLibrary()
@@ -244,6 +252,9 @@ func (cp *MenuPanel) update(gtx C) {
 	if cp.openAssistantBtn.Clicked(gtx) && cp.OnAssistant != nil {
 		cp.OnAssistant()
 	}
+	if cp.moreBtn.Clicked(gtx) {
+		cp.morePopup.SetOpen()
+	}
 
 	if cp.openSettingBtn.Clicked(gtx) {
 		cp.vm.RequestSwitch(view.Intent{
@@ -253,10 +264,7 @@ func (cp *MenuPanel) update(gtx C) {
 	}
 
 	if cp.newProjectBtn.Clicked(gtx) {
-		cp.vm.RequestSwitch(view.Intent{
-			Target:      dialog.CreateProjectDialogViewID,
-			ShowAsModal: true,
-		})
+		cp.openNewProject()
 	}
 
 	if cp.openDirBtn.Clicked(gtx) {
@@ -264,15 +272,36 @@ func (cp *MenuPanel) update(gtx C) {
 	}
 
 	if cp.openPkgManagerBtn.Clicked(gtx) {
-		cp.vm.RequestSwitch(view.Intent{
-			Target:     pkgmgmt.PkgListViewID,
-			RequireNew: true,
-		})
+		cp.openPackageManager()
 	}
 
 	if cp.hideDrawerBtn.Clicked(gtx) {
 		cp.IsDrawerHidden = !cp.IsDrawerHidden
 	}
+}
+
+func (cp *MenuPanel) openNewProject() {
+	cp.vm.RequestSwitch(view.Intent{
+		Target:      dialog.CreateProjectDialogViewID,
+		ShowAsModal: true,
+	})
+}
+
+func (cp *MenuPanel) openPackageManager() {
+	cp.vm.RequestSwitch(view.Intent{
+		Target:     pkgmgmt.PkgListViewID,
+		RequireNew: true,
+	})
+}
+
+func (cp *MenuPanel) openLocalTemplates() {
+	cp.vm.RequestSwitch(view.Intent{
+		Target:     pkgmgmt.PkgListViewID,
+		RequireNew: true,
+		Params: map[string]any{
+			pkgmgmt.LocalTemplatesParam: true,
+		},
+	})
 }
 
 func (cp *MenuPanel) OpenFolder() {
@@ -293,7 +322,30 @@ func (cp *MenuPanel) OpenFolder() {
 
 func NewMenuPanel(vm view.ViewManager, srv *service.ServiceFacade) *MenuPanel {
 	return &MenuPanel{
-		vm:  vm,
-		srv: srv,
+		vm:        vm,
+		srv:       srv,
+		morePopup: &wg.Popup{Width: unit.Dp(230), Direction: layout.N},
 	}
+}
+
+type railMenuItem struct {
+	name    string
+	icon    *icons.SvgIcon
+	onClick func()
+}
+
+func (i railMenuItem) OnClicked() {
+	if i.onClick != nil {
+		i.onClick()
+	}
+}
+
+func (i railMenuItem) Layout(gtx C, th *theme.Theme) D {
+	return layout.Inset{Top: unit.Dp(8), Bottom: unit.Dp(8), Left: unit.Dp(12), Right: unit.Dp(12)}.Layout(gtx, func(gtx C) D {
+		return layout.Flex{Alignment: layout.Middle}.Layout(gtx,
+			layout.Rigid(func(gtx C) D { return i.icon.Layout(gtx, th.Fg, th.TextSize) }),
+			layout.Rigid(layout.Spacer{Width: unit.Dp(10)}.Layout),
+			layout.Rigid(material.Body1(th.Theme, i.name).Layout),
+		)
+	})
 }

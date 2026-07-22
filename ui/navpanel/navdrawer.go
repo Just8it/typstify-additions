@@ -9,6 +9,7 @@ import (
 	"github.com/oligo/gioview/view"
 	"looz.ws/typstify/i18n"
 	"looz.ws/typstify/service"
+	settingsmodel "looz.ws/typstify/service/settings"
 	"looz.ws/typstify/ui/assistant"
 	"looz.ws/typstify/widgets"
 	"looz.ws/typstify/widgets/icons"
@@ -152,6 +153,9 @@ func (nv *NavDrawer) Layout(gtx C, th *theme.Theme) D {
 		layout.Rigid(layout.Spacer{Height: unit.Dp(1)}.Layout),
 
 		layout.Rigid(func(gtx C) D {
+			if nv.usesStudentRail() {
+				return D{}
+			}
 			return nv.updateTips.Layout(gtx, th)
 		}),
 	)
@@ -205,6 +209,9 @@ func (nv *NavDrawer) layoutHeader(gtx C, th *theme.Theme, section NavSection) D 
 						}),
 
 						layout.Rigid(func(gtx C) D {
+							if nv.usesStudentRail() {
+								return D{}
+							}
 							return nv.layoutButton(gtx, th)
 						}),
 					)
@@ -214,6 +221,11 @@ func (nv *NavDrawer) layoutHeader(gtx C, th *theme.Theme, section NavSection) D 
 
 		},
 	)
+}
+
+func (nv *NavDrawer) usesStudentRail() bool {
+	setting := nv.srv.Settings().FileInterface()
+	return setting.Mode == settingsmodel.FileInterfaceModeStudent && setting.NavigationLayout == settingsmodel.FileInterfaceNavigationLayoutLibrary
 }
 
 func (nv *NavDrawer) layoutButton(gtx C, th *theme.Theme) D {
