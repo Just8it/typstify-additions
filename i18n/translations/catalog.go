@@ -40,893 +40,986 @@ func init() {
 }
 
 var messageKeyToIndex = map[string]int{
-	" (%d selected)":                      37,
-	"%d items":                            169,
-	"%d of %d":                            33,
-	"'%s' into '%s'":                      114,
-	"@preview/package:version (optional)": 100,
-	"A folder with this name will be created at the location above.": 102,
-	"A new version is avaliable: %s":                                 194,
-	"AI Assistant":                                                   155,
-	"About":                                                          353,
-	"Agent":                                                          224,
-	"Agent Name":                                                     250,
-	"Agent Registry":                                                 226,
-	"All":                                                            223,
-	"All files":                                                      182,
-	"Are you sure you want to delete '%s'?":                          109,
-	"Are you sure you want to move":                                  113,
-	"Are you sure you want to open file '%s'?": 141,
+	" (%d selected)":                      38,
+	"%d items":                            170,
+	"%d of %d":                            34,
+	"%s is already used by %s.":           275,
+	"'%s' into '%s'":                      115,
+	"@preview/package:version (optional)": 101,
+	"A folder with this name will be created at the location above.": 103,
+	"A new version is avaliable: %s":                                 195,
+	"AI Assistant":                                                   156,
+	"About":                                                          398,
+	"Agent":                                                          225,
+	"Agent Name":                                                     251,
+	"Agent Registry":                                                 227,
+	"All":                                                            224,
+	"All files":                                                      183,
+	"Are you sure you want to delete '%s'?":                          110,
+	"Are you sure you want to move":                                  114,
+	"Are you sure you want to open file '%s'?": 142,
 	"Args":                         6,
-	"Assistant":                    190,
-	"Author":                       198,
-	"Authors:":                     235,
-	"Auto Save Interval":           284,
-	"Bibliography File Name":       66,
-	"Browse Packages/Templates...": 50,
-	"Browsing thousands of packages and templates on TPIX server, including public namespaces, and private namespaces of your teams.": 209,
-	"Build":            147,
-	"Build And Export": 116,
-	"Bundle":           145,
-	"Bundle the project files to a valid Typst package/template.":                                                                                  146,
-	"By default a tagged PDF is generated to provide base accessibility. In some cases this may be not desired. You can check this to disable it.": 131,
-	"Cached":                   197,
-	"Cancel":                   111,
-	"Category":                 201,
-	"Change":                   310,
-	"Change File Indentation":  133,
-	"Change tab display size.": 137,
-	"Changelog":                350,
-	"Check Update":             281,
-	"Check for updates on app startup. Please enable it to keep up to date for new features and bugfixes.": 282,
-	"Check new version": 349,
-	"Choose Document for notes, articles, books, or slides. Choose Package or Template only when developing reusable Typst packages.": 92,
-	"Choose folder": 41,
-	"Choose how much editor space the preview uses when it opens. You can still drag the divider while editing.": 287,
-	"Choose the default presentation for folders, notebooks, and files.":                                         317,
-	"Choose the indentation style for the current file.":                                                         135,
-	"Choose your Library folder":                               39,
-	"Choose your favorite color theme for the user interface.": 276,
-	"Classic":          302,
-	"Classic controls": 323,
-	"Classic keeps Typstify's existing file workflow. Student adds a Library home and focused project navigation.": 301,
-	"Clear":          206,
-	"Collection: %s": 81,
-	"Collections":    68,
-	"Command":        252,
-	"Configure agent for AI assitant. You can either manually configure your own agent, or select one from the Agent Registry below.": 225,
-	"Confirm":                 108,
-	"Convert the indentation": 138,
-	"Convert the indentation from spaces to tabs or from tabs to spaces, depending on what you choosed.": 139,
-	"Copy":             21,
-	"Copy import path": 203,
-	"Crafting Typst documents at the speed of thought.": 45,
-	"Create":                   83,
-	"Create In":                95,
-	"Create New Project":       82,
-	"Create project error: %s": 90,
-	"Created Bundle: %s":       148,
-	"Creating managed bibliography error: %s":     64,
-	"Creating managed bibliography succeeded: %s": 65,
-	"Current project or folder":                   314,
-	"Cut":                                         22,
-	"Debug Log":                                   263,
-	"Delete File/Folder":                          107,
+	"Assistant":                    191,
+	"Author":                       199,
+	"Authors:":                     236,
+	"Auto Save Interval":           330,
+	"Bibliography File Name":       67,
+	"Browse Packages/Templates...": 51,
+	"Browsing thousands of packages and templates on TPIX server, including public namespaces, and private namespaces of your teams.": 210,
+	"Build":            148,
+	"Build And Export": 117,
+	"Bundle":           146,
+	"Bundle the project files to a valid Typst package/template.":                                                                                  147,
+	"By default a tagged PDF is generated to provide base accessibility. In some cases this may be not desired. You can check this to disable it.": 132,
+	"Cached":                   198,
+	"Cancel":                   112,
+	"Category":                 202,
+	"Change":                   355,
+	"Change File Indentation":  134,
+	"Change tab display size.": 138,
+	"Changelog":                395,
+	"Check Update":             327,
+	"Check for updates on app startup. Please enable it to keep up to date for new features and bugfixes.": 328,
+	"Check new version": 394,
+	"Choose Document for notes, articles, books, or slides. Choose Package or Template only when developing reusable Typst packages.": 93,
+	"Choose folder": 42,
+	"Choose how much editor space the preview uses when it opens. You can still drag the divider while editing.": 333,
+	"Choose the default presentation for folders, notebooks, and files.":                                         362,
+	"Choose the indentation style for the current file.":                                                         136,
+	"Choose your Library folder":                               40,
+	"Choose your favorite color theme for the user interface.": 322,
+	"Classic":          347,
+	"Classic controls": 368,
+	"Classic keeps Typstify's existing file workflow. Student adds a Library home and focused project navigation.": 346,
+	"Clear": 207,
+	"Click a shortcut field, then press the new key combination. Escape cancels recording.": 272,
+	"Collection: %s": 82,
+	"Collections":    69,
+	"Command":        253,
+	"Configure agent for AI assitant. You can either manually configure your own agent, or select one from the Agent Registry below.": 226,
+	"Confirm":                 109,
+	"Convert the indentation": 139,
+	"Convert the indentation from spaces to tabs or from tabs to spaces, depending on what you choosed.": 140,
+	"Copy":                              22,
+	"Copy file":                         293,
+	"Copy import path":                  204,
+	"Copy text":                         288,
+	"Copy the editor selection.":        305,
+	"Copy the selected file or folder.": 310,
+	"Crafting Typst documents at the speed of thought.": 46,
+	"Create":                   84,
+	"Create In":                96,
+	"Create New Project":       83,
+	"Create project error: %s": 91,
+	"Created Bundle: %s":       149,
+	"Creating managed bibliography error: %s":     65,
+	"Creating managed bibliography succeeded: %s": 66,
+	"Current project or folder":                   359,
+	"Cut":                                         23,
+	"Cut file":                                    294,
+	"Cut text":                                    289,
+	"Cut the editor selection.":                   306,
+	"Cut the selected file or folder.":            311,
+	"Debug Log":                                   264,
+	"Delete File/Folder":                          108,
 	"Description":                                 3,
-	"Disable PDF Tags":                            130,
-	"Document":                                    106,
-	"Download":                                    196,
-	"Download package failed: ":                   218,
-	"Download the archive for your platform, extract it, and ensure the binary is on your PATH.": 246,
-	"Downloaded package %s and %d transitive dependencies.":                                      220,
-	"Downloaded package %s. ":            219,
-	"Editor":                             298,
-	"Editor files":                       312,
-	"Enable Partial Preview":             261,
+	"Disable PDF Tags":                            131,
+	"Disabled":                                    273,
+	"Document":                                    107,
+	"Download":                                    197,
+	"Download package failed: ":                   219,
+	"Download the archive for your platform, extract it, and ensure the binary is on your PATH.": 247,
+	"Downloaded package %s and %d transitive dependencies.":                                      221,
+	"Downloaded package %s. ":            220,
+	"Editor":                             279,
+	"Editor files":                       357,
+	"Enable %s":                          274,
+	"Enable Partial Preview":             262,
 	"Env":                                7,
-	"Environment":                        255,
-	"Exit":                               38,
-	"Explorer":                           157,
-	"Export":                             117,
-	"Export Dir":                         331,
-	"Exported File Format":               119,
-	"Exporting file...":                  118,
-	"External LSP Server(Tinymist) Path": 279,
-	"External Typst Compiler Path":       277,
-	"Extra Font Path":                    329,
-	"Extra environment variables, space-separated KEY=value pairs, e.g. FOO=bar BAZ=qux": 256,
-	"FOO=bar BAZ=qux":            257,
-	"File":                       175,
-	"File Explorer":              193,
-	"File Interface":             299,
-	"File Name":                  122,
-	"Files":                      188,
-	"Find & Replace":             24,
-	"Folder":                     161,
-	"Font Family":                274,
-	"Font Weight":                291,
-	"Forget":                     311,
-	"Format:":                    77,
-	"Found %d local templates.":  222,
-	"Found %d packages.":         221,
-	"General":                    283,
-	"Generate Dependencies file": 339,
-	"Getting Started":            47,
-	"Go to download":             352,
-	"Grid":                       318,
-	"Hide Explorer":              183,
+	"Environment":                        256,
+	"Exit":                               39,
+	"Explorer":                           158,
+	"Export":                             118,
+	"Export Dir":                         376,
+	"Exported File Format":               120,
+	"Exporting file...":                  119,
+	"External LSP Server(Tinymist) Path": 325,
+	"External Typst Compiler Path":       323,
+	"Extra Font Path":                    374,
+	"Extra environment variables, space-separated KEY=value pairs, e.g. FOO=bar BAZ=qux": 257,
+	"FOO=bar BAZ=qux":            258,
+	"File":                       176,
+	"File Explorer":              194,
+	"File Interface":             344,
+	"File Name":                  123,
+	"Files":                      189,
+	"Find & Replace":             25,
+	"Find and replace":           285,
+	"Folder":                     162,
+	"Font Family":                320,
+	"Font Weight":                337,
+	"Forget":                     356,
+	"Format:":                    78,
+	"Found %d local templates.":  223,
+	"Found %d packages.":         222,
+	"General":                    329,
+	"Generate Dependencies file": 384,
+	"Getting Started":            48,
+	"Go to download":             397,
+	"Grid":                       363,
+	"Hide Explorer":              184,
 	"ID":                         1,
-	"ID:":                        232,
-	"If the agent fails to start, try installing manually: npm install -g %s": 239,
-	"If the agent fails to start, try installing manually: uv pip install %s": 243,
-	"Ignore Compiler Embedded Fonts":                                          337,
-	"Ignore System Fonts":                                                     335,
-	"Ignore embedded Fonts or not. This only works when exporting files.":     338,
-	"Ignore system fonts or not. For code linter, auto-completion and previewing, it needs to restart or reload to take effect.": 336,
-	"Images":                     180,
-	"Indent with spaces or tabs": 134,
-	"Indentation":                295,
-	"Installation":               247,
-	"Installation (Binary)":      245,
-	"Installation (npx)":         240,
-	"Installation (uvx)":         244,
-	"Interface":                  300,
-	"Language":                   268,
-	"Language Server":            267,
-	"Last Updated":               199,
-	"Later":                      195,
-	"Learn more":                 51,
-	"Library":                    184,
-	"Library folder":             307,
-	"Library rail":               322,
-	"Library view":               316,
-	"Library: %s":                80,
-	"License":                    200,
-	"License:":                   234,
-	"Line Height Scale":          293,
-	"Link":                       4,
-	"List":                       319,
-	"Ln %d, Col %d":              36,
-	"Load External Inputs":       333,
-	"Load external inputs from a file named sys-inputs.json as sys.inputs. If there is no such one, it is created at the root dir. \nA sys-inputs.json file contains user defined key-value pairs which can be accessed via Typst's sys.inputs. The values should always be string encoded data.\nNeed to restart or reload to take effect for code linter, auto-completion, and preview when changed.": 334,
-	"Loading collecions...": 70,
-	"Loading namespaces...": 151,
-	"Loading packages...":   204,
-	"Loading...":            342,
-	"Local Templates":       192,
-	"Lock":                  25,
-	"Login TPIX":            346,
-	"Login TPIX to access all the features of Typstify, including package management, Zotero sync, MCP tools for AI assistant etc. Some features may need a subscription.": 345,
-	"Logout TPIX":                     344,
-	"MCP":                             228,
-	"Match Case":                      29,
-	"More":                            191,
-	"Move File/Folder":                112,
-	"Name":                            2,
-	"Namespace":                       149,
-	"Namespace: %s":                   79,
-	"Navigation":                      320,
-	"New":                             170,
-	"New File":                        171,
-	"New Folder":                      172,
-	"New Project":                     173,
-	"New chat":                        60,
-	"New project...":                  48,
-	"No Library folder selected":      309,
-	"No PDF Tags":                     132,
-	"No collections found":            71,
-	"No items match this filter.":     167,
-	"No messages.":                    15,
-	"No open project.":                159,
-	"No packages/templates found":     205,
-	"No previous chats yet.":          61,
-	"No project":                      158,
-	"No results":                      32,
-	"No writable namespaces":          152,
-	"Not a package creation request.": 87,
-	"Notebook":                        174,
-	"Notebooks":                       177,
-	"Off":                             11,
-	"On":                              12,
-	"Open AI Assistant: %s + L":       57,
-	"Open File Location":              357,
-	"Open File With...":               140,
-	"Open Folder":                     185,
-	"Open Folder Location":            358,
-	"Open existing project...":        49,
-	"Open/Hide Console: %s + K":       55,
-	"Open/Hide File Explorer: %s + D": 54,
-	"Open/Hide Previewer: %s + P":     56,
-	"Optionally start from a Typst package such as @preview/aero-check:0.1.1. Leave this empty to create a basic document.": 99,
-	"Options":       13,
-	"Other files":   181,
-	"Outline":       189,
-	"PDF Standards": 128,
-	"PDF Versions":  126,
-	"PDF standards that Typstify will enforce conformance with.": 129,
-	"PDF version that Typstify will enforce conformance with.":   127,
-	"PDFs":              179,
-	"PPI":               124,
-	"Package":           104,
-	"Package Cache Dir": 327,
-	"Package Dir":       325,
-	"Package kind":      213,
-	"Pages":             120,
-	"Paste":             23,
-	"Paste asset: %s":   156,
-	"Personal @local packages and templates from Typst's local package folder. No account or network connection is required.": 211,
-	"Plan": 17,
+	"ID:":                        233,
+	"If the agent fails to start, try installing manually: npm install -g %s": 240,
+	"If the agent fails to start, try installing manually: uv pip install %s": 244,
+	"Ignore Compiler Embedded Fonts":                                          382,
+	"Ignore System Fonts":                                                     380,
+	"Ignore embedded Fonts or not. This only works when exporting files.":     383,
+	"Ignore system fonts or not. For code linter, auto-completion and previewing, it needs to restart or reload to take effect.": 381,
+	"Images":                                181,
+	"Indent with spaces or tabs":            135,
+	"Indentation":                           341,
+	"Insert Typst line break":               292,
+	"Insert \\ and continue on a new line.": 309,
+	"Installation":                          248,
+	"Installation (Binary)":                 246,
+	"Installation (npx)":                    241,
+	"Installation (uvx)":                    245,
+	"Interface":                             345,
+	"Language":                              314,
+	"Language Server":                       268,
+	"Last Updated":                          200,
+	"Later":                                 196,
+	"Learn more":                            52,
+	"Library":                               185,
+	"Library folder":                        352,
+	"Library rail":                          367,
+	"Library view":                          361,
+	"Library: %s":                           81,
+	"License":                               201,
+	"License:":                              235,
+	"Line Height Scale":                     339,
+	"Link":                                  4,
+	"List":                                  364,
+	"Ln %d, Col %d":                         37,
+	"Load External Inputs":                  378,
+	"Load external inputs from a file named sys-inputs.json as sys.inputs. If there is no such one, it is created at the root dir. \nA sys-inputs.json file contains user defined key-value pairs which can be accessed via Typst's sys.inputs. The values should always be string encoded data.\nNeed to restart or reload to take effect for code linter, auto-completion, and preview when changed.": 379,
+	"Loading collecions...": 71,
+	"Loading namespaces...": 152,
+	"Loading packages...":   205,
+	"Loading...":            387,
+	"Local Templates":       193,
+	"Lock":                  26,
+	"Lock or unlock editing for the active document.": 303,
+	"Login TPIX": 391,
+	"Login TPIX to access all the features of Typstify, including package management, Zotero sync, MCP tools for AI assistant etc. Some features may need a subscription.": 390,
+	"Logout TPIX":                      389,
+	"MCP":                              229,
+	"Match Case":                       30,
+	"More":                             192,
+	"Move File/Folder":                 113,
+	"Name":                             2,
+	"Namespace":                        150,
+	"Namespace: %s":                    80,
+	"Navigation":                       365,
+	"New":                              171,
+	"New File":                         172,
+	"New Folder":                       173,
+	"New Project":                      174,
+	"New chat":                         61,
+	"New project...":                   49,
+	"No Library folder selected":       354,
+	"No PDF Tags":                      133,
+	"No collections found":             72,
+	"No items match this filter.":      168,
+	"No messages.":                     16,
+	"No open project.":                 160,
+	"No packages/templates found":      206,
+	"No previous chats yet.":           62,
+	"No project":                       159,
+	"No results":                       33,
+	"No writable namespaces":           153,
+	"Not a package creation request.":  88,
+	"Notebook":                         175,
+	"Notebooks":                        178,
+	"Off":                              12,
+	"On":                               13,
+	"Open AI Assistant: %s":            58,
+	"Open File Location":               402,
+	"Open File With...":                141,
+	"Open Folder":                      186,
+	"Open Folder Location":             403,
+	"Open code and Typst suggestions.": 308,
+	"Open existing project...":         50,
+	"Open or close the AI assistant.":  299,
+	"Open/Hide Console: %s":            56,
+	"Open/Hide File Explorer: %s":      55,
+	"Open/Hide Previewer: %s":          57,
+	"Optionally start from a Typst package such as @preview/aero-check:0.1.1. Leave this empty to create a basic document.": 100,
+	"Options":       14,
+	"Other files":   182,
+	"Outline":       190,
+	"PDF Standards": 129,
+	"PDF Versions":  127,
+	"PDF standards that Typstify will enforce conformance with.": 130,
+	"PDF version that Typstify will enforce conformance with.":   128,
+	"PDFs":                                  180,
+	"PPI":                                   125,
+	"Package":                               105,
+	"Package Cache Dir":                     372,
+	"Package Dir":                           370,
+	"Package kind":                          214,
+	"Pages":                                 121,
+	"Paste":                                 24,
+	"Paste asset: %s":                       157,
+	"Paste clipboard text into the editor.": 307,
+	"Paste file":                            295,
+	"Paste files into the selected folder.": 312,
+	"Paste text":                            290,
+	"Personal @local packages and templates from Typst's local package folder. No account or network connection is required.": 212,
+	"Plan": 18,
 	"Please choose a method to authenticate the agent:":                 0,
-	"Please input a valid full template name.":                          86,
-	"Please open a folder in File Explorer to place the project files.": 85,
-	"Please select where the project should be created.":                89,
-	"Please set a name for your package/template.":                      88,
-	"Please set a name for your project.":                               84,
-	"Power Saving":                                                      265,
-	"Preview":                                                           154,
-	"Preview In Browser":                                                259,
-	"Preview width":                                                     286,
-	"Project":                                                           160,
-	"Project Location":                                                  93,
-	"Project Name":                                                      101,
-	"Project Type":                                                      91,
-	"Project name":                                                      103,
-	"Publish Package":                                                   142,
-	"Query packages failed: ":                                           216,
-	"Query packages...":                                                 215,
-	"Raw Input":                                                         18,
-	"Raw Output":                                                        19,
-	"Read the docs":                                                     202,
-	"Ready — npx is available on your system.":                          237,
-	"Ready — uvx is available on your system.":                          241,
-	"Refresh":                                                           231,
-	"Release Time":                                                      351,
-	"Replace":                                                           34,
-	"Replace All":                                                       35,
-	"Repository:":                                                       236,
+	"Please input a valid full template name.":                          87,
+	"Please open a folder in File Explorer to place the project files.": 86,
+	"Please select where the project should be created.":                90,
+	"Please set a name for your package/template.":                      89,
+	"Please set a name for your project.":                               85,
+	"Power Saving":                                                      266,
+	"Press shortcut…":                                                   276,
+	"Preview":                                                           155,
+	"Preview In Browser":                                                260,
+	"Preview width":                                                     332,
+	"Project":                                                           161,
+	"Project Location":                                                  94,
+	"Project Name":                                                      102,
+	"Project Type":                                                      92,
+	"Project name":                                                      104,
+	"Publish Package":                                                   143,
+	"Query packages failed: ":                                           217,
+	"Query packages...":                                                 216,
+	"Raw Input":                                                         19,
+	"Raw Output":                                                        20,
+	"Read the docs":                                                     203,
+	"Ready — npx is available on your system.":                          238,
+	"Ready — uvx is available on your system.":                          242,
+	"Refresh":                                                           232,
+	"Release Time":                                                      396,
+	"Replace":                                                           35,
+	"Replace All":                                                       36,
+	"Repository:":                                                       237,
 	"Required environment variables:":                                   5,
-	"Requires Node.js. Install from https://nodejs.org, then restart Typstify.":                       238,
-	"Requires uvx. Install via `pip install uv` or https://docs.astral.sh/uv, then restart Typstify.": 242,
-	"Search & Replace":                  153,
-	"Search TPIX...":                    210,
-	"Search local templates...":         212,
-	"Search packages/templates on TPIX": 208,
-	"See https://agentclientprotocol.com/get-started/registry": 249,
-	"Select a directory": 97,
-	"Select an agent below or edit directly, e.g. npx -y @scope/package":                                                                     253,
-	"Select an agent below or type a name directly.":                                                                                         251,
-	"Select an agent from the registry. Click use to overwrite the above configuration.":                                                     227,
-	"Select the collection to sync with. Make sure you or your team have added Zotero API key on TPIX server. ":                              69,
-	"Select the folder that contains your courses, notebooks, and documents. Typstify keeps it as a normal folder.":                          40,
-	"Select the folder where the project will be created.":                                                                                   94,
-	"Select the namespace to publish to. Make sure you have logged in TPIX in the app and have accessible namespaces of your TPIX account. ": 150,
-	"Send":     9,
-	"Sessions": 59,
-	"Set font size for the editor. The unit is in scale-independent pixel (sp).":                                                                                                             290,
-	"Set font size for the user interface. The unit is in scale-independent pixel (sp).":                                                                                                     271,
-	"Set how many number of spaces the Tab is equal to. Please be noted that this works only for empty file. Indentation for non-empty files are auto detected.":                             297,
-	"Set the auto save delay (in seconds), cannot be completely disabled.":                                                                                                                   285,
-	"Set the desired fonts for the UI. Use CSS style font family syntax which is a list of comma separated names. You can also leave it empty to let the application choose a fallback.":     273,
-	"Set the desired fonts for the editor. Use CSS style font family syntax which is a list of comma separated names. You can also leave it empty to let the application choose a fallback.": 288,
-	"Set the displaying language of the user interface.":                                                                                                                                     269,
-	"Set the expected characters to use when pressing the Tab key. Please be noted that this works only for empty file. Indentation for non-empty files are auto detected.":                  296,
-	"Set the expected weight (or boldness) of the text. This is for variable fonts only.":                                                                                                    292,
-	"Set the line height scale of the lines in editor. Line height scale is multiplied by line height to determine the final gap between lines.":                                             294,
-	"Settings": 187,
-	"Show only the current project or folder, or keep the complete workspace tree.": 313,
-	"Sign In": 42,
-	"Specifies a path to your own version of Tinymist. Leave it empty to use the built-in one. Please check the compatibility before you switch. It needs to restart to take effect.":       280,
-	"Specifies a path to your own version of Typst compiler. Leave it empty to use the built-in one. Please check the compatibility before you switch. It needs to restart to take effect.": 278,
-	"Specifies where to store your local Typst packages/templates. Leave it empty to use the default dir.":                                                                                  326,
-	"Specifies where to store your the cached Typst packages/templates retrieved from the network. Leave it empty to use the default dir.":                                                  328,
-	"Start":                    43,
-	"Starting AI Assistant...": 58,
-	"Stop":                     10,
-	"Student":                  303,
-	"Student preferences":      305,
-	"Submit":                   63,
-	"Sync Bibliographies":      165,
-	"Sync Bibliography":        62,
-	"Sync Dependencies":        164,
-	"TPIX":                     341,
-	"Tab Width":                136,
-	"Template":                 105,
-	"Terminal: %s":             20,
-	"Text Size":                289,
-	"The PPI (pixels per inch) to use for PNG export.": 125,
-	"The built-in MCP server use dynamic network port by default, and it registers itself to agent at runtime. \nSome agents does not support runtime registration, you have to fix the MCP server port and register the server manually. When using static port, the server address is 127.0.0.1:5322, transport: http.": 229,
-	"The directory to save exported files to, including the deps.json. If not set, the exported files will be saved to a 'output' folder beside the source file.":                                                                                                                                                         332,
-	"The directory where to search for fonts when exporting, previewing and auto-completing. Be aware that the current project root directory is always searched. Need to restart or reload to take effect.":                                                                                                              330,
-	"The folder shown when Student mode starts. Forgetting it does not delete any files.": 308,
-	"The format of the output file.": 115,
-	"The name of the managed bibliography file, such as 'bib-file-name.bib'. You can leave it empty to use a auto generated one.":                                  67,
-	"The path of the managed bibliography file. Clicking unlink below will turn it to a regular file, and it will not sync with remote Zotero collection anymore.": 76,
-	"The previewer will only render pages inside the viewport if enabled. This improves performance especially for large document.":                                262,
-	"The project will be created inside the current Library folder.":                                                                                               96,
-	"Theme": 275,
-	"These choices apply immediately and do not change the Classic interface.": 306,
-	"Thinking": 16,
-	"This agent is not directly available for your platform. Visit the ACP registry for more details.":                                                                            248,
-	"This folder is empty. Use New to create a file, folder, or project.":                                                                                                         168,
-	"This specifies the output file name. If multiple files is generated, the file name will be suffixed with a number. When not specified, the name of the source file is used.": 123,
-	"To get a subscription of TPIX, click ":                   348,
-	"To learn more about TPIX, click ":                        53,
-	"To learn more about TPIX, go to ":                        347,
-	"To learn more about Typstify, go to ":                    52,
-	"Type @ to include resource, and / to use skills.":        14,
-	"Type to start a conversation, press Shift+Enter to send": 8,
-	"Typst":                                 324,
-	"Typst Package Center":                  186,
-	"Typst Packages":                        207,
-	"Typst Template":                        98,
-	"Typst documents":                       178,
-	"Typst packages info loaded.":           217,
-	"Typst work":                            176,
-	"Typstify":                              44,
-	"UI Font Family":                        272,
-	"UI Text Size":                          270,
-	"Unlink":                                73,
-	"Unlink managed bibliography error: %s": 74,
-	"Unlink managed bibliography succeeded: %s": 75,
-	"Unlock":       26,
-	"Unwrap Lines": 27,
-	"Use":          230,
-	"Use Regex":    31,
-	"Use template": 214,
-	"Use the Library rail, or keep Typstify's familiar sidebar and bottom controls.": 321,
-	"Version":                   258,
-	"Version:":                  233,
-	"View Bibliography Info":    166,
-	"View Managed Bibliography": 72,
-	"Welcome, %s!":              46,
-	"When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.": 266,
-	"When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.":                                                                                260,
-	"When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.":                                                 264,
-	"Which pages to export. Valid value can be comma seperated page numbers and page ranges, for example, 1,3,5,6-9. When unspecified, all document pages are exported.":                                        121,
-	"Whole Word":            30,
-	"Whole workspace":       315,
-	"Width: %d, Height: %d": 355,
-	"Wrap Lines":            28,
-	"Write dependencies of the file compiled to a file named deps.json in your project directory.": 340,
-	"You can restore this file from the Trash.":                                                    110,
-	"You have an active TPIX session":                                                              343,
-	"Your Student preferences are saved and will return when you choose Student.":                  304,
-	"Zotero Collection Info":                                                                       78,
-	"git checkout %s failed: %v":                                                                   354,
-	"npx -y @scope/package":                                                                        254,
-	"popup and display the preview in a dedicated window":                                          356,
-	"publish package error: %s":                                                                    143,
-	"publish package succeeded: %s":                                                                144,
-	"pull dependencies error: %s":                                                                  162,
-	"pull dependencies succeeded!":                                                                 163,
+	"Requires Node.js. Install from https://nodejs.org, then restart Typstify.":                       239,
+	"Requires uvx. Install via `pip install uv` or https://docs.astral.sh/uv, then restart Typstify.": 243,
+	"Reset":                             277,
+	"Restore all defaults":              271,
+	"Save file":                         284,
+	"Save the active document.":         301,
+	"Search & Replace":                  154,
+	"Search TPIX...":                    211,
+	"Search actions or shortcuts":       270,
+	"Search in the active document.":    302,
+	"Search local templates...":         213,
+	"Search packages/templates on TPIX": 209,
+	"See https://agentclientprotocol.com/get-started/registry": 250,
+	"Select a directory": 98,
+	"Select an agent below or edit directly, e.g. npx -y @scope/package":                                                                     254,
+	"Select an agent below or type a name directly.":                                                                                         252,
+	"Select an agent from the registry. Click use to overwrite the above configuration.":                                                     228,
+	"Select the collection to sync with. Make sure you or your team have added Zotero API key on TPIX server. ":                              70,
+	"Select the folder that contains your courses, notebooks, and documents. Typstify keeps it as a normal folder.":                          41,
+	"Select the folder where the project will be created.":                                                                                   95,
+	"Select the namespace to publish to. Make sure you have logged in TPIX in the app and have accessible namespaces of your TPIX account. ": 151,
+	"Send":                                10,
+	"Send prompt":                         296,
+	"Send the current assistant message.": 313,
+	"Sessions":                            60,
+	"Set font size for the editor. The unit is in scale-independent pixel (sp).":                                                                                                             336,
+	"Set font size for the user interface. The unit is in scale-independent pixel (sp).":                                                                                                     317,
+	"Set how many number of spaces the Tab is equal to. Please be noted that this works only for empty file. Indentation for non-empty files are auto detected.":                             343,
+	"Set the auto save delay (in seconds), cannot be completely disabled.":                                                                                                                   331,
+	"Set the desired fonts for the UI. Use CSS style font family syntax which is a list of comma separated names. You can also leave it empty to let the application choose a fallback.":     319,
+	"Set the desired fonts for the editor. Use CSS style font family syntax which is a list of comma separated names. You can also leave it empty to let the application choose a fallback.": 334,
+	"Set the displaying language of the user interface.":                                                                                                                                     315,
+	"Set the expected characters to use when pressing the Tab key. Please be noted that this works only for empty file. Indentation for non-empty files are auto detected.":                  342,
+	"Set the expected weight (or boldness) of the text. This is for variable fonts only.":                                                                                                    338,
+	"Set the line height scale of the lines in editor. Line height scale is multiplied by line height to determine the final gap between lines.":                                             340,
+	"Settings":         188,
+	"Shortcuts":        269,
+	"Show completions": 291,
+	"Show only the current project or folder, or keep the complete workspace tree.": 358,
+	"Show or hide compiler and application output.":                                 298,
+	"Show or hide the document preview.":                                            300,
+	"Show or hide the project files.":                                               297,
+	"Sign In":                                                                       43,
+	"Specifies a path to your own version of Tinymist. Leave it empty to use the built-in one. Please check the compatibility before you switch. It needs to restart to take effect.":       326,
+	"Specifies a path to your own version of Typst compiler. Leave it empty to use the built-in one. Please check the compatibility before you switch. It needs to restart to take effect.": 324,
+	"Specifies where to store your local Typst packages/templates. Leave it empty to use the default dir.":                                                                                  371,
+	"Specifies where to store your the cached Typst packages/templates retrieved from the network. Leave it empty to use the default dir.":                                                  373,
+	"Start":                    44,
+	"Starting AI Assistant...": 59,
+	"Stop":                     11,
+	"Student":                  348,
+	"Student preferences":      350,
+	"Submit":                   64,
+	"Sync Bibliographies":      166,
+	"Sync Bibliography":        63,
+	"Sync Dependencies":        165,
+	"TPIX":                     386,
+	"Tab Width":                137,
+	"Template":                 106,
+	"Terminal: %s":             21,
+	"Text Size":                335,
+	"The PPI (pixels per inch) to use for PNG export.": 126,
+	"The built-in MCP server use dynamic network port by default, and it registers itself to agent at runtime. \nSome agents does not support runtime registration, you have to fix the MCP server port and register the server manually. When using static port, the server address is 127.0.0.1:5322, transport: http.": 230,
+	"The directory to save exported files to, including the deps.json. If not set, the exported files will be saved to a 'output' folder beside the source file.":                                                                                                                                                         377,
+	"The directory where to search for fonts when exporting, previewing and auto-completing. Be aware that the current project root directory is always searched. Need to restart or reload to take effect.":                                                                                                              375,
+	"The folder shown when Student mode starts. Forgetting it does not delete any files.": 353,
+	"The format of the output file.": 116,
+	"The name of the managed bibliography file, such as 'bib-file-name.bib'. You can leave it empty to use a auto generated one.":                                  68,
+	"The path of the managed bibliography file. Clicking unlink below will turn it to a regular file, and it will not sync with remote Zotero collection anymore.": 77,
+	"The previewer will only render pages inside the viewport if enabled. This improves performance especially for large document.":                                263,
+	"The project will be created inside the current Library folder.":                                                                                               97,
+	"Theme": 321,
+	"These choices apply immediately and do not change the Classic interface.": 351,
+	"Thinking": 17,
+	"This agent is not directly available for your platform. Visit the ACP registry for more details.":                                                                            249,
+	"This folder is empty. Use New to create a file, folder, or project.":                                                                                                         169,
+	"This specifies the output file name. If multiple files is generated, the file name will be suffixed with a number. When not specified, the name of the source file is used.": 124,
+	"To get a subscription of TPIX, click ":            393,
+	"To learn more about TPIX, click ":                 54,
+	"To learn more about TPIX, go to ":                 392,
+	"To learn more about Typstify, go to ":             53,
+	"Toggle assistant":                                 282,
+	"Toggle console":                                   281,
+	"Toggle file explorer":                             280,
+	"Toggle line wrapping":                             287,
+	"Toggle preview":                                   283,
+	"Toggle read-only mode":                            286,
+	"Type @ to include resource, and / to use skills.": 15,
+	"Type to start a conversation":                     8,
+	"Type to start a conversation, press %s to send":   9,
+	"Typst":                                 369,
+	"Typst Package Center":                  187,
+	"Typst Packages":                        208,
+	"Typst Template":                        99,
+	"Typst documents":                       179,
+	"Typst packages info loaded.":           218,
+	"Typst work":                            177,
+	"Typstify":                              45,
+	"UI Font Family":                        318,
+	"UI Text Size":                          316,
+	"Unlink":                                74,
+	"Unlink managed bibliography error: %s": 75,
+	"Unlink managed bibliography succeeded: %s": 76,
+	"Unlock":       27,
+	"Unwrap Lines": 28,
+	"Use":          231,
+	"Use Regex":    32,
+	"Use template": 215,
+	"Use the Library rail, or keep Typstify's familiar sidebar and bottom controls.": 366,
+	"Version":                   259,
+	"Version:":                  234,
+	"View Bibliography Info":    167,
+	"View Managed Bibliography": 73,
+	"Welcome, %s!":              47,
+	"When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.": 267,
+	"When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.":                                                                                261,
+	"When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.":                                                 265,
+	"Which pages to export. Valid value can be comma seperated page numbers and page ranges, for example, 1,3,5,6-9. When unspecified, all document pages are exported.":                                        122,
+	"Whole Word":                        31,
+	"Whole workspace":                   360,
+	"Width: %d, Height: %d":             400,
+	"Workspace":                         278,
+	"Wrap Lines":                        29,
+	"Wrap or unwrap long editor lines.": 304,
+	"Write dependencies of the file compiled to a file named deps.json in your project directory.": 385,
+	"You can restore this file from the Trash.":                                                    111,
+	"You have an active TPIX session":                                                              388,
+	"Your Student preferences are saved and will return when you choose Student.":                  349,
+	"Zotero Collection Info":                                                                       79,
+	"git checkout %s failed: %v":                                                                   399,
+	"npx -y @scope/package":                                                                        255,
+	"popup and display the preview in a dedicated window":                                          401,
+	"publish package error: %s":                                                                    144,
+	"publish package succeeded: %s":                                                                145,
+	"pull dependencies error: %s":                                                                  163,
+	"pull dependencies succeeded!":                                                                 164,
 }
 
-var de_DEIndex = []uint32{ // 360 elements
+var de_DEIndex = []uint32{ // 405 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000042, 0x00000045, 0x0000004a,
 	0x00000057, 0x0000005c, 0x0000007e, 0x00000083,
-	0x0000008c, 0x000000cd, 0x000000d4, 0x000000da,
-	0x000000de, 0x000000e1, 0x000000ea, 0x00000127,
-	0x0000013a, 0x00000145, 0x0000014a, 0x00000155,
-	0x00000160, 0x00000170, 0x00000179, 0x00000186,
-	0x00000190, 0x000001a2, 0x000001aa, 0x000001b5,
-	0x000001cd, 0x000001db, 0x000001f2, 0x000001fe,
+	0x0000008c, 0x000000b4, 0x000000fa, 0x00000101,
+	0x00000107, 0x0000010b, 0x0000010e, 0x00000117,
+	0x00000154, 0x00000167, 0x00000172, 0x00000177,
+	0x00000182, 0x0000018d, 0x0000019d, 0x000001a6,
+	0x000001b3, 0x000001bd, 0x000001cf, 0x000001d7,
+	0x000001e2, 0x000001fa, 0x00000208, 0x0000021f,
 	// Entry 20 - 3F
-	0x0000020e, 0x0000021f, 0x0000022f, 0x00000238,
-	0x00000246, 0x00000258, 0x00000271, 0x00000279,
-	0x00000296, 0x0000030f, 0x00000321, 0x0000032a,
-	0x00000330, 0x00000339, 0x00000368, 0x0000037b,
-	0x0000038a, 0x0000039b, 0x000003ba, 0x000003d9,
-	0x000003e7, 0x0000041d, 0x0000044e, 0x0000047b,
-	0x000004a1, 0x000004c8, 0x000004e8, 0x00000507,
-	0x00000511, 0x0000051c, 0x00000539, 0x00000556,
+	0x0000022b, 0x0000023b, 0x0000024c, 0x0000025c,
+	0x00000265, 0x00000273, 0x00000285, 0x0000029e,
+	0x000002a6, 0x000002c3, 0x0000033c, 0x0000034e,
+	0x00000357, 0x0000035d, 0x00000366, 0x00000395,
+	0x000003a8, 0x000003b7, 0x000003c8, 0x000003e7,
+	0x00000406, 0x00000414, 0x0000044a, 0x0000047b,
+	0x000004a4, 0x000004c6, 0x000004e9, 0x00000505,
+	0x00000524, 0x0000052e, 0x00000539, 0x00000556,
 	// Entry 40 - 5F
-	0x0000055f, 0x00000599, 0x000005cd, 0x000005e4,
-	0x0000067b, 0x00000686, 0x0000072c, 0x00000749,
-	0x00000763, 0x00000784, 0x0000079a, 0x000007d4,
-	0x0000080c, 0x000008c4, 0x000008cc, 0x000008e1,
-	0x000008f2, 0x00000904, 0x00000914, 0x0000092c,
-	0x00000936, 0x00000967, 0x000009ba, 0x000009fc,
-	0x00000a26, 0x00000a62, 0x00000a93, 0x00000abd,
-	0x00000ac8, 0x00000b65, 0x00000b75, 0x00000bb1,
+	0x00000573, 0x0000057c, 0x000005b6, 0x000005ea,
+	0x00000601, 0x00000698, 0x000006a3, 0x00000749,
+	0x00000766, 0x00000780, 0x000007a1, 0x000007b7,
+	0x000007f1, 0x00000829, 0x000008e1, 0x000008e9,
+	0x000008fe, 0x0000090f, 0x00000921, 0x00000931,
+	0x00000949, 0x00000953, 0x00000984, 0x000009d7,
+	0x00000a19, 0x00000a43, 0x00000a7f, 0x00000ab0,
+	0x00000ada, 0x00000ae5, 0x00000b82, 0x00000b92,
 	// Entry 60 - 7F
-	0x00000bbe, 0x00000bf8, 0x00000c0f, 0x00000c1d,
-	0x00000caa, 0x00000cce, 0x00000cda, 0x00000d1c,
-	0x00000d28, 0x00000d2e, 0x00000d36, 0x00000d3f,
-	0x00000d55, 0x00000d61, 0x00000d89, 0x00000dc6,
-	0x00000dd0, 0x00000de9, 0x00000dff, 0x00000e21,
-	0x00000e3e, 0x00000e58, 0x00000e64, 0x00000e7d,
-	0x00000e96, 0x00000e9d, 0x00000f57, 0x00000f61,
-	0x00001013, 0x00001017, 0x00001054, 0x00001062,
+	0x00000bce, 0x00000bdb, 0x00000c15, 0x00000c2c,
+	0x00000c3a, 0x00000cc7, 0x00000ceb, 0x00000cf7,
+	0x00000d39, 0x00000d45, 0x00000d4b, 0x00000d53,
+	0x00000d5c, 0x00000d72, 0x00000d7e, 0x00000da6,
+	0x00000de3, 0x00000ded, 0x00000e06, 0x00000e1c,
+	0x00000e3e, 0x00000e5b, 0x00000e75, 0x00000e81,
+	0x00000e9a, 0x00000eb3, 0x00000eba, 0x00000f74,
+	0x00000f7e, 0x00001030, 0x00001034, 0x00001071,
 	// Entry 80 - 9F
-	0x00001095, 0x000010a3, 0x000010d8, 0x000010ee,
-	0x000011c6, 0x000011d5, 0x000011e9, 0x0000120a,
-	0x0000123f, 0x0000124a, 0x00001266, 0x0000127a,
-	0x000012d7, 0x000012e6, 0x00001317, 0x0000132e,
-	0x0000135d, 0x00001386, 0x0000138f, 0x000013d9,
-	0x000013e3, 0x000013fb, 0x00001405, 0x000014b6,
-	0x000014d3, 0x000014f3, 0x00001507, 0x00001510,
-	0x0000151d, 0x00001534, 0x0000153d, 0x0000154a,
+	0x0000107f, 0x000010b2, 0x000010c0, 0x000010f5,
+	0x0000110b, 0x000011e3, 0x000011f2, 0x00001206,
+	0x00001227, 0x0000125c, 0x00001267, 0x00001283,
+	0x00001297, 0x000012f4, 0x00001303, 0x00001334,
+	0x0000134b, 0x0000137a, 0x000013a3, 0x000013ac,
+	0x000013f6, 0x00001400, 0x00001418, 0x00001422,
+	0x000014d3, 0x000014f0, 0x00001510, 0x00001524,
+	0x0000152d, 0x0000153a, 0x00001551, 0x0000155a,
 	// Entry A0 - BF
-	0x00001562, 0x0000156a, 0x00001571, 0x000015a0,
-	0x000015c7, 0x000015e7, 0x00001605, 0x00001620,
-	0x0000164a, 0x000016b1, 0x000016c0, 0x000016c4,
-	0x000016cf, 0x000016dc, 0x000016ea, 0x000016f4,
-	0x000016fa, 0x00001709, 0x00001716, 0x00001726,
-	0x0000172b, 0x00001732, 0x00001741, 0x0000174e,
-	0x00001762, 0x0000176d, 0x0000177c, 0x0000178f,
-	0x0000179d, 0x000017a5, 0x000017b0, 0x000017ba,
+	0x00001567, 0x0000157f, 0x00001587, 0x0000158e,
+	0x000015bd, 0x000015e4, 0x00001604, 0x00001622,
+	0x0000163d, 0x00001667, 0x000016ce, 0x000016dd,
+	0x000016e1, 0x000016ec, 0x000016f9, 0x00001707,
+	0x00001711, 0x00001717, 0x00001726, 0x00001733,
+	0x00001743, 0x00001748, 0x0000174f, 0x0000175e,
+	0x0000176b, 0x0000177f, 0x0000178a, 0x00001799,
+	0x000017ac, 0x000017ba, 0x000017c2, 0x000017cd,
 	// Entry C0 - DF
-	0x000017bf, 0x000017cf, 0x000017de, 0x00001806,
-	0x0000180e, 0x0000181c, 0x00001830, 0x00001836,
-	0x0000184b, 0x00001852, 0x0000185c, 0x00001870,
-	0x00001884, 0x0000189d, 0x000018bc, 0x000018c5,
-	0x000018d2, 0x000018f2, 0x00001987, 0x0000199b,
-	0x00001a26, 0x00001a46, 0x00001a4f, 0x00001a61,
-	0x00001a74, 0x00001a96, 0x00001ab8, 0x00001adc,
-	0x00001afe, 0x00001b40, 0x00001b57, 0x00001b77,
+	0x000017d7, 0x000017dc, 0x000017ec, 0x000017fb,
+	0x00001823, 0x0000182b, 0x00001839, 0x0000184d,
+	0x00001853, 0x00001868, 0x0000186f, 0x00001879,
+	0x0000188d, 0x000018a1, 0x000018ba, 0x000018d9,
+	0x000018e2, 0x000018ef, 0x0000190f, 0x000019a4,
+	0x000019b8, 0x00001a43, 0x00001a63, 0x00001a6c,
+	0x00001a7e, 0x00001a91, 0x00001ab3, 0x00001ad5,
+	0x00001af9, 0x00001b1b, 0x00001b5d, 0x00001b74,
 	// Entry E0 - FF
-	0x00001b7c, 0x00001b82, 0x00001c39, 0x00001c4a,
-	0x00001cbf, 0x00001cc3, 0x00001e30, 0x00001e3a,
-	0x00001e48, 0x00001e4c, 0x00001e55, 0x00001e5d,
-	0x00001e66, 0x00001e72, 0x00001ea2, 0x00001f03,
-	0x00001f5f, 0x00001f72, 0x00001fa2, 0x0000201e,
-	0x0000207a, 0x0000208d, 0x000020a3, 0x00002127,
-	0x00002134, 0x000021a6, 0x000021e1, 0x000021ed,
-	0x00002238, 0x0000223f, 0x0000229b, 0x000022b1,
+	0x00001b94, 0x00001b99, 0x00001b9f, 0x00001c56,
+	0x00001c67, 0x00001cdc, 0x00001ce0, 0x00001e4d,
+	0x00001e57, 0x00001e65, 0x00001e69, 0x00001e72,
+	0x00001e7a, 0x00001e83, 0x00001e8f, 0x00001ebf,
+	0x00001f20, 0x00001f7c, 0x00001f8f, 0x00001fbf,
+	0x0000203b, 0x00002097, 0x000020aa, 0x000020c0,
+	0x00002144, 0x00002151, 0x000021c3, 0x000021fe,
+	0x0000220a, 0x00002255, 0x0000225c, 0x000022b8,
 	// Entry 100 - 11F
-	0x000022ba, 0x00002324, 0x00002334, 0x0000233c,
-	0x00002350, 0x000023d3, 0x000023eb, 0x00002471,
-	0x00002481, 0x00002527, 0x00002538, 0x00002617,
-	0x00002624, 0x0000262c, 0x00002667, 0x00002679,
-	0x000026ed, 0x000026ff, 0x000027dc, 0x000027eb,
-	0x000027f2, 0x00002837, 0x00002854, 0x00002933,
-	0x00002957, 0x00002a2f, 0x00002a3e, 0x00002ac9,
-	0x00002ad3, 0x00002af3, 0x00002b6e, 0x00002b7d,
+	0x000022ce, 0x000022d7, 0x00002341, 0x00002351,
+	0x00002359, 0x0000236d, 0x000023f0, 0x00002408,
+	0x0000248e, 0x0000249e, 0x00002544, 0x00002555,
+	0x00002634, 0x00002641, 0x0000264f, 0x00002672,
+	0x00002692, 0x000026ff, 0x0000270b, 0x0000271c,
+	0x00002744, 0x0000275f, 0x0000276d, 0x0000277c,
+	0x00002783, 0x000027a2, 0x000027ba, 0x000027d6,
+	0x000027ef, 0x000027ff, 0x00002813, 0x00002832,
 	// Entry 120 - 13F
-	0x00002bfb, 0x00002cdc, 0x00002ceb, 0x00002d52,
-	0x00002d61, 0x00002dcb, 0x00002dde, 0x00002e92,
-	0x00002e99, 0x00002f6a, 0x00003018, 0x0000301f,
-	0x00003030, 0x0000303c, 0x000030c4, 0x000030ce,
-	0x000030d6, 0x00003140, 0x00003156, 0x000031a6,
-	0x000031b8, 0x00003223, 0x00003246, 0x0000324e,
-	0x00003258, 0x00003267, 0x000032d5, 0x000032fd,
-	0x00003315, 0x00003328, 0x0000336e, 0x00003375,
+	0x00002851, 0x0000285f, 0x00002871, 0x00002880,
+	0x0000289e, 0x000028bc, 0x000028cb, 0x000028de,
+	0x000028ee, 0x000028fd, 0x00002926, 0x00002960,
+	0x00002988, 0x000029b3, 0x000029cf, 0x000029eb,
+	0x00002a26, 0x00002a5e, 0x00002a7a, 0x00002a9a,
+	0x00002acf, 0x00002af4, 0x00002b25, 0x00002b5c,
+	0x00002b97, 0x00002bc6, 0x00002bf4, 0x00002bfc,
+	0x00002c37, 0x00002c49, 0x00002cbd, 0x00002ccf,
 	// Entry 140 - 15F
-	0x0000337b, 0x00003386, 0x000033f3, 0x00003405,
-	0x0000341f, 0x00003425, 0x00003436, 0x000034bc,
-	0x000034d4, 0x00003584, 0x000035a4, 0x00003699,
-	0x000036ab, 0x0000376c, 0x00003783, 0x0000395e,
-	0x0000397c, 0x00003a0b, 0x00003a39, 0x00003a9e,
-	0x00003abd, 0x00003b2d, 0x00003b32, 0x00003b42,
-	0x00003b65, 0x00003b73, 0x00003c5e, 0x00003c6c,
-	0x00003c9e, 0x00003cd3, 0x00003ce8, 0x00003cfc,
+	0x00002dac, 0x00002dbb, 0x00002dc2, 0x00002e07,
+	0x00002e24, 0x00002f03, 0x00002f27, 0x00002fff,
+	0x0000300e, 0x00003099, 0x000030a3, 0x000030c3,
+	0x0000313e, 0x0000314d, 0x000031cb, 0x000032ac,
+	0x000032bb, 0x00003322, 0x00003331, 0x0000339b,
+	0x000033ae, 0x00003462, 0x00003469, 0x0000353a,
+	0x000035e8, 0x000035f9, 0x00003605, 0x0000368d,
+	0x00003697, 0x0000369f, 0x00003709, 0x0000371f,
 	// Entry 160 - 17F
-	0x00003d13, 0x00003d20, 0x00003d26, 0x00003d4f,
-	0x00003d6b, 0x00003d98, 0x00003db1, 0x00003dcb,
-} // Size: 1464 bytes
+	0x0000376f, 0x00003781, 0x000037ec, 0x0000380f,
+	0x00003817, 0x00003821, 0x00003830, 0x0000389e,
+	0x000038c6, 0x000038de, 0x000038f1, 0x00003937,
+	0x0000393e, 0x00003944, 0x0000394f, 0x000039bc,
+	0x000039ce, 0x000039e8, 0x000039ee, 0x000039ff,
+	0x00003a85, 0x00003a9d, 0x00003b4d, 0x00003b6d,
+	0x00003c62, 0x00003c74, 0x00003d35, 0x00003d4c,
+	0x00003f27, 0x00003f45, 0x00003fd4, 0x00004002,
+	// Entry 180 - 19F
+	0x00004067, 0x00004086, 0x000040f6, 0x000040fb,
+	0x0000410b, 0x0000412e, 0x0000413c, 0x00004227,
+	0x00004235, 0x00004267, 0x0000429c, 0x000042b1,
+	0x000042c5, 0x000042dc, 0x000042e9, 0x000042ef,
+	0x00004318, 0x00004334, 0x00004361, 0x0000437a,
+	0x00004394,
+} // Size: 1644 bytes
 
-const de_DEData string = "" + // Size: 15819 bytes
+const de_DEData string = "" + // Size: 17300 bytes
 	"\x02Bitte wählen Sie eine Methode zur Authentifizierung des Agenten:\x02" +
 	"ID\x02Name\x02Beschreibung\x02Link\x02Erforderliche Umgebungsvariablen:" +
-	"\x02Args\x02Umgebung\x02Tippen Sie, um ein Gespräch zu beginnen. Mit Shi" +
-	"ft+Enter senden\x02Senden\x02Stopp\x02Aus\x02An\x02Optionen\x02@ eingebe" +
-	"n, um Ressourcen einzubinden, / um Skills zu nutzen\x02Keine Nachrichten" +
-	".\x02Denkt nach\x02Plan\x02Roheingabe\x02Rohausgabe\x02Terminal: %[1]s" +
-	"\x02Kopieren\x02Ausschneiden\x02Einfügen\x02Suchen & Ersetzen\x02Sperren" +
-	"\x02Entsperren\x02Zeilenumbruch entfernen\x02Zeilenumbruch\x02Groß-/Klei" +
-	"nschreibung\x02Ganzes Wort\x02Regex verwenden\x02Keine Ergebnisse\x02%[1" +
-	"]d von %[2]d\x02Ersetzen\x02Alle ersetzen\x02Z %[1]d, Sp %[2]d\x04\x01 " +
-	"\x00\x14\x02(%[1]d ausgewählt)\x02Beenden\x02Bibliotheksordner auswählen" +
-	"\x02Wähle den Ordner mit deinen Kursen, Notizbüchern und Dokumenten. Typ" +
-	"stify behandelt ihn weiterhin als normalen Ordner.\x02Ordner auswählen" +
-	"\x02Anmelden\x02Start\x02Typstify\x02Typst-Dokumente in Gedankenschnelle" +
-	" erstellen.\x02Willkommen, %[1]s!\x02Erste Schritte\x02Neues Projekt..." +
-	"\x02Bestehendes Projekt öffnen...\x02Pakete/Vorlagen durchsuchen...\x02M" +
-	"ehr erfahren\x04\x00\x01 1\x02Um mehr über Typstify zu erfahren, besuche" +
-	"n Sie\x04\x00\x01 ,\x02Um mehr über TPIX zu erfahren, klicken Sie\x02Dat" +
-	"ei-Explorer öffnen/ausblenden: %[1]s + D\x02Konsole öffnen/ausblenden: %" +
-	"[1]s + K\x02Vorschau öffnen/ausblenden: %[1]s + P\x02KI-Assistent öffnen" +
-	": %[1]s + L\x02KI-Assistent wird gestartet...\x02Sitzungen\x02Neuer Chat" +
-	"\x02Noch keine vorherigen Chats.\x02Bibliografie synchronisieren\x02Abse" +
-	"nden\x02Fehler beim Erstellen der verwalteten Bibliografie: %[1]s\x02Ver" +
-	"waltete Bibliografie erfolgreich erstellt: %[1]s\x02Bibliografie-Dateina" +
-	"me\x02Der Name der verwalteten Bibliografie-Datei, z. B. 'bib-file-name." +
-	"bib'. Lassen Sie das Feld leer, um einen automatisch generierten Namen z" +
-	"u verwenden.\x02Sammlungen\x04\x00\x01 \xa0\x01\x02Wählen Sie die zu syn" +
-	"chronisierende Sammlung aus. Stellen Sie sicher, dass Sie oder Ihr Team " +
-	"den Zotero-API-Schlüssel auf dem TPIX-Server hinzugefügt haben.\x02Samml" +
-	"ungen werden geladen...\x02Keine Sammlungen gefunden\x02Verwaltete Bibli" +
-	"ografie anzeigen\x02Verknüpfung aufheben\x02Fehler beim Aufheben der Bib" +
-	"liografie-Verknüpfung: %[1]s\x02Bibliografie-Verknüpfung erfolgreich auf" +
-	"gehoben: %[1]s\x02Der Pfad der verwalteten Bibliografie-Datei. Durch Kli" +
-	"cken auf Verknüpfung aufheben wird sie zu einer normalen Datei und nicht" +
-	" mehr mit der entfernten Zotero-Sammlung synchronisiert.\x02Format:\x02Z" +
-	"otero-Sammlungsinfo\x02Namespace: %[1]s\x02Bibliothek: %[1]s\x02Sammlung" +
-	": %[1]s\x02Neues Projekt erstellen\x02Erstellen\x02Bitte geben Sie einen" +
-	" Namen für Ihr Projekt an.\x02Bitte öffnen Sie einen Ordner im Datei-Exp" +
-	"lorer, um die Projektdateien abzulegen.\x02Bitte geben Sie einen gültige" +
-	"n vollständigen Vorlagennamen ein.\x02Keine Anfrage zum Erstellen eines " +
-	"Pakets.\x02Bitte geben Sie einen Namen für Ihr Paket/Ihre Vorlage an." +
-	"\x02Wähle aus, wo das Projekt erstellt werden soll.\x02Fehler beim Erste" +
-	"llen des Projekts: %[1]s\x02Projekttyp\x02Wähle „Dokument“ für Notizen, " +
-	"Artikel, Bücher oder Folien. Wähle „Paket“ oder „Vorlage“ nur zur Entwic" +
-	"klung wiederverwendbarer Typst-Pakete.\x02Projektstandort\x02Wähle den O" +
-	"rdner, in dem das Projekt erstellt werden soll.\x02Erstellen in\x02Das P" +
-	"rojekt wird im aktuellen Bibliotheksordner erstellt.\x02Verzeichnis ausw" +
-	"ählen\x02Typst-Vorlage\x02Optional kannst du mit einem Typst-Paket wie " +
-	"@preview/aero-check:0.1.1 beginnen. Lass das Feld leer, um ein einfaches" +
-	" Dokument zu erstellen.\x02@preview/package:version (optional)\x02Projek" +
-	"tname\x02Ein Ordner mit diesem Namen wird am oben gewählten Ort erstellt" +
-	".\x02Projektname\x02Paket\x02Vorlage\x02Dokument\x02Datei/Ordner löschen" +
-	"\x02Bestätigen\x02Möchten Sie '%[1]s' wirklich löschen?\x02Sie können di" +
-	"ese Datei aus dem Papierkorb wiederherstellen.\x02Abbrechen\x02Datei/Ord" +
-	"ner verschieben\x02Möchten Sie wirklich\x02'%[1]s' nach '%[2]s' verschie" +
-	"ben?\x02Das Format der Ausgabedatei.\x02Erstellen und Exportieren\x02Exp" +
-	"ortieren\x02Datei wird exportiert...\x02Exportiertes Dateiformat\x02Seit" +
-	"en\x02Welche Seiten exportiert werden sollen. Gültige Werte sind durch K" +
-	"ommas getrennte Seitenzahlen und Seitenbereiche, z. B. 1,3,5,6-9. Wenn n" +
-	"icht angegeben, werden alle Seiten exportiert.\x02Dateiname\x02Gibt den " +
-	"Ausgabedateinamen an. Wenn mehrere Dateien generiert werden, wird der Da" +
-	"teiname mit einer Nummer versehen. Wenn nicht angegeben, wird der Name d" +
-	"er Quelldatei verwendet.\x02PPI\x02Die für den PNG-Export zu verwendende" +
-	" PPI (Pixel pro Zoll).\x02PDF-Versionen\x02PDF-Version, deren Konformitä" +
-	"t Typstify erzwingt.\x02PDF-Standards\x02PDF-Standards, deren Konformitä" +
-	"t Typstify erzwingt.\x02PDF-Tags deaktivieren\x02Standardmäßig wird ein " +
-	"getaggtes PDF generiert, um grundlegende Barrierefreiheit zu gewährleist" +
-	"en. In einigen Fällen ist dies möglicherweise nicht erwünscht. Aktiviere" +
-	"n Sie diese Option, um es zu deaktivieren.\x02Keine PDF-Tags\x02Dateiein" +
-	"zug ändern\x02Einzug mit Leerzeichen oder Tabs\x02Wählen Sie den Einzugs" +
-	"stil für die aktuelle Datei.\x02Tab-Breite\x02Tab-Anzeigegröße ändern." +
-	"\x02Einzug konvertieren\x02Konvertiert den Einzug je nach Auswahl von Le" +
-	"erzeichen zu Tabs oder von Tabs zu Leerzeichen.\x02Öffnen mit...\x02Möch" +
-	"ten Sie die Datei '%[1]s' wirklich öffnen?\x02Paket veröffentlichen\x02F" +
-	"ehler beim Veröffentlichen des Pakets: %[1]s\x02Paket erfolgreich veröff" +
-	"entlicht: %[1]s\x02Bündeln\x02Die Projektdateien zu einem gültigen Typst" +
-	"-Paket/einer Vorlage bündeln.\x02Erstellen\x02Bündel erstellt: %[1]s\x02" +
-	"Namespace\x04\x00\x01 \xab\x01\x02Wählen Sie den Namespace für die Veröf" +
-	"fentlichung. Stellen Sie sicher, dass Sie in der App bei TPIX angemeldet" +
-	" sind und Zugriff auf Namespaces Ihres TPIX-Kontos haben.\x02Namespaces " +
-	"werden geladen...\x02Keine beschreibbaren Namespaces\x02Suchen und Erset" +
-	"zen\x02Vorschau\x02KI-Assistent\x02Asset einfügen: %[1]s\x02Explorer\x02" +
-	"Kein Projekt\x02Kein Projekt geöffnet.\x02Projekt\x02Ordner\x02Fehler be" +
-	"im Abrufen der Abhängigkeiten: %[1]s\x02Abhängigkeiten erfolgreich abger" +
-	"ufen!\x02Abhängigkeiten synchronisieren\x02Bibliografien synchronisieren" +
-	"\x02Bibliografie-Info anzeigen\x02Keine Elemente entsprechen diesem Filt" +
-	"er.\x02Dieser Ordner ist leer. Verwende „Neu“, um eine Datei, einen Ordn" +
-	"er oder ein Projekt zu erstellen.\x02%[1]d Elemente\x02Neu\x02Neue Datei" +
-	"\x02Neuer Ordner\x02Neues Projekt\x02Notizbuch\x02Datei\x02Typst-Arbeite" +
-	"n\x02Notizbücher\x02Typst-Dokumente\x02PDFs\x02Bilder\x02Andere Dateien" +
-	"\x02Alle Dateien\x02Explorer ausblenden\x02Bibliothek\x02Ordner öffnen" +
-	"\x02Typst-Paketzentrum\x02Einstellungen\x02Dateien\x02Gliederung\x02Assi" +
-	"stent\x02Mehr\x02Lokale Vorlagen\x02Datei-Explorer\x02Eine neue Version " +
-	"ist verfügbar: %[1]s\x02Später\x02Herunterladen\x02Zwischengespeichert" +
-	"\x02Autor\x02Zuletzt aktualisiert\x02Lizenz\x02Kategorie\x02Dokumentatio" +
-	"n lesen\x02Importpfad kopieren\x02Pakete werden geladen...\x02Keine Pake" +
-	"te/Vorlagen gefunden\x02Löschen\x02Typst-Pakete\x02Pakete/Vorlagen auf T" +
-	"PIX suchen\x02Durchsuchen Sie Tausende von Paketen und Vorlagen auf dem " +
-	"TPIX-Server, einschließlich öffentlicher Namespaces und privater Namespa" +
-	"ces Ihrer Teams.\x02TPIX durchsuchen...\x02Persönliche @local-Pakete und" +
-	" -Vorlagen aus Typsts lokalem Paketordner. Es ist weder ein Konto noch e" +
-	"ine Netzwerkverbindung erforderlich.\x02Lokale Vorlagen durchsuchen …" +
-	"\x02Paketart\x02Vorlage verwenden\x02Pakete abfragen...\x04\x00\x01 \x1d" +
-	"\x02Paketabfrage fehlgeschlagen:\x02Typst-Paketinformationen geladen." +
-	"\x04\x00\x01 \x1f\x02Paket-Download fehlgeschlagen:\x04\x00\x01 \x1d\x02" +
-	"Paket %[1]s heruntergeladen.\x02Paket %[1]s und %[2]d transitive Abhängi" +
-	"gkeiten heruntergeladen.\x02%[1]d Pakete gefunden.\x02%[1]d lokale Vorla" +
-	"gen gefunden.\x02Alle\x02Agent\x02Konfigurieren Sie den Agenten für den " +
-	"KI-Assistenten. Sie können entweder Ihren eigenen Agenten manuell konfig" +
-	"urieren oder einen aus der untenstehenden Agenten-Registry auswählen." +
-	"\x02Agenten-Registry\x02Wählen Sie einen Agenten aus der Registry. Klick" +
-	"en Sie auf Verwenden, um die obige Konfiguration zu überschreiben.\x02MC" +
-	"P\x02Der integrierte MCP-Server verwendet standardmäßig einen dynamische" +
-	"n Netzwerkport und registriert sich zur Laufzeit beim Agenten.\x0aEinige" +
-	" Agenten unterstützen keine Laufzeitregistrierung. Sie müssen den MCP-Se" +
-	"rver-Port festlegen und den Server manuell registrieren. Bei Verwendung " +
-	"eines statischen Ports lautet die Serveradresse 127.0.0.1:5322, Transpor" +
-	"t: http.\x02Verwenden\x02Aktualisieren\x02ID:\x02Version:\x02Lizenz:\x02" +
-	"Autoren:\x02Repository:\x02Bereit — npx ist auf Ihrem System verfügbar." +
-	"\x02Erfordert Node.js. Installieren Sie es von https://nodejs.org und st" +
-	"arten Sie dann Typstify neu.\x02Wenn der Agent nicht startet, versuchen " +
-	"Sie die manuelle Installation: npm install -g %[1]s\x02Installation (npx" +
-	")\x02Bereit — uvx ist auf Ihrem System verfügbar.\x02Erfordert uvx. Inst" +
-	"allieren Sie es über `pip install uv` oder https://docs.astral.sh/uv und" +
-	" starten Sie dann Typstify neu.\x02Wenn der Agent nicht startet, versuch" +
-	"en Sie die manuelle Installation: uv pip install %[1]s\x02Installation (" +
-	"uvx)\x02Installation (Binär)\x02Laden Sie das Archiv für Ihre Plattform " +
-	"herunter, entpacken Sie es und stellen Sie sicher, dass die Binärdatei i" +
-	"n Ihrem PATH ist.\x02Installation\x02Dieser Agent ist für Ihre Plattform" +
-	" nicht direkt verfügbar. Besuchen Sie die ACP-Registry für weitere Detai" +
-	"ls.\x02Siehe https://agentclientprotocol.com/get-started/registry\x02Age" +
-	"ntenname\x02Wählen Sie unten einen Agenten aus oder geben Sie direkt ein" +
-	"en Namen ein.\x02Befehl\x02Wählen Sie unten einen Agenten aus oder bearb" +
-	"eiten Sie direkt, z. B. npx -y @scope/package\x02npx -y @scope/package" +
-	"\x02Umgebung\x02Zusätzliche Umgebungsvariablen, durch Leerzeichen getren" +
-	"nte SCHLÜSSEL=Wert-Paare, z. B. FOO=bar BAZ=qux\x02FOO=bar BAZ=qux\x02Ve" +
-	"rsion\x02Vorschau im Browser\x02Wenn aktiviert, wird die Dokumentvorscha" +
-	"u in Ihrem Standardbrowser geöffnet. Andernfalls wird die integrierte Vo" +
-	"rschau verwendet.\x02Teilvorschau aktivieren\x02Wenn aktiviert, rendert " +
-	"die Vorschau nur Seiten im sichtbaren Bereich. Dies verbessert besonders" +
-	" bei großen Dokumenten die Leistung.\x02Debug-Protokoll\x02Wenn aktivier" +
-	"t, werden Protokolle des integrierten LSP-Servers (Language Server Proto" +
-	"col) im Konsolenbereich ausgegeben. Ein Neustart oder Neuladen ist erfor" +
-	"derlich.\x02Energiesparmodus\x02Wenn aktiviert, läuft der LSP-Server im " +
-	"Energiesparmodus. Nur grundlegende Syntaxprüfung und Codevervollständigu" +
-	"ng sind verfügbar, Diagnose und Vorschau funktionieren nicht. Ein Neusta" +
-	"rt oder Neuladen ist erforderlich.\x02Sprachserver\x02Sprache\x02Legen S" +
-	"ie die Anzeigesprache der Benutzeroberfläche fest.\x02UI-Schriftgröße" +
-	"\x02Legen Sie die Schriftgröße für die Benutzeroberfläche fest. Die Einh" +
-	"eit ist skalierungsunabhängige Pixel (sp).\x02UI-Schriftfamilie\x02Legen" +
-	" Sie die gewünschten Schriftarten für die UI fest. Verwenden Sie die CSS" +
-	"-Schriftfamilien-Syntax als kommagetrennte Liste. Sie können das Feld au" +
-	"ch leer lassen, damit die Anwendung eine Fallback-Schriftart wählt.\x02S" +
-	"chriftfamilie\x02Design\x02Wählen Sie Ihr bevorzugtes Farbdesign für die" +
-	" Benutzeroberfläche.\x02Externer Typst-Compiler-Pfad\x02Gibt einen Pfad " +
-	"zu Ihrer eigenen Version des Typst-Compilers an. Lassen Sie das Feld lee" +
-	"r, um die integrierte Version zu verwenden. Bitte überprüfen Sie die Kom" +
-	"patibilität vor dem Wechsel. Ein Neustart ist erforderlich.\x02Externer " +
-	"LSP-Server-Pfad (Tinymist)\x02Gibt einen Pfad zu Ihrer eigenen Version v" +
-	"on Tinymist an. Lassen Sie das Feld leer, um die integrierte Version zu " +
-	"verwenden. Bitte überprüfen Sie die Kompatibilität vor dem Wechsel. Ein " +
-	"Neustart ist erforderlich.\x02Update prüfen\x02Beim App-Start nach Updat" +
-	"es suchen. Bitte aktivieren Sie dies, um über neue Funktionen und Fehler" +
-	"behebungen auf dem Laufenden zu bleiben.\x02Allgemein\x02Automatisches S" +
-	"peicherintervall\x02Legen Sie die Verzögerung für das automatische Speic" +
-	"hern fest (in Sekunden). Kann nicht vollständig deaktiviert werden.\x02V" +
-	"orschaubreite\x02Wähle, wie viel Platz die Vorschau beim Öffnen im Edito" +
-	"r verwendet. Du kannst den Trenner beim Bearbeiten weiterhin ziehen.\x02" +
-	"Legen Sie die gewünschten Schriftarten für den Editor fest. Verwenden Si" +
-	"e die CSS-Schriftfamilien-Syntax als kommagetrennte Liste. Sie können da" +
-	"s Feld auch leer lassen, damit die Anwendung eine Fallback-Schriftart wä" +
-	"hlt.\x02Schriftgröße\x02Legen Sie die Schriftgröße für den Editor fest. " +
-	"Die Einheit ist skalierungsunabhängige Pixel (sp).\x02Schriftstärke\x02L" +
-	"egen Sie die erwartete Stärke (oder Fettung) des Textes fest. Dies gilt " +
-	"nur für variable Schriftarten.\x02Zeilenhöhenfaktor\x02Legen Sie den Zei" +
-	"lenhöhenfaktor für den Editor fest. Der Zeilenhöhenfaktor wird mit der Z" +
-	"eilenhöhe multipliziert, um den endgültigen Abstand zwischen den Zeilen " +
-	"zu bestimmen.\x02Einzug\x02Legen Sie die erwarteten Zeichen fest, die be" +
-	"im Drücken der Tabulatortaste verwendet werden. Beachten Sie, dass dies " +
-	"nur für leere Dateien gilt. Der Einzug für nicht-leere Dateien wird auto" +
-	"matisch erkannt.\x02Legen Sie fest, wie vielen Leerzeichen ein Tab entsp" +
-	"richt. Beachten Sie, dass dies nur für leere Dateien gilt. Der Einzug fü" +
-	"r nicht-leere Dateien wird automatisch erkannt.\x02Editor\x02Dateioberfl" +
-	"äche\x02Oberfläche\x02„Klassisch“ behält Typstifys bisherigen Dateiabla" +
-	"uf bei. „Student“ ergänzt eine Bibliothek und fokussierte Projektnavigat" +
-	"ion.\x02Klassisch\x02Student\x02Deine Student-Einstellungen werden gespe" +
-	"ichert und wiederhergestellt, sobald du „Student“ auswählst.\x02Student-" +
-	"Einstellungen\x02Diese Einstellungen gelten sofort und ändern die klassi" +
-	"sche Oberfläche nicht.\x02Bibliotheksordner\x02Dieser Ordner wird beim S" +
-	"tart des Studentenmodus angezeigt. Beim Vergessen werden keine Dateien g" +
-	"elöscht.\x02Kein Bibliotheksordner ausgewählt\x02Ändern\x02Vergessen\x02" +
-	"Editor-Dateien\x02Zeige nur das aktuelle Projekt bzw. den aktuellen Ordn" +
-	"er oder behalte den vollständigen Arbeitsbereichsbaum.\x02Aktuelles Proj" +
-	"ekt oder aktueller Ordner\x02Gesamter Arbeitsbereich\x02Bibliotheksansic" +
-	"ht\x02Wähle die Standarddarstellung für Ordner, Notizbücher und Dateien." +
-	"\x02Raster\x02Liste\x02Navigation\x02Verwende die Bibliotheksleiste oder" +
-	" behalte Typstifys vertraute Seitenleiste und die unteren Bedienelemente" +
-	".\x02Bibliotheksleiste\x02Klassische Bedienelemente\x02Typst\x02Paketver" +
-	"zeichnis\x02Gibt an, wo Ihre lokalen Typst-Pakete/Vorlagen gespeichert w" +
-	"erden. Lassen Sie das Feld leer, um das Standardverzeichnis zu verwenden" +
-	".\x02Paket-Cache-Verzeichnis\x02Gibt an, wo die aus dem Netzwerk abgeruf" +
-	"enen zwischengespeicherten Typst-Pakete/Vorlagen gespeichert werden. Las" +
-	"sen Sie das Feld leer, um das Standardverzeichnis zu verwenden.\x02Zusät" +
-	"zlicher Schriftarten-Pfad\x02Das Verzeichnis, in dem beim Exportieren, V" +
-	"orschauen und automatischen Vervollständigen nach Schriftarten gesucht w" +
-	"ird. Beachten Sie, dass das aktuelle Projektstammverzeichnis immer durch" +
-	"sucht wird. Ein Neustart oder Neuladen ist erforderlich.\x02Exportverzei" +
-	"chnis\x02Das Verzeichnis zum Speichern exportierter Dateien, einschließl" +
-	"ich deps.json. Wenn nicht festgelegt, werden die exportierten Dateien in" +
-	" einem 'output'-Ordner neben der Quelldatei gespeichert.\x02Externe Eing" +
-	"aben laden\x02Lädt externe Eingaben aus einer Datei namens sys-inputs.js" +
-	"on als sys.inputs. Wenn keine vorhanden ist, wird sie im Stammverzeichni" +
-	"s erstellt.\x0aEine sys-inputs.json-Datei enthält benutzerdefinierte Sch" +
-	"lüssel-Wert-Paare, auf die über Typsts sys.inputs zugegriffen werden kan" +
-	"n. Die Werte sollten immer als Zeichenkette codierte Daten sein.\x0aEin " +
-	"Neustart oder Neuladen ist erforderlich, damit Änderungen für Code-Prüfu" +
-	"ng, Autovervollständigung und Vorschau wirksam werden.\x02Systemschrifta" +
-	"rten ignorieren\x02Systemschriftarten ignorieren oder nicht. Für Code-Pr" +
-	"üfung, Autovervollständigung und Vorschau ist ein Neustart oder Neulade" +
-	"n erforderlich.\x02Eingebettete Compiler-Schriftarten ignorieren\x02Eing" +
-	"ebettete Schriftarten ignorieren oder nicht. Dies funktioniert nur beim " +
-	"Exportieren von Dateien.\x02Abhängigkeitsdatei generieren\x02Schreibt di" +
-	"e Abhängigkeiten der kompilierten Datei in eine Datei namens deps.json i" +
-	"n Ihrem Projektverzeichnis.\x02TPIX\x02Wird geladen...\x02Sie haben eine" +
-	" aktive TPIX-Sitzung\x02TPIX abmelden\x02Melden Sie sich bei TPIX an, um" +
-	" auf alle Funktionen von Typstify zuzugreifen, einschließlich Paketverwa" +
-	"ltung, Zotero-Synchronisierung, MCP-Tools für den KI-Assistenten usw. Ei" +
-	"nige Funktionen erfordern möglicherweise ein Abonnement.\x02TPIX anmelde" +
-	"n\x04\x00\x01 -\x02Um mehr über TPIX zu erfahren, besuchen Sie\x04\x00" +
-	"\x01 0\x02Um ein TPIX-Abonnement zu erhalten, klicken Sie\x02Neue Versio" +
-	"n prüfen\x02Änderungsprotokoll\x02Veröffentlichungszeit\x02Zum Download" +
-	"\x02Über\x02git checkout %[1]s fehlgeschlagen: %[2]v\x02Breite: %[1]d, H" +
-	"öhe: %[2]d\x02Vorschau in einem separaten Fenster anzeigen\x02Dateispei" +
-	"cherort öffnen\x02Ordnerspeicherort öffnen"
+	"\x02Args\x02Umgebung\x02Tippe, um eine Unterhaltung zu beginnen\x02Tippe" +
+	", um eine Unterhaltung zu beginnen, und drücke zum Senden %[1]s\x02Sende" +
+	"n\x02Stopp\x02Aus\x02An\x02Optionen\x02@ eingeben, um Ressourcen einzubi" +
+	"nden, / um Skills zu nutzen\x02Keine Nachrichten.\x02Denkt nach\x02Plan" +
+	"\x02Roheingabe\x02Rohausgabe\x02Terminal: %[1]s\x02Kopieren\x02Ausschnei" +
+	"den\x02Einfügen\x02Suchen & Ersetzen\x02Sperren\x02Entsperren\x02Zeilenu" +
+	"mbruch entfernen\x02Zeilenumbruch\x02Groß-/Kleinschreibung\x02Ganzes Wor" +
+	"t\x02Regex verwenden\x02Keine Ergebnisse\x02%[1]d von %[2]d\x02Ersetzen" +
+	"\x02Alle ersetzen\x02Z %[1]d, Sp %[2]d\x04\x01 \x00\x14\x02(%[1]d ausgew" +
+	"ählt)\x02Beenden\x02Bibliotheksordner auswählen\x02Wähle den Ordner mit" +
+	" deinen Kursen, Notizbüchern und Dokumenten. Typstify behandelt ihn weit" +
+	"erhin als normalen Ordner.\x02Ordner auswählen\x02Anmelden\x02Start\x02T" +
+	"ypstify\x02Typst-Dokumente in Gedankenschnelle erstellen.\x02Willkommen," +
+	" %[1]s!\x02Erste Schritte\x02Neues Projekt...\x02Bestehendes Projekt öff" +
+	"nen...\x02Pakete/Vorlagen durchsuchen...\x02Mehr erfahren\x04\x00\x01 1" +
+	"\x02Um mehr über Typstify zu erfahren, besuchen Sie\x04\x00\x01 ,\x02Um " +
+	"mehr über TPIX zu erfahren, klicken Sie\x02Datei-Explorer öffnen/ausblen" +
+	"den: %[1]s\x02Konsole öffnen/ausblenden: %[1]s\x02Vorschau öffnen/ausble" +
+	"nden: %[1]s\x02KI-Assistent öffnen: %[1]s\x02KI-Assistent wird gestartet" +
+	"...\x02Sitzungen\x02Neuer Chat\x02Noch keine vorherigen Chats.\x02Biblio" +
+	"grafie synchronisieren\x02Absenden\x02Fehler beim Erstellen der verwalte" +
+	"ten Bibliografie: %[1]s\x02Verwaltete Bibliografie erfolgreich erstellt:" +
+	" %[1]s\x02Bibliografie-Dateiname\x02Der Name der verwalteten Bibliografi" +
+	"e-Datei, z. B. 'bib-file-name.bib'. Lassen Sie das Feld leer, um einen a" +
+	"utomatisch generierten Namen zu verwenden.\x02Sammlungen\x04\x00\x01 " +
+	"\xa0\x01\x02Wählen Sie die zu synchronisierende Sammlung aus. Stellen Si" +
+	"e sicher, dass Sie oder Ihr Team den Zotero-API-Schlüssel auf dem TPIX-S" +
+	"erver hinzugefügt haben.\x02Sammlungen werden geladen...\x02Keine Sammlu" +
+	"ngen gefunden\x02Verwaltete Bibliografie anzeigen\x02Verknüpfung aufhebe" +
+	"n\x02Fehler beim Aufheben der Bibliografie-Verknüpfung: %[1]s\x02Bibliog" +
+	"rafie-Verknüpfung erfolgreich aufgehoben: %[1]s\x02Der Pfad der verwalte" +
+	"ten Bibliografie-Datei. Durch Klicken auf Verknüpfung aufheben wird sie " +
+	"zu einer normalen Datei und nicht mehr mit der entfernten Zotero-Sammlun" +
+	"g synchronisiert.\x02Format:\x02Zotero-Sammlungsinfo\x02Namespace: %[1]s" +
+	"\x02Bibliothek: %[1]s\x02Sammlung: %[1]s\x02Neues Projekt erstellen\x02E" +
+	"rstellen\x02Bitte geben Sie einen Namen für Ihr Projekt an.\x02Bitte öff" +
+	"nen Sie einen Ordner im Datei-Explorer, um die Projektdateien abzulegen." +
+	"\x02Bitte geben Sie einen gültigen vollständigen Vorlagennamen ein.\x02K" +
+	"eine Anfrage zum Erstellen eines Pakets.\x02Bitte geben Sie einen Namen " +
+	"für Ihr Paket/Ihre Vorlage an.\x02Wähle aus, wo das Projekt erstellt wer" +
+	"den soll.\x02Fehler beim Erstellen des Projekts: %[1]s\x02Projekttyp\x02" +
+	"Wähle „Dokument“ für Notizen, Artikel, Bücher oder Folien. Wähle „Paket“" +
+	" oder „Vorlage“ nur zur Entwicklung wiederverwendbarer Typst-Pakete.\x02" +
+	"Projektstandort\x02Wähle den Ordner, in dem das Projekt erstellt werden " +
+	"soll.\x02Erstellen in\x02Das Projekt wird im aktuellen Bibliotheksordner" +
+	" erstellt.\x02Verzeichnis auswählen\x02Typst-Vorlage\x02Optional kannst " +
+	"du mit einem Typst-Paket wie @preview/aero-check:0.1.1 beginnen. Lass da" +
+	"s Feld leer, um ein einfaches Dokument zu erstellen.\x02@preview/package" +
+	":version (optional)\x02Projektname\x02Ein Ordner mit diesem Namen wird a" +
+	"m oben gewählten Ort erstellt.\x02Projektname\x02Paket\x02Vorlage\x02Dok" +
+	"ument\x02Datei/Ordner löschen\x02Bestätigen\x02Möchten Sie '%[1]s' wirkl" +
+	"ich löschen?\x02Sie können diese Datei aus dem Papierkorb wiederherstell" +
+	"en.\x02Abbrechen\x02Datei/Ordner verschieben\x02Möchten Sie wirklich\x02" +
+	"'%[1]s' nach '%[2]s' verschieben?\x02Das Format der Ausgabedatei.\x02Ers" +
+	"tellen und Exportieren\x02Exportieren\x02Datei wird exportiert...\x02Exp" +
+	"ortiertes Dateiformat\x02Seiten\x02Welche Seiten exportiert werden solle" +
+	"n. Gültige Werte sind durch Kommas getrennte Seitenzahlen und Seitenbere" +
+	"iche, z. B. 1,3,5,6-9. Wenn nicht angegeben, werden alle Seiten exportie" +
+	"rt.\x02Dateiname\x02Gibt den Ausgabedateinamen an. Wenn mehrere Dateien " +
+	"generiert werden, wird der Dateiname mit einer Nummer versehen. Wenn nic" +
+	"ht angegeben, wird der Name der Quelldatei verwendet.\x02PPI\x02Die für " +
+	"den PNG-Export zu verwendende PPI (Pixel pro Zoll).\x02PDF-Versionen\x02" +
+	"PDF-Version, deren Konformität Typstify erzwingt.\x02PDF-Standards\x02PD" +
+	"F-Standards, deren Konformität Typstify erzwingt.\x02PDF-Tags deaktivier" +
+	"en\x02Standardmäßig wird ein getaggtes PDF generiert, um grundlegende Ba" +
+	"rrierefreiheit zu gewährleisten. In einigen Fällen ist dies möglicherwei" +
+	"se nicht erwünscht. Aktivieren Sie diese Option, um es zu deaktivieren." +
+	"\x02Keine PDF-Tags\x02Dateieinzug ändern\x02Einzug mit Leerzeichen oder " +
+	"Tabs\x02Wählen Sie den Einzugsstil für die aktuelle Datei.\x02Tab-Breite" +
+	"\x02Tab-Anzeigegröße ändern.\x02Einzug konvertieren\x02Konvertiert den E" +
+	"inzug je nach Auswahl von Leerzeichen zu Tabs oder von Tabs zu Leerzeich" +
+	"en.\x02Öffnen mit...\x02Möchten Sie die Datei '%[1]s' wirklich öffnen?" +
+	"\x02Paket veröffentlichen\x02Fehler beim Veröffentlichen des Pakets: %[1" +
+	"]s\x02Paket erfolgreich veröffentlicht: %[1]s\x02Bündeln\x02Die Projektd" +
+	"ateien zu einem gültigen Typst-Paket/einer Vorlage bündeln.\x02Erstellen" +
+	"\x02Bündel erstellt: %[1]s\x02Namespace\x04\x00\x01 \xab\x01\x02Wählen S" +
+	"ie den Namespace für die Veröffentlichung. Stellen Sie sicher, dass Sie " +
+	"in der App bei TPIX angemeldet sind und Zugriff auf Namespaces Ihres TPI" +
+	"X-Kontos haben.\x02Namespaces werden geladen...\x02Keine beschreibbaren " +
+	"Namespaces\x02Suchen und Ersetzen\x02Vorschau\x02KI-Assistent\x02Asset e" +
+	"infügen: %[1]s\x02Explorer\x02Kein Projekt\x02Kein Projekt geöffnet.\x02" +
+	"Projekt\x02Ordner\x02Fehler beim Abrufen der Abhängigkeiten: %[1]s\x02Ab" +
+	"hängigkeiten erfolgreich abgerufen!\x02Abhängigkeiten synchronisieren" +
+	"\x02Bibliografien synchronisieren\x02Bibliografie-Info anzeigen\x02Keine" +
+	" Elemente entsprechen diesem Filter.\x02Dieser Ordner ist leer. Verwende" +
+	" „Neu“, um eine Datei, einen Ordner oder ein Projekt zu erstellen.\x02%[" +
+	"1]d Elemente\x02Neu\x02Neue Datei\x02Neuer Ordner\x02Neues Projekt\x02No" +
+	"tizbuch\x02Datei\x02Typst-Arbeiten\x02Notizbücher\x02Typst-Dokumente\x02" +
+	"PDFs\x02Bilder\x02Andere Dateien\x02Alle Dateien\x02Explorer ausblenden" +
+	"\x02Bibliothek\x02Ordner öffnen\x02Typst-Paketzentrum\x02Einstellungen" +
+	"\x02Dateien\x02Gliederung\x02Assistent\x02Mehr\x02Lokale Vorlagen\x02Dat" +
+	"ei-Explorer\x02Eine neue Version ist verfügbar: %[1]s\x02Später\x02Herun" +
+	"terladen\x02Zwischengespeichert\x02Autor\x02Zuletzt aktualisiert\x02Lize" +
+	"nz\x02Kategorie\x02Dokumentation lesen\x02Importpfad kopieren\x02Pakete " +
+	"werden geladen...\x02Keine Pakete/Vorlagen gefunden\x02Löschen\x02Typst-" +
+	"Pakete\x02Pakete/Vorlagen auf TPIX suchen\x02Durchsuchen Sie Tausende vo" +
+	"n Paketen und Vorlagen auf dem TPIX-Server, einschließlich öffentlicher " +
+	"Namespaces und privater Namespaces Ihrer Teams.\x02TPIX durchsuchen..." +
+	"\x02Persönliche @local-Pakete und -Vorlagen aus Typsts lokalem Paketordn" +
+	"er. Es ist weder ein Konto noch eine Netzwerkverbindung erforderlich." +
+	"\x02Lokale Vorlagen durchsuchen …\x02Paketart\x02Vorlage verwenden\x02Pa" +
+	"kete abfragen...\x04\x00\x01 \x1d\x02Paketabfrage fehlgeschlagen:\x02Typ" +
+	"st-Paketinformationen geladen.\x04\x00\x01 \x1f\x02Paket-Download fehlge" +
+	"schlagen:\x04\x00\x01 \x1d\x02Paket %[1]s heruntergeladen.\x02Paket %[1]" +
+	"s und %[2]d transitive Abhängigkeiten heruntergeladen.\x02%[1]d Pakete g" +
+	"efunden.\x02%[1]d lokale Vorlagen gefunden.\x02Alle\x02Agent\x02Konfigur" +
+	"ieren Sie den Agenten für den KI-Assistenten. Sie können entweder Ihren " +
+	"eigenen Agenten manuell konfigurieren oder einen aus der untenstehenden " +
+	"Agenten-Registry auswählen.\x02Agenten-Registry\x02Wählen Sie einen Agen" +
+	"ten aus der Registry. Klicken Sie auf Verwenden, um die obige Konfigurat" +
+	"ion zu überschreiben.\x02MCP\x02Der integrierte MCP-Server verwendet sta" +
+	"ndardmäßig einen dynamischen Netzwerkport und registriert sich zur Laufz" +
+	"eit beim Agenten.\x0aEinige Agenten unterstützen keine Laufzeitregistrie" +
+	"rung. Sie müssen den MCP-Server-Port festlegen und den Server manuell re" +
+	"gistrieren. Bei Verwendung eines statischen Ports lautet die Serveradres" +
+	"se 127.0.0.1:5322, Transport: http.\x02Verwenden\x02Aktualisieren\x02ID:" +
+	"\x02Version:\x02Lizenz:\x02Autoren:\x02Repository:\x02Bereit — npx ist a" +
+	"uf Ihrem System verfügbar.\x02Erfordert Node.js. Installieren Sie es von" +
+	" https://nodejs.org und starten Sie dann Typstify neu.\x02Wenn der Agent" +
+	" nicht startet, versuchen Sie die manuelle Installation: npm install -g " +
+	"%[1]s\x02Installation (npx)\x02Bereit — uvx ist auf Ihrem System verfügb" +
+	"ar.\x02Erfordert uvx. Installieren Sie es über `pip install uv` oder htt" +
+	"ps://docs.astral.sh/uv und starten Sie dann Typstify neu.\x02Wenn der Ag" +
+	"ent nicht startet, versuchen Sie die manuelle Installation: uv pip insta" +
+	"ll %[1]s\x02Installation (uvx)\x02Installation (Binär)\x02Laden Sie das " +
+	"Archiv für Ihre Plattform herunter, entpacken Sie es und stellen Sie sic" +
+	"her, dass die Binärdatei in Ihrem PATH ist.\x02Installation\x02Dieser Ag" +
+	"ent ist für Ihre Plattform nicht direkt verfügbar. Besuchen Sie die ACP-" +
+	"Registry für weitere Details.\x02Siehe https://agentclientprotocol.com/g" +
+	"et-started/registry\x02Agentenname\x02Wählen Sie unten einen Agenten aus" +
+	" oder geben Sie direkt einen Namen ein.\x02Befehl\x02Wählen Sie unten ei" +
+	"nen Agenten aus oder bearbeiten Sie direkt, z. B. npx -y @scope/package" +
+	"\x02npx -y @scope/package\x02Umgebung\x02Zusätzliche Umgebungsvariablen," +
+	" durch Leerzeichen getrennte SCHLÜSSEL=Wert-Paare, z. B. FOO=bar BAZ=qux" +
+	"\x02FOO=bar BAZ=qux\x02Version\x02Vorschau im Browser\x02Wenn aktiviert," +
+	" wird die Dokumentvorschau in Ihrem Standardbrowser geöffnet. Andernfall" +
+	"s wird die integrierte Vorschau verwendet.\x02Teilvorschau aktivieren" +
+	"\x02Wenn aktiviert, rendert die Vorschau nur Seiten im sichtbaren Bereic" +
+	"h. Dies verbessert besonders bei großen Dokumenten die Leistung.\x02Debu" +
+	"g-Protokoll\x02Wenn aktiviert, werden Protokolle des integrierten LSP-Se" +
+	"rvers (Language Server Protocol) im Konsolenbereich ausgegeben. Ein Neus" +
+	"tart oder Neuladen ist erforderlich.\x02Energiesparmodus\x02Wenn aktivie" +
+	"rt, läuft der LSP-Server im Energiesparmodus. Nur grundlegende Syntaxprü" +
+	"fung und Codevervollständigung sind verfügbar, Diagnose und Vorschau fun" +
+	"ktionieren nicht. Ein Neustart oder Neuladen ist erforderlich.\x02Sprach" +
+	"server\x02Tastenkürzel\x02Aktionen oder Tastenkürzel suchen\x02Alle Stan" +
+	"dards wiederherstellen\x02Klicke auf ein Tastenkürzelfeld und drücke dan" +
+	"n die neue Tastenkombination. Escape bricht die Aufnahme ab.\x02Deaktivi" +
+	"ert\x02%[1]s aktivieren\x02%[1]s wird bereits von %[2]s verwendet.\x02Ta" +
+	"stenkürzel drücken …\x02Zurücksetzen\x02Arbeitsbereich\x02Editor\x02Date" +
+	"i-Explorer ein-/ausblenden\x02Konsole ein-/ausblenden\x02Assistenten ein" +
+	"-/ausblenden\x02Vorschau ein-/ausblenden\x02Datei speichern\x02Suchen un" +
+	"d Ersetzen\x02Schreibschutz ein-/ausschalten\x02Zeilenumbruch ein-/aussc" +
+	"halten\x02Text kopieren\x02Text ausschneiden\x02Text einfügen\x02Vervoll" +
+	"ständigungen anzeigen\x02Typst-Zeilenumbruch einfügen\x02Datei kopieren" +
+	"\x02Datei ausschneiden\x02Datei einfügen\x02Eingabe senden\x02Projektdat" +
+	"eien anzeigen oder ausblenden.\x02Compiler- und Anwendungsausgabe anzeig" +
+	"en oder ausblenden.\x02KI-Assistenten öffnen oder schließen.\x02Dokument" +
+	"vorschau anzeigen oder ausblenden.\x02Aktives Dokument speichern.\x02Im " +
+	"aktiven Dokument suchen.\x02Bearbeitung des aktiven Dokuments sperren od" +
+	"er entsperren.\x02Lange Editorzeilen umbrechen oder den Umbruch aufheben" +
+	".\x02Auswahl im Editor kopieren.\x02Auswahl im Editor ausschneiden.\x02T" +
+	"ext aus der Zwischenablage in den Editor einfügen.\x02Code- und Typst-Vo" +
+	"rschläge öffnen.\x02\\ einfügen und in einer neuen Zeile fortfahren.\x02" +
+	"Ausgewählte Datei oder ausgewählten Ordner kopieren.\x02Ausgewählte Date" +
+	"i oder ausgewählten Ordner ausschneiden.\x02Dateien in den ausgewählten " +
+	"Ordner einfügen.\x02Aktuelle Nachricht an den Assistenten senden.\x02Spr" +
+	"ache\x02Legen Sie die Anzeigesprache der Benutzeroberfläche fest.\x02UI-" +
+	"Schriftgröße\x02Legen Sie die Schriftgröße für die Benutzeroberfläche fe" +
+	"st. Die Einheit ist skalierungsunabhängige Pixel (sp).\x02UI-Schriftfami" +
+	"lie\x02Legen Sie die gewünschten Schriftarten für die UI fest. Verwenden" +
+	" Sie die CSS-Schriftfamilien-Syntax als kommagetrennte Liste. Sie können" +
+	" das Feld auch leer lassen, damit die Anwendung eine Fallback-Schriftart" +
+	" wählt.\x02Schriftfamilie\x02Design\x02Wählen Sie Ihr bevorzugtes Farbde" +
+	"sign für die Benutzeroberfläche.\x02Externer Typst-Compiler-Pfad\x02Gibt" +
+	" einen Pfad zu Ihrer eigenen Version des Typst-Compilers an. Lassen Sie " +
+	"das Feld leer, um die integrierte Version zu verwenden. Bitte überprüfen" +
+	" Sie die Kompatibilität vor dem Wechsel. Ein Neustart ist erforderlich." +
+	"\x02Externer LSP-Server-Pfad (Tinymist)\x02Gibt einen Pfad zu Ihrer eige" +
+	"nen Version von Tinymist an. Lassen Sie das Feld leer, um die integriert" +
+	"e Version zu verwenden. Bitte überprüfen Sie die Kompatibilität vor dem " +
+	"Wechsel. Ein Neustart ist erforderlich.\x02Update prüfen\x02Beim App-Sta" +
+	"rt nach Updates suchen. Bitte aktivieren Sie dies, um über neue Funktion" +
+	"en und Fehlerbehebungen auf dem Laufenden zu bleiben.\x02Allgemein\x02Au" +
+	"tomatisches Speicherintervall\x02Legen Sie die Verzögerung für das autom" +
+	"atische Speichern fest (in Sekunden). Kann nicht vollständig deaktiviert" +
+	" werden.\x02Vorschaubreite\x02Wähle, wie viel Platz die Vorschau beim Öf" +
+	"fnen im Editor verwendet. Du kannst den Trenner beim Bearbeiten weiterhi" +
+	"n ziehen.\x02Legen Sie die gewünschten Schriftarten für den Editor fest." +
+	" Verwenden Sie die CSS-Schriftfamilien-Syntax als kommagetrennte Liste. " +
+	"Sie können das Feld auch leer lassen, damit die Anwendung eine Fallback-" +
+	"Schriftart wählt.\x02Schriftgröße\x02Legen Sie die Schriftgröße für den " +
+	"Editor fest. Die Einheit ist skalierungsunabhängige Pixel (sp).\x02Schri" +
+	"ftstärke\x02Legen Sie die erwartete Stärke (oder Fettung) des Textes fes" +
+	"t. Dies gilt nur für variable Schriftarten.\x02Zeilenhöhenfaktor\x02Lege" +
+	"n Sie den Zeilenhöhenfaktor für den Editor fest. Der Zeilenhöhenfaktor w" +
+	"ird mit der Zeilenhöhe multipliziert, um den endgültigen Abstand zwische" +
+	"n den Zeilen zu bestimmen.\x02Einzug\x02Legen Sie die erwarteten Zeichen" +
+	" fest, die beim Drücken der Tabulatortaste verwendet werden. Beachten Si" +
+	"e, dass dies nur für leere Dateien gilt. Der Einzug für nicht-leere Date" +
+	"ien wird automatisch erkannt.\x02Legen Sie fest, wie vielen Leerzeichen " +
+	"ein Tab entspricht. Beachten Sie, dass dies nur für leere Dateien gilt. " +
+	"Der Einzug für nicht-leere Dateien wird automatisch erkannt.\x02Dateiobe" +
+	"rfläche\x02Oberfläche\x02„Klassisch“ behält Typstifys bisherigen Dateiab" +
+	"lauf bei. „Student“ ergänzt eine Bibliothek und fokussierte Projektnavig" +
+	"ation.\x02Klassisch\x02Student\x02Deine Student-Einstellungen werden ges" +
+	"peichert und wiederhergestellt, sobald du „Student“ auswählst.\x02Studen" +
+	"t-Einstellungen\x02Diese Einstellungen gelten sofort und ändern die klas" +
+	"sische Oberfläche nicht.\x02Bibliotheksordner\x02Dieser Ordner wird beim" +
+	" Start des Studentenmodus angezeigt. Beim Vergessen werden keine Dateien" +
+	" gelöscht.\x02Kein Bibliotheksordner ausgewählt\x02Ändern\x02Vergessen" +
+	"\x02Editor-Dateien\x02Zeige nur das aktuelle Projekt bzw. den aktuellen " +
+	"Ordner oder behalte den vollständigen Arbeitsbereichsbaum.\x02Aktuelles " +
+	"Projekt oder aktueller Ordner\x02Gesamter Arbeitsbereich\x02Bibliotheksa" +
+	"nsicht\x02Wähle die Standarddarstellung für Ordner, Notizbücher und Date" +
+	"ien.\x02Raster\x02Liste\x02Navigation\x02Verwende die Bibliotheksleiste " +
+	"oder behalte Typstifys vertraute Seitenleiste und die unteren Bedienelem" +
+	"ente.\x02Bibliotheksleiste\x02Klassische Bedienelemente\x02Typst\x02Pake" +
+	"tverzeichnis\x02Gibt an, wo Ihre lokalen Typst-Pakete/Vorlagen gespeiche" +
+	"rt werden. Lassen Sie das Feld leer, um das Standardverzeichnis zu verwe" +
+	"nden.\x02Paket-Cache-Verzeichnis\x02Gibt an, wo die aus dem Netzwerk abg" +
+	"erufenen zwischengespeicherten Typst-Pakete/Vorlagen gespeichert werden." +
+	" Lassen Sie das Feld leer, um das Standardverzeichnis zu verwenden.\x02Z" +
+	"usätzlicher Schriftarten-Pfad\x02Das Verzeichnis, in dem beim Exportiere" +
+	"n, Vorschauen und automatischen Vervollständigen nach Schriftarten gesuc" +
+	"ht wird. Beachten Sie, dass das aktuelle Projektstammverzeichnis immer d" +
+	"urchsucht wird. Ein Neustart oder Neuladen ist erforderlich.\x02Exportve" +
+	"rzeichnis\x02Das Verzeichnis zum Speichern exportierter Dateien, einschl" +
+	"ießlich deps.json. Wenn nicht festgelegt, werden die exportierten Dateie" +
+	"n in einem 'output'-Ordner neben der Quelldatei gespeichert.\x02Externe " +
+	"Eingaben laden\x02Lädt externe Eingaben aus einer Datei namens sys-input" +
+	"s.json als sys.inputs. Wenn keine vorhanden ist, wird sie im Stammverzei" +
+	"chnis erstellt.\x0aEine sys-inputs.json-Datei enthält benutzerdefinierte" +
+	" Schlüssel-Wert-Paare, auf die über Typsts sys.inputs zugegriffen werden" +
+	" kann. Die Werte sollten immer als Zeichenkette codierte Daten sein.\x0a" +
+	"Ein Neustart oder Neuladen ist erforderlich, damit Änderungen für Code-P" +
+	"rüfung, Autovervollständigung und Vorschau wirksam werden.\x02Systemschr" +
+	"iftarten ignorieren\x02Systemschriftarten ignorieren oder nicht. Für Cod" +
+	"e-Prüfung, Autovervollständigung und Vorschau ist ein Neustart oder Neul" +
+	"aden erforderlich.\x02Eingebettete Compiler-Schriftarten ignorieren\x02E" +
+	"ingebettete Schriftarten ignorieren oder nicht. Dies funktioniert nur be" +
+	"im Exportieren von Dateien.\x02Abhängigkeitsdatei generieren\x02Schreibt" +
+	" die Abhängigkeiten der kompilierten Datei in eine Datei namens deps.jso" +
+	"n in Ihrem Projektverzeichnis.\x02TPIX\x02Wird geladen...\x02Sie haben e" +
+	"ine aktive TPIX-Sitzung\x02TPIX abmelden\x02Melden Sie sich bei TPIX an," +
+	" um auf alle Funktionen von Typstify zuzugreifen, einschließlich Paketve" +
+	"rwaltung, Zotero-Synchronisierung, MCP-Tools für den KI-Assistenten usw." +
+	" Einige Funktionen erfordern möglicherweise ein Abonnement.\x02TPIX anme" +
+	"lden\x04\x00\x01 -\x02Um mehr über TPIX zu erfahren, besuchen Sie\x04" +
+	"\x00\x01 0\x02Um ein TPIX-Abonnement zu erhalten, klicken Sie\x02Neue Ve" +
+	"rsion prüfen\x02Änderungsprotokoll\x02Veröffentlichungszeit\x02Zum Downl" +
+	"oad\x02Über\x02git checkout %[1]s fehlgeschlagen: %[2]v\x02Breite: %[1]d" +
+	", Höhe: %[2]d\x02Vorschau in einem separaten Fenster anzeigen\x02Dateisp" +
+	"eicherort öffnen\x02Ordnerspeicherort öffnen"
 
-var en_USIndex = []uint32{ // 360 elements
+var en_USIndex = []uint32{ // 405 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000032, 0x00000035, 0x0000003a,
 	0x00000046, 0x0000004b, 0x0000006b, 0x00000070,
-	0x00000074, 0x000000ac, 0x000000b1, 0x000000b6,
-	0x000000ba, 0x000000bd, 0x000000c5, 0x000000f6,
-	0x00000103, 0x0000010c, 0x00000111, 0x0000011b,
-	0x00000126, 0x00000136, 0x0000013b, 0x0000013f,
-	0x00000145, 0x00000154, 0x00000159, 0x00000160,
-	0x0000016d, 0x00000178, 0x00000183, 0x0000018e,
+	0x00000074, 0x00000091, 0x000000c3, 0x000000c8,
+	0x000000cd, 0x000000d1, 0x000000d4, 0x000000dc,
+	0x0000010d, 0x0000011a, 0x00000123, 0x00000128,
+	0x00000132, 0x0000013d, 0x0000014d, 0x00000152,
+	0x00000156, 0x0000015c, 0x0000016b, 0x00000170,
+	0x00000177, 0x00000184, 0x0000018f, 0x0000019a,
 	// Entry 20 - 3F
-	0x00000198, 0x000001a3, 0x000001b2, 0x000001ba,
-	0x000001c6, 0x000001da, 0x000001f0, 0x000001f5,
-	0x00000210, 0x0000027e, 0x0000028c, 0x00000294,
-	0x0000029a, 0x000002a3, 0x000002d5, 0x000002e5,
-	0x000002f5, 0x00000304, 0x0000031d, 0x0000033a,
-	0x00000345, 0x0000036e, 0x00000393, 0x000003b6,
-	0x000003d3, 0x000003f2, 0x0000040f, 0x00000428,
-	0x00000431, 0x0000043a, 0x00000451, 0x00000463,
+	0x000001a5, 0x000001af, 0x000001ba, 0x000001c9,
+	0x000001d1, 0x000001dd, 0x000001f1, 0x00000207,
+	0x0000020c, 0x00000227, 0x00000295, 0x000002a3,
+	0x000002ab, 0x000002b1, 0x000002ba, 0x000002ec,
+	0x000002fc, 0x0000030c, 0x0000031b, 0x00000334,
+	0x00000351, 0x0000035c, 0x00000385, 0x000003aa,
+	0x000003c9, 0x000003e2, 0x000003fd, 0x00000416,
+	0x0000042f, 0x00000438, 0x00000441, 0x00000458,
 	// Entry 40 - 5F
-	0x0000046a, 0x00000495, 0x000004c4, 0x000004db,
-	0x00000557, 0x00000563, 0x000005d1, 0x000005e7,
-	0x000005fc, 0x00000616, 0x0000061d, 0x00000646,
-	0x00000673, 0x00000710, 0x00000718, 0x0000072f,
-	0x00000740, 0x0000074f, 0x00000761, 0x00000774,
-	0x0000077b, 0x0000079f, 0x000007e1, 0x0000080a,
-	0x0000082a, 0x00000857, 0x0000088a, 0x000008a6,
-	0x000008b3, 0x00000933, 0x00000944, 0x00000979,
+	0x0000046a, 0x00000471, 0x0000049c, 0x000004cb,
+	0x000004e2, 0x0000055e, 0x0000056a, 0x000005d8,
+	0x000005ee, 0x00000603, 0x0000061d, 0x00000624,
+	0x0000064d, 0x0000067a, 0x00000717, 0x0000071f,
+	0x00000736, 0x00000747, 0x00000756, 0x00000768,
+	0x0000077b, 0x00000782, 0x000007a6, 0x000007e8,
+	0x00000811, 0x00000831, 0x0000085e, 0x00000891,
+	0x000008ad, 0x000008ba, 0x0000093a, 0x0000094b,
 	// Entry 60 - 7F
-	0x00000983, 0x000009c2, 0x000009d5, 0x000009e4,
-	0x00000a5a, 0x00000a7e, 0x00000a8b, 0x00000aca,
-	0x00000ad7, 0x00000adf, 0x00000ae8, 0x00000af1,
-	0x00000b04, 0x00000b0c, 0x00000b35, 0x00000b5f,
-	0x00000b66, 0x00000b77, 0x00000b95, 0x00000baa,
-	0x00000bc9, 0x00000bda, 0x00000be1, 0x00000bf3,
-	0x00000c08, 0x00000c0e, 0x00000cb1, 0x00000cbb,
-	0x00000d67, 0x00000d6b, 0x00000d9c, 0x00000da9,
+	0x00000980, 0x0000098a, 0x000009c9, 0x000009dc,
+	0x000009eb, 0x00000a61, 0x00000a85, 0x00000a92,
+	0x00000ad1, 0x00000ade, 0x00000ae6, 0x00000aef,
+	0x00000af8, 0x00000b0b, 0x00000b13, 0x00000b3c,
+	0x00000b66, 0x00000b6d, 0x00000b7e, 0x00000b9c,
+	0x00000bb1, 0x00000bd0, 0x00000be1, 0x00000be8,
+	0x00000bfa, 0x00000c0f, 0x00000c15, 0x00000cb8,
+	0x00000cc2, 0x00000d6e, 0x00000d72, 0x00000da3,
 	// Entry 80 - 9F
-	0x00000de2, 0x00000df0, 0x00000e2b, 0x00000e3c,
-	0x00000ec9, 0x00000ed5, 0x00000eed, 0x00000f08,
-	0x00000f3b, 0x00000f45, 0x00000f5e, 0x00000f76,
-	0x00000fd9, 0x00000feb, 0x00001017, 0x00001027,
-	0x00001044, 0x00001065, 0x0000106c, 0x000010a8,
-	0x000010ae, 0x000010c4, 0x000010ce, 0x0000115a,
-	0x00001170, 0x00001187, 0x00001198, 0x000011a0,
-	0x000011ad, 0x000011c0, 0x000011c9, 0x000011d4,
+	0x00000db0, 0x00000de9, 0x00000df7, 0x00000e32,
+	0x00000e43, 0x00000ed0, 0x00000edc, 0x00000ef4,
+	0x00000f0f, 0x00000f42, 0x00000f4c, 0x00000f65,
+	0x00000f7d, 0x00000fe0, 0x00000ff2, 0x0000101e,
+	0x0000102e, 0x0000104b, 0x0000106c, 0x00001073,
+	0x000010af, 0x000010b5, 0x000010cb, 0x000010d5,
+	0x00001161, 0x00001177, 0x0000118e, 0x0000119f,
+	0x000011a7, 0x000011b4, 0x000011c7, 0x000011d0,
 	// Entry A0 - BF
-	0x000011e5, 0x000011ed, 0x000011f4, 0x00001213,
-	0x00001230, 0x00001242, 0x00001256, 0x0000126d,
-	0x00001289, 0x000012cd, 0x000012d9, 0x000012dd,
-	0x000012e6, 0x000012f1, 0x000012fd, 0x00001306,
-	0x0000130b, 0x00001316, 0x00001320, 0x00001330,
-	0x00001335, 0x0000133c, 0x00001348, 0x00001352,
-	0x00001360, 0x00001368, 0x00001374, 0x00001389,
-	0x00001392, 0x00001398, 0x000013a0, 0x000013aa,
+	0x000011db, 0x000011ec, 0x000011f4, 0x000011fb,
+	0x0000121a, 0x00001237, 0x00001249, 0x0000125d,
+	0x00001274, 0x00001290, 0x000012d4, 0x000012e0,
+	0x000012e4, 0x000012ed, 0x000012f8, 0x00001304,
+	0x0000130d, 0x00001312, 0x0000131d, 0x00001327,
+	0x00001337, 0x0000133c, 0x00001343, 0x0000134f,
+	0x00001359, 0x00001367, 0x0000136f, 0x0000137b,
+	0x00001390, 0x00001399, 0x0000139f, 0x000013a7,
 	// Entry C0 - DF
-	0x000013af, 0x000013bf, 0x000013cd, 0x000013ef,
-	0x000013f5, 0x000013fe, 0x00001405, 0x0000140c,
-	0x00001419, 0x00001421, 0x0000142a, 0x00001438,
-	0x00001449, 0x0000145d, 0x00001479, 0x0000147f,
-	0x0000148e, 0x000014b0, 0x00001530, 0x0000153f,
-	0x000015b7, 0x000015d1, 0x000015de, 0x000015eb,
-	0x000015fd, 0x00001619, 0x00001635, 0x00001653,
-	0x00001672, 0x000016ae, 0x000016c4, 0x000016e1,
+	0x000013b1, 0x000013b6, 0x000013c6, 0x000013d4,
+	0x000013f6, 0x000013fc, 0x00001405, 0x0000140c,
+	0x00001413, 0x00001420, 0x00001428, 0x00001431,
+	0x0000143f, 0x00001450, 0x00001464, 0x00001480,
+	0x00001486, 0x00001495, 0x000014b7, 0x00001537,
+	0x00001546, 0x000015be, 0x000015d8, 0x000015e5,
+	0x000015f2, 0x00001604, 0x00001620, 0x0000163c,
+	0x0000165a, 0x00001679, 0x000016b5, 0x000016cb,
 	// Entry E0 - FF
-	0x000016e5, 0x000016eb, 0x0000176b, 0x0000177a,
-	0x000017cd, 0x000017d1, 0x00001904, 0x00001908,
-	0x00001910, 0x00001914, 0x0000191d, 0x00001926,
-	0x0000192f, 0x0000193b, 0x00001966, 0x000019b0,
-	0x000019fb, 0x00001a0e, 0x00001a39, 0x00001a99,
-	0x00001ae4, 0x00001af7, 0x00001b0d, 0x00001b68,
-	0x00001b75, 0x00001bd6, 0x00001c0f, 0x00001c1a,
-	0x00001c49, 0x00001c51, 0x00001c94, 0x00001caa,
+	0x000016e8, 0x000016ec, 0x000016f2, 0x00001772,
+	0x00001781, 0x000017d4, 0x000017d8, 0x0000190b,
+	0x0000190f, 0x00001917, 0x0000191b, 0x00001924,
+	0x0000192d, 0x00001936, 0x00001942, 0x0000196d,
+	0x000019b7, 0x00001a02, 0x00001a15, 0x00001a40,
+	0x00001aa0, 0x00001aeb, 0x00001afe, 0x00001b14,
+	0x00001b6f, 0x00001b7c, 0x00001bdd, 0x00001c16,
+	0x00001c21, 0x00001c50, 0x00001c58, 0x00001c9b,
 	// Entry 100 - 11F
-	0x00001cb6, 0x00001d09, 0x00001d19, 0x00001d21,
-	0x00001d34, 0x00001daf, 0x00001dc6, 0x00001e44,
-	0x00001e4e, 0x00001ee8, 0x00001ef5, 0x00001fbf,
-	0x00001fcf, 0x00001fd8, 0x0000200b, 0x00002018,
-	0x0000206b, 0x0000207a, 0x0000212d, 0x00002139,
-	0x0000213f, 0x00002178, 0x00002195, 0x0000224b,
-	0x0000226e, 0x0000231e, 0x0000232b, 0x00002390,
-	0x00002398, 0x000023ab, 0x000023f0, 0x000023fe,
+	0x00001cb1, 0x00001cbd, 0x00001d10, 0x00001d20,
+	0x00001d28, 0x00001d3b, 0x00001db6, 0x00001dcd,
+	0x00001e4b, 0x00001e55, 0x00001eef, 0x00001efc,
+	0x00001fc6, 0x00001fd6, 0x00001fe0, 0x00001ffc,
+	0x00002011, 0x00002067, 0x00002070, 0x0000207d,
+	0x0000209d, 0x000020af, 0x000020b5, 0x000020bf,
+	0x000020c6, 0x000020db, 0x000020ea, 0x000020fb,
+	0x0000210a, 0x00002114, 0x00002125, 0x0000213b,
 	// Entry 120 - 13F
-	0x00002469, 0x00002520, 0x0000252a, 0x00002575,
-	0x00002581, 0x000025d5, 0x000025e7, 0x00002672,
-	0x0000267e, 0x00002724, 0x000027bf, 0x000027c6,
-	0x000027d5, 0x000027df, 0x0000284c, 0x00002854,
-	0x0000285c, 0x000028a8, 0x000028bc, 0x00002905,
-	0x00002914, 0x00002968, 0x00002983, 0x0000298a,
-	0x00002991, 0x0000299e, 0x000029ec, 0x00002a06,
-	0x00002a16, 0x00002a23, 0x00002a66, 0x00002a6b,
+	0x00002150, 0x0000215a, 0x00002163, 0x0000216e,
+	0x0000217f, 0x00002197, 0x000021a1, 0x000021aa,
+	0x000021b5, 0x000021c1, 0x000021e1, 0x0000220f,
+	0x0000222f, 0x00002252, 0x0000226c, 0x0000228b,
+	0x000022bb, 0x000022dd, 0x000022f8, 0x00002312,
+	0x00002338, 0x00002359, 0x0000237e, 0x000023a0,
+	0x000023c1, 0x000023e7, 0x0000240b, 0x00002414,
+	0x00002447, 0x00002454, 0x000024a7, 0x000024b6,
 	// Entry 140 - 15F
-	0x00002a70, 0x00002a7b, 0x00002aca, 0x00002ad7,
-	0x00002ae8, 0x00002aee, 0x00002afa, 0x00002b5f,
-	0x00002b71, 0x00002bf6, 0x00002c06, 0x00002ccd,
-	0x00002cd8, 0x00002d74, 0x00002d89, 0x00002f09,
-	0x00002f1d, 0x00002f98, 0x00002fb7, 0x00002ffb,
-	0x00003016, 0x00003073, 0x00003078, 0x00003083,
-	0x000030a3, 0x000030af, 0x00003154, 0x0000315f,
-	0x00003184, 0x000031ae, 0x000031c0, 0x000031ca,
+	0x00002569, 0x00002575, 0x0000257b, 0x000025b4,
+	0x000025d1, 0x00002687, 0x000026aa, 0x0000275a,
+	0x00002767, 0x000027cc, 0x000027d4, 0x000027e7,
+	0x0000282c, 0x0000283a, 0x000028a5, 0x0000295c,
+	0x00002966, 0x000029b1, 0x000029bd, 0x00002a11,
+	0x00002a23, 0x00002aae, 0x00002aba, 0x00002b60,
+	0x00002bfb, 0x00002c0a, 0x00002c14, 0x00002c81,
+	0x00002c89, 0x00002c91, 0x00002cdd, 0x00002cf1,
 	// Entry 160 - 17F
-	0x000031d7, 0x000031e6, 0x000031ec, 0x0000320d,
-	0x00003229, 0x0000325d, 0x00003270, 0x00003285,
-} // Size: 1464 bytes
+	0x00002d3a, 0x00002d49, 0x00002d9d, 0x00002db8,
+	0x00002dbf, 0x00002dc6, 0x00002dd3, 0x00002e21,
+	0x00002e3b, 0x00002e4b, 0x00002e58, 0x00002e9b,
+	0x00002ea0, 0x00002ea5, 0x00002eb0, 0x00002eff,
+	0x00002f0c, 0x00002f1d, 0x00002f23, 0x00002f2f,
+	0x00002f94, 0x00002fa6, 0x0000302b, 0x0000303b,
+	0x00003102, 0x0000310d, 0x000031a9, 0x000031be,
+	0x0000333e, 0x00003352, 0x000033cd, 0x000033ec,
+	// Entry 180 - 19F
+	0x00003430, 0x0000344b, 0x000034a8, 0x000034ad,
+	0x000034b8, 0x000034d8, 0x000034e4, 0x00003589,
+	0x00003594, 0x000035b9, 0x000035e3, 0x000035f5,
+	0x000035ff, 0x0000360c, 0x0000361b, 0x00003621,
+	0x00003642, 0x0000365e, 0x00003692, 0x000036a5,
+	0x000036ba,
+} // Size: 1644 bytes
 
-const en_USData string = "" + // Size: 12933 bytes
+const en_USData string = "" + // Size: 14010 bytes
 	"\x02Please choose a method to authenticate the agent:\x02ID\x02Name\x02D" +
 	"escription\x02Link\x02Required environment variables:\x02Args\x02Env\x02" +
-	"Type to start a conversation, press Shift+Enter to send\x02Send\x02Stop" +
-	"\x02Off\x02On\x02Options\x02Type @ to include resource, and / to use ski" +
-	"lls.\x02No messages.\x02Thinking\x02Plan\x02Raw Input\x02Raw Output\x02T" +
-	"erminal: %[1]s\x02Copy\x02Cut\x02Paste\x02Find & Replace\x02Lock\x02Unlo" +
-	"ck\x02Unwrap Lines\x02Wrap Lines\x02Match Case\x02Whole Word\x02Use Rege" +
-	"x\x02No results\x02%[1]d of %[2]d\x02Replace\x02Replace All\x02Ln %[1]d," +
-	" Col %[2]d\x04\x01 \x00\x11\x02(%[1]d selected)\x02Exit\x02Choose your L" +
-	"ibrary folder\x02Select the folder that contains your courses, notebooks" +
-	", and documents. Typstify keeps it as a normal folder.\x02Choose folder" +
-	"\x02Sign In\x02Start\x02Typstify\x02Crafting Typst documents at the spee" +
-	"d of thought.\x02Welcome, %[1]s!\x02Getting Started\x02New project..." +
-	"\x02Open existing project...\x02Browse Packages/Templates...\x02Learn mo" +
-	"re\x04\x00\x01 $\x02To learn more about Typstify, go to\x04\x00\x01  " +
-	"\x02To learn more about TPIX, click\x02Open/Hide File Explorer: %[1]s + " +
-	"D\x02Open/Hide Console: %[1]s + K\x02Open/Hide Previewer: %[1]s + P\x02O" +
-	"pen AI Assistant: %[1]s + L\x02Starting AI Assistant...\x02Sessions\x02N" +
-	"ew chat\x02No previous chats yet.\x02Sync Bibliography\x02Submit\x02Crea" +
-	"ting managed bibliography error: %[1]s\x02Creating managed bibliography " +
-	"succeeded: %[1]s\x02Bibliography File Name\x02The name of the managed bi" +
-	"bliography file, such as 'bib-file-name.bib'. You can leave it empty to " +
-	"use a auto generated one.\x02Collections\x04\x00\x01 i\x02Select the col" +
-	"lection to sync with. Make sure you or your team have added Zotero API k" +
-	"ey on TPIX server.\x02Loading collecions...\x02No collections found\x02V" +
-	"iew Managed Bibliography\x02Unlink\x02Unlink managed bibliography error:" +
-	" %[1]s\x02Unlink managed bibliography succeeded: %[1]s\x02The path of th" +
-	"e managed bibliography file. Clicking unlink below will turn it to a reg" +
-	"ular file, and it will not sync with remote Zotero collection anymore." +
-	"\x02Format:\x02Zotero Collection Info\x02Namespace: %[1]s\x02Library: %[" +
-	"1]s\x02Collection: %[1]s\x02Create New Project\x02Create\x02Please set a" +
-	" name for your project.\x02Please open a folder in File Explorer to plac" +
-	"e the project files.\x02Please input a valid full template name.\x02Not " +
-	"a package creation request.\x02Please set a name for your package/templa" +
-	"te.\x02Please select where the project should be created.\x02Create proj" +
-	"ect error: %[1]s\x02Project Type\x02Choose Document for notes, articles," +
-	" books, or slides. Choose Package or Template only when developing reusa" +
-	"ble Typst packages.\x02Project Location\x02Select the folder where the p" +
-	"roject will be created.\x02Create In\x02The project will be created insi" +
-	"de the current Library folder.\x02Select a directory\x02Typst Template" +
-	"\x02Optionally start from a Typst package such as @preview/aero-check:0." +
-	"1.1. Leave this empty to create a basic document.\x02@preview/package:ve" +
-	"rsion (optional)\x02Project Name\x02A folder with this name will be crea" +
-	"ted at the location above.\x02Project name\x02Package\x02Template\x02Doc" +
-	"ument\x02Delete File/Folder\x02Confirm\x02Are you sure you want to delet" +
-	"e '%[1]s'?\x02You can restore this file from the Trash.\x02Cancel\x02Mov" +
-	"e File/Folder\x02Are you sure you want to move\x02'%[1]s' into '%[2]s'" +
-	"\x02The format of the output file.\x02Build And Export\x02Export\x02Expo" +
-	"rting file...\x02Exported File Format\x02Pages\x02Which pages to export." +
-	" Valid value can be comma seperated page numbers and page ranges, for ex" +
-	"ample, 1,3,5,6-9. When unspecified, all document pages are exported.\x02" +
-	"File Name\x02This specifies the output file name. If multiple files is g" +
-	"enerated, the file name will be suffixed with a number. When not specifi" +
-	"ed, the name of the source file is used.\x02PPI\x02The PPI (pixels per i" +
-	"nch) to use for PNG export.\x02PDF Versions\x02PDF version that Typstify" +
-	" will enforce conformance with.\x02PDF Standards\x02PDF standards that T" +
-	"ypstify will enforce conformance with.\x02Disable PDF Tags\x02By default" +
-	" a tagged PDF is generated to provide base accessibility. In some cases " +
-	"this may be not desired. You can check this to disable it.\x02No PDF Tag" +
-	"s\x02Change File Indentation\x02Indent with spaces or tabs\x02Choose the" +
-	" indentation style for the current file.\x02Tab Width\x02Change tab disp" +
-	"lay size.\x02Convert the indentation\x02Convert the indentation from spa" +
-	"ces to tabs or from tabs to spaces, depending on what you choosed.\x02Op" +
-	"en File With...\x02Are you sure you want to open file '%[1]s'?\x02Publis" +
-	"h Package\x02publish package error: %[1]s\x02publish package succeeded: " +
-	"%[1]s\x02Bundle\x02Bundle the project files to a valid Typst package/tem" +
-	"plate.\x02Build\x02Created Bundle: %[1]s\x02Namespace\x04\x00\x01 \x86" +
-	"\x01\x02Select the namespace to publish to. Make sure you have logged in" +
-	" TPIX in the app and have accessible namespaces of your TPIX account." +
-	"\x02Loading namespaces...\x02No writable namespaces\x02Search & Replace" +
-	"\x02Preview\x02AI Assistant\x02Paste asset: %[1]s\x02Explorer\x02No proj" +
-	"ect\x02No open project.\x02Project\x02Folder\x02pull dependencies error:" +
-	" %[1]s\x02pull dependencies succeeded!\x02Sync Dependencies\x02Sync Bibl" +
-	"iographies\x02View Bibliography Info\x02No items match this filter.\x02T" +
-	"his folder is empty. Use New to create a file, folder, or project.\x02%[" +
-	"1]d items\x02New\x02New File\x02New Folder\x02New Project\x02Notebook" +
-	"\x02File\x02Typst work\x02Notebooks\x02Typst documents\x02PDFs\x02Images" +
-	"\x02Other files\x02All files\x02Hide Explorer\x02Library\x02Open Folder" +
-	"\x02Typst Package Center\x02Settings\x02Files\x02Outline\x02Assistant" +
+	"Type to start a conversation\x02Type to start a conversation, press %[1]" +
+	"s to send\x02Send\x02Stop\x02Off\x02On\x02Options\x02Type @ to include r" +
+	"esource, and / to use skills.\x02No messages.\x02Thinking\x02Plan\x02Raw" +
+	" Input\x02Raw Output\x02Terminal: %[1]s\x02Copy\x02Cut\x02Paste\x02Find " +
+	"& Replace\x02Lock\x02Unlock\x02Unwrap Lines\x02Wrap Lines\x02Match Case" +
+	"\x02Whole Word\x02Use Regex\x02No results\x02%[1]d of %[2]d\x02Replace" +
+	"\x02Replace All\x02Ln %[1]d, Col %[2]d\x04\x01 \x00\x11\x02(%[1]d select" +
+	"ed)\x02Exit\x02Choose your Library folder\x02Select the folder that cont" +
+	"ains your courses, notebooks, and documents. Typstify keeps it as a norm" +
+	"al folder.\x02Choose folder\x02Sign In\x02Start\x02Typstify\x02Crafting " +
+	"Typst documents at the speed of thought.\x02Welcome, %[1]s!\x02Getting S" +
+	"tarted\x02New project...\x02Open existing project...\x02Browse Packages/" +
+	"Templates...\x02Learn more\x04\x00\x01 $\x02To learn more about Typstify" +
+	", go to\x04\x00\x01  \x02To learn more about TPIX, click\x02Open/Hide Fi" +
+	"le Explorer: %[1]s\x02Open/Hide Console: %[1]s\x02Open/Hide Previewer: %" +
+	"[1]s\x02Open AI Assistant: %[1]s\x02Starting AI Assistant...\x02Sessions" +
+	"\x02New chat\x02No previous chats yet.\x02Sync Bibliography\x02Submit" +
+	"\x02Creating managed bibliography error: %[1]s\x02Creating managed bibli" +
+	"ography succeeded: %[1]s\x02Bibliography File Name\x02The name of the ma" +
+	"naged bibliography file, such as 'bib-file-name.bib'. You can leave it e" +
+	"mpty to use a auto generated one.\x02Collections\x04\x00\x01 i\x02Select" +
+	" the collection to sync with. Make sure you or your team have added Zote" +
+	"ro API key on TPIX server.\x02Loading collecions...\x02No collections fo" +
+	"und\x02View Managed Bibliography\x02Unlink\x02Unlink managed bibliograph" +
+	"y error: %[1]s\x02Unlink managed bibliography succeeded: %[1]s\x02The pa" +
+	"th of the managed bibliography file. Clicking unlink below will turn it " +
+	"to a regular file, and it will not sync with remote Zotero collection an" +
+	"ymore.\x02Format:\x02Zotero Collection Info\x02Namespace: %[1]s\x02Libra" +
+	"ry: %[1]s\x02Collection: %[1]s\x02Create New Project\x02Create\x02Please" +
+	" set a name for your project.\x02Please open a folder in File Explorer t" +
+	"o place the project files.\x02Please input a valid full template name." +
+	"\x02Not a package creation request.\x02Please set a name for your packag" +
+	"e/template.\x02Please select where the project should be created.\x02Cre" +
+	"ate project error: %[1]s\x02Project Type\x02Choose Document for notes, a" +
+	"rticles, books, or slides. Choose Package or Template only when developi" +
+	"ng reusable Typst packages.\x02Project Location\x02Select the folder whe" +
+	"re the project will be created.\x02Create In\x02The project will be crea" +
+	"ted inside the current Library folder.\x02Select a directory\x02Typst Te" +
+	"mplate\x02Optionally start from a Typst package such as @preview/aero-ch" +
+	"eck:0.1.1. Leave this empty to create a basic document.\x02@preview/pack" +
+	"age:version (optional)\x02Project Name\x02A folder with this name will b" +
+	"e created at the location above.\x02Project name\x02Package\x02Template" +
+	"\x02Document\x02Delete File/Folder\x02Confirm\x02Are you sure you want t" +
+	"o delete '%[1]s'?\x02You can restore this file from the Trash.\x02Cancel" +
+	"\x02Move File/Folder\x02Are you sure you want to move\x02'%[1]s' into '%" +
+	"[2]s'\x02The format of the output file.\x02Build And Export\x02Export" +
+	"\x02Exporting file...\x02Exported File Format\x02Pages\x02Which pages to" +
+	" export. Valid value can be comma seperated page numbers and page ranges" +
+	", for example, 1,3,5,6-9. When unspecified, all document pages are expor" +
+	"ted.\x02File Name\x02This specifies the output file name. If multiple fi" +
+	"les is generated, the file name will be suffixed with a number. When not" +
+	" specified, the name of the source file is used.\x02PPI\x02The PPI (pixe" +
+	"ls per inch) to use for PNG export.\x02PDF Versions\x02PDF version that " +
+	"Typstify will enforce conformance with.\x02PDF Standards\x02PDF standard" +
+	"s that Typstify will enforce conformance with.\x02Disable PDF Tags\x02By" +
+	" default a tagged PDF is generated to provide base accessibility. In som" +
+	"e cases this may be not desired. You can check this to disable it.\x02No" +
+	" PDF Tags\x02Change File Indentation\x02Indent with spaces or tabs\x02Ch" +
+	"oose the indentation style for the current file.\x02Tab Width\x02Change " +
+	"tab display size.\x02Convert the indentation\x02Convert the indentation " +
+	"from spaces to tabs or from tabs to spaces, depending on what you choose" +
+	"d.\x02Open File With...\x02Are you sure you want to open file '%[1]s'?" +
+	"\x02Publish Package\x02publish package error: %[1]s\x02publish package s" +
+	"ucceeded: %[1]s\x02Bundle\x02Bundle the project files to a valid Typst p" +
+	"ackage/template.\x02Build\x02Created Bundle: %[1]s\x02Namespace\x04\x00" +
+	"\x01 \x86\x01\x02Select the namespace to publish to. Make sure you have " +
+	"logged in TPIX in the app and have accessible namespaces of your TPIX ac" +
+	"count.\x02Loading namespaces...\x02No writable namespaces\x02Search & Re" +
+	"place\x02Preview\x02AI Assistant\x02Paste asset: %[1]s\x02Explorer\x02No" +
+	" project\x02No open project.\x02Project\x02Folder\x02pull dependencies e" +
+	"rror: %[1]s\x02pull dependencies succeeded!\x02Sync Dependencies\x02Sync" +
+	" Bibliographies\x02View Bibliography Info\x02No items match this filter." +
+	"\x02This folder is empty. Use New to create a file, folder, or project." +
+	"\x02%[1]d items\x02New\x02New File\x02New Folder\x02New Project\x02Noteb" +
+	"ook\x02File\x02Typst work\x02Notebooks\x02Typst documents\x02PDFs\x02Ima" +
+	"ges\x02Other files\x02All files\x02Hide Explorer\x02Library\x02Open Fold" +
+	"er\x02Typst Package Center\x02Settings\x02Files\x02Outline\x02Assistant" +
 	"\x02More\x02Local Templates\x02File Explorer\x02A new version is avaliab" +
 	"le: %[1]s\x02Later\x02Download\x02Cached\x02Author\x02Last Updated\x02Li" +
 	"cense\x02Category\x02Read the docs\x02Copy import path\x02Loading packag" +
@@ -974,273 +1067,310 @@ const en_USData string = "" + // Size: 12933 bytes
 	"cked, LSP server runs in power saving mode, only basic syntax checking a" +
 	"nd code completion are avaliable, diagnostics and previewing will not wo" +
 	"rk. It needs to restart or reload to take effect.\x02Language Server\x02" +
-	"Language\x02Set the displaying language of the user interface.\x02UI Tex" +
-	"t Size\x02Set font size for the user interface. The unit is in scale-ind" +
-	"ependent pixel (sp).\x02UI Font Family\x02Set the desired fonts for the " +
-	"UI. Use CSS style font family syntax which is a list of comma separated " +
-	"names. You can also leave it empty to let the application choose a fallb" +
-	"ack.\x02Font Family\x02Theme\x02Choose your favorite color theme for the" +
-	" user interface.\x02External Typst Compiler Path\x02Specifies a path to " +
-	"your own version of Typst compiler. Leave it empty to use the built-in o" +
-	"ne. Please check the compatibility before you switch. It needs to restar" +
-	"t to take effect.\x02External LSP Server(Tinymist) Path\x02Specifies a p" +
-	"ath to your own version of Tinymist. Leave it empty to use the built-in " +
-	"one. Please check the compatibility before you switch. It needs to resta" +
-	"rt to take effect.\x02Check Update\x02Check for updates on app startup. " +
-	"Please enable it to keep up to date for new features and bugfixes.\x02Ge" +
-	"neral\x02Auto Save Interval\x02Set the auto save delay (in seconds), can" +
-	"not be completely disabled.\x02Preview width\x02Choose how much editor s" +
-	"pace the preview uses when it opens. You can still drag the divider whil" +
-	"e editing.\x02Set the desired fonts for the editor. Use CSS style font f" +
-	"amily syntax which is a list of comma separated names. You can also leav" +
-	"e it empty to let the application choose a fallback.\x02Text Size\x02Set" +
-	" font size for the editor. The unit is in scale-independent pixel (sp)." +
-	"\x02Font Weight\x02Set the expected weight (or boldness) of the text. Th" +
-	"is is for variable fonts only.\x02Line Height Scale\x02Set the line heig" +
-	"ht scale of the lines in editor. Line height scale is multiplied by line" +
-	" height to determine the final gap between lines.\x02Indentation\x02Set " +
-	"the expected characters to use when pressing the Tab key. Please be note" +
-	"d that this works only for empty file. Indentation for non-empty files a" +
-	"re auto detected.\x02Set how many number of spaces the Tab is equal to. " +
-	"Please be noted that this works only for empty file. Indentation for non" +
-	"-empty files are auto detected.\x02Editor\x02File Interface\x02Interface" +
-	"\x02Classic keeps Typstify's existing file workflow. Student adds a Libr" +
-	"ary home and focused project navigation.\x02Classic\x02Student\x02Your S" +
-	"tudent preferences are saved and will return when you choose Student." +
-	"\x02Student preferences\x02These choices apply immediately and do not ch" +
-	"ange the Classic interface.\x02Library folder\x02The folder shown when S" +
-	"tudent mode starts. Forgetting it does not delete any files.\x02No Libra" +
-	"ry folder selected\x02Change\x02Forget\x02Editor files\x02Show only the " +
-	"current project or folder, or keep the complete workspace tree.\x02Curre" +
-	"nt project or folder\x02Whole workspace\x02Library view\x02Choose the de" +
-	"fault presentation for folders, notebooks, and files.\x02Grid\x02List" +
-	"\x02Navigation\x02Use the Library rail, or keep Typstify's familiar side" +
-	"bar and bottom controls.\x02Library rail\x02Classic controls\x02Typst" +
-	"\x02Package Dir\x02Specifies where to store your local Typst packages/te" +
-	"mplates. Leave it empty to use the default dir.\x02Package Cache Dir\x02" +
-	"Specifies where to store your the cached Typst packages/templates retrie" +
-	"ved from the network. Leave it empty to use the default dir.\x02Extra Fo" +
-	"nt Path\x02The directory where to search for fonts when exporting, previ" +
-	"ewing and auto-completing. Be aware that the current project root direct" +
-	"ory is always searched. Need to restart or reload to take effect.\x02Exp" +
-	"ort Dir\x02The directory to save exported files to, including the deps.j" +
-	"son. If not set, the exported files will be saved to a 'output' folder b" +
-	"eside the source file.\x02Load External Inputs\x02Load external inputs f" +
-	"rom a file named sys-inputs.json as sys.inputs. If there is no such one," +
-	" it is created at the root dir. \x0aA sys-inputs.json file contains user" +
-	" defined key-value pairs which can be accessed via Typst's sys.inputs. T" +
-	"he values should always be string encoded data.\x0aNeed to restart or re" +
-	"load to take effect for code linter, auto-completion, and preview when c" +
-	"hanged.\x02Ignore System Fonts\x02Ignore system fonts or not. For code l" +
-	"inter, auto-completion and previewing, it needs to restart or reload to " +
-	"take effect.\x02Ignore Compiler Embedded Fonts\x02Ignore embedded Fonts " +
-	"or not. This only works when exporting files.\x02Generate Dependencies f" +
-	"ile\x02Write dependencies of the file compiled to a file named deps.json" +
-	" in your project directory.\x02TPIX\x02Loading...\x02You have an active " +
-	"TPIX session\x02Logout TPIX\x02Login TPIX to access all the features of " +
-	"Typstify, including package management, Zotero sync, MCP tools for AI as" +
-	"sistant etc. Some features may need a subscription.\x02Login TPIX\x04" +
-	"\x00\x01  \x02To learn more about TPIX, go to\x04\x00\x01 %\x02To get a " +
-	"subscription of TPIX, click\x02Check new version\x02Changelog\x02Release" +
-	" Time\x02Go to download\x02About\x02git checkout %[1]s failed: %[2]v\x02" +
-	"Width: %[1]d, Height: %[2]d\x02popup and display the preview in a dedica" +
-	"ted window\x02Open File Location\x02Open Folder Location"
+	"Shortcuts\x02Search actions or shortcuts\x02Restore all defaults\x02Clic" +
+	"k a shortcut field, then press the new key combination. Escape cancels r" +
+	"ecording.\x02Disabled\x02Enable %[1]s\x02%[1]s is already used by %[2]s." +
+	"\x02Press shortcut…\x02Reset\x02Workspace\x02Editor\x02Toggle file explo" +
+	"rer\x02Toggle console\x02Toggle assistant\x02Toggle preview\x02Save file" +
+	"\x02Find and replace\x02Toggle read-only mode\x02Toggle line wrapping" +
+	"\x02Copy text\x02Cut text\x02Paste text\x02Show completions\x02Insert Ty" +
+	"pst line break\x02Copy file\x02Cut file\x02Paste file\x02Send prompt\x02" +
+	"Show or hide the project files.\x02Show or hide compiler and application" +
+	" output.\x02Open or close the AI assistant.\x02Show or hide the document" +
+	" preview.\x02Save the active document.\x02Search in the active document." +
+	"\x02Lock or unlock editing for the active document.\x02Wrap or unwrap lo" +
+	"ng editor lines.\x02Copy the editor selection.\x02Cut the editor selecti" +
+	"on.\x02Paste clipboard text into the editor.\x02Open code and Typst sugg" +
+	"estions.\x02Insert \\ and continue on a new line.\x02Copy the selected f" +
+	"ile or folder.\x02Cut the selected file or folder.\x02Paste files into t" +
+	"he selected folder.\x02Send the current assistant message.\x02Language" +
+	"\x02Set the displaying language of the user interface.\x02UI Text Size" +
+	"\x02Set font size for the user interface. The unit is in scale-independe" +
+	"nt pixel (sp).\x02UI Font Family\x02Set the desired fonts for the UI. Us" +
+	"e CSS style font family syntax which is a list of comma separated names." +
+	" You can also leave it empty to let the application choose a fallback." +
+	"\x02Font Family\x02Theme\x02Choose your favorite color theme for the use" +
+	"r interface.\x02External Typst Compiler Path\x02Specifies a path to your" +
+	" own version of Typst compiler. Leave it empty to use the built-in one. " +
+	"Please check the compatibility before you switch. It needs to restart to" +
+	" take effect.\x02External LSP Server(Tinymist) Path\x02Specifies a path " +
+	"to your own version of Tinymist. Leave it empty to use the built-in one." +
+	" Please check the compatibility before you switch. It needs to restart t" +
+	"o take effect.\x02Check Update\x02Check for updates on app startup. Plea" +
+	"se enable it to keep up to date for new features and bugfixes.\x02Genera" +
+	"l\x02Auto Save Interval\x02Set the auto save delay (in seconds), cannot " +
+	"be completely disabled.\x02Preview width\x02Choose how much editor space" +
+	" the preview uses when it opens. You can still drag the divider while ed" +
+	"iting.\x02Set the desired fonts for the editor. Use CSS style font famil" +
+	"y syntax which is a list of comma separated names. You can also leave it" +
+	" empty to let the application choose a fallback.\x02Text Size\x02Set fon" +
+	"t size for the editor. The unit is in scale-independent pixel (sp).\x02F" +
+	"ont Weight\x02Set the expected weight (or boldness) of the text. This is" +
+	" for variable fonts only.\x02Line Height Scale\x02Set the line height sc" +
+	"ale of the lines in editor. Line height scale is multiplied by line heig" +
+	"ht to determine the final gap between lines.\x02Indentation\x02Set the e" +
+	"xpected characters to use when pressing the Tab key. Please be noted tha" +
+	"t this works only for empty file. Indentation for non-empty files are au" +
+	"to detected.\x02Set how many number of spaces the Tab is equal to. Pleas" +
+	"e be noted that this works only for empty file. Indentation for non-empt" +
+	"y files are auto detected.\x02File Interface\x02Interface\x02Classic kee" +
+	"ps Typstify's existing file workflow. Student adds a Library home and fo" +
+	"cused project navigation.\x02Classic\x02Student\x02Your Student preferen" +
+	"ces are saved and will return when you choose Student.\x02Student prefer" +
+	"ences\x02These choices apply immediately and do not change the Classic i" +
+	"nterface.\x02Library folder\x02The folder shown when Student mode starts" +
+	". Forgetting it does not delete any files.\x02No Library folder selected" +
+	"\x02Change\x02Forget\x02Editor files\x02Show only the current project or" +
+	" folder, or keep the complete workspace tree.\x02Current project or fold" +
+	"er\x02Whole workspace\x02Library view\x02Choose the default presentation" +
+	" for folders, notebooks, and files.\x02Grid\x02List\x02Navigation\x02Use" +
+	" the Library rail, or keep Typstify's familiar sidebar and bottom contro" +
+	"ls.\x02Library rail\x02Classic controls\x02Typst\x02Package Dir\x02Speci" +
+	"fies where to store your local Typst packages/templates. Leave it empty " +
+	"to use the default dir.\x02Package Cache Dir\x02Specifies where to store" +
+	" your the cached Typst packages/templates retrieved from the network. Le" +
+	"ave it empty to use the default dir.\x02Extra Font Path\x02The directory" +
+	" where to search for fonts when exporting, previewing and auto-completin" +
+	"g. Be aware that the current project root directory is always searched. " +
+	"Need to restart or reload to take effect.\x02Export Dir\x02The directory" +
+	" to save exported files to, including the deps.json. If not set, the exp" +
+	"orted files will be saved to a 'output' folder beside the source file." +
+	"\x02Load External Inputs\x02Load external inputs from a file named sys-i" +
+	"nputs.json as sys.inputs. If there is no such one, it is created at the " +
+	"root dir. \x0aA sys-inputs.json file contains user defined key-value pai" +
+	"rs which can be accessed via Typst's sys.inputs. The values should alway" +
+	"s be string encoded data.\x0aNeed to restart or reload to take effect fo" +
+	"r code linter, auto-completion, and preview when changed.\x02Ignore Syst" +
+	"em Fonts\x02Ignore system fonts or not. For code linter, auto-completion" +
+	" and previewing, it needs to restart or reload to take effect.\x02Ignore" +
+	" Compiler Embedded Fonts\x02Ignore embedded Fonts or not. This only work" +
+	"s when exporting files.\x02Generate Dependencies file\x02Write dependenc" +
+	"ies of the file compiled to a file named deps.json in your project direc" +
+	"tory.\x02TPIX\x02Loading...\x02You have an active TPIX session\x02Logout" +
+	" TPIX\x02Login TPIX to access all the features of Typstify, including pa" +
+	"ckage management, Zotero sync, MCP tools for AI assistant etc. Some feat" +
+	"ures may need a subscription.\x02Login TPIX\x04\x00\x01  \x02To learn mo" +
+	"re about TPIX, go to\x04\x00\x01 %\x02To get a subscription of TPIX, cli" +
+	"ck\x02Check new version\x02Changelog\x02Release Time\x02Go to download" +
+	"\x02About\x02git checkout %[1]s failed: %[2]v\x02Width: %[1]d, Height: %" +
+	"[2]d\x02popup and display the preview in a dedicated window\x02Open File" +
+	" Location\x02Open Folder Location"
 
-var zh_CNIndex = []uint32{ // 360 elements
+var zh_CNIndex = []uint32{ // 405 elements
 	// Entry 0 - 1F
 	0x00000000, 0x00000025, 0x00000028, 0x0000002f,
 	0x00000036, 0x0000003d, 0x00000056, 0x0000005d,
-	0x0000006a, 0x00000099, 0x000000a0, 0x000000a7,
-	0x000000ab, 0x000000af, 0x000000b6, 0x000000e4,
-	0x000000f1, 0x000000fb, 0x00000102, 0x0000010f,
-	0x0000011c, 0x0000012a, 0x00000131, 0x00000138,
-	0x0000013f, 0x0000014f, 0x00000156, 0x0000015d,
-	0x0000016a, 0x00000177, 0x00000187, 0x00000194,
+	0x0000006a, 0x00000086, 0x000000b5, 0x000000bc,
+	0x000000c3, 0x000000c7, 0x000000cb, 0x000000d2,
+	0x00000100, 0x0000010d, 0x00000117, 0x0000011e,
+	0x0000012b, 0x00000138, 0x00000146, 0x0000014d,
+	0x00000154, 0x0000015b, 0x0000016b, 0x00000172,
+	0x00000179, 0x00000186, 0x00000193, 0x000001a3,
 	// Entry 20 - 3F
-	0x000001a1, 0x000001ab, 0x000001b9, 0x000001c0,
-	0x000001cd, 0x000001e2, 0x00000204, 0x0000020b,
-	0x00000224, 0x00000288, 0x00000298, 0x0000029f,
-	0x000002a6, 0x000002af, 0x000002d8, 0x000002e7,
-	0x000002f4, 0x00000304, 0x0000031a, 0x0000032e,
-	0x0000033b, 0x00000369, 0x00000393, 0x000003bb,
-	0x000003dd, 0x000003ff, 0x0000041b, 0x00000435,
-	0x0000043c, 0x00000449, 0x00000462, 0x00000475,
+	0x000001b0, 0x000001bd, 0x000001c7, 0x000001d5,
+	0x000001dc, 0x000001e9, 0x000001fe, 0x00000220,
+	0x00000227, 0x00000240, 0x000002a4, 0x000002b4,
+	0x000002bb, 0x000002c2, 0x000002cb, 0x000002f4,
+	0x00000303, 0x00000310, 0x00000320, 0x00000336,
+	0x0000034a, 0x00000357, 0x00000385, 0x000003af,
+	0x000003d4, 0x000003f3, 0x0000040f, 0x00000428,
+	0x00000442, 0x00000449, 0x00000456, 0x0000046f,
 	// Entry 40 - 5F
-	0x0000047c, 0x000004a2, 0x000004c8, 0x000004de,
-	0x00000541, 0x00000548, 0x000005ba, 0x000005d0,
-	0x000005e0, 0x000005f9, 0x00000606, 0x00000632,
-	0x0000065e, 0x000006df, 0x000006e7, 0x000006fb,
-	0x0000070f, 0x0000071d, 0x0000072b, 0x0000073b,
-	0x00000742, 0x00000764, 0x000007aa, 0x000007d2,
-	0x000007f1, 0x0000081d, 0x0000083f, 0x00000859,
-	0x00000866, 0x000008e9, 0x000008f6, 0x0000091b,
+	0x00000482, 0x00000489, 0x000004af, 0x000004d5,
+	0x000004eb, 0x0000054e, 0x00000555, 0x000005c7,
+	0x000005dd, 0x000005ed, 0x00000606, 0x00000613,
+	0x0000063f, 0x0000066b, 0x000006ec, 0x000006f4,
+	0x00000708, 0x0000071c, 0x0000072a, 0x00000738,
+	0x00000748, 0x0000074f, 0x00000771, 0x000007b7,
+	0x000007df, 0x000007fe, 0x0000082a, 0x0000084c,
+	0x00000866, 0x00000873, 0x000008f6, 0x00000903,
 	// Entry 60 - 7F
-	0x00000928, 0x00000959, 0x00000966, 0x00000973,
-	0x000009d2, 0x000009f7, 0x00000a04, 0x00000a2f,
-	0x00000a3c, 0x00000a40, 0x00000a47, 0x00000a4e,
-	0x00000a65, 0x00000a6c, 0x00000a89, 0x00000ab1,
-	0x00000ab8, 0x00000acf, 0x00000adf, 0x00000af8,
-	0x00000b11, 0x00000b21, 0x00000b28, 0x00000b3e,
-	0x00000b51, 0x00000b58, 0x00000bdb, 0x00000be5,
-	0x00000c5b, 0x00000c5f, 0x00000c92, 0x00000c9d,
+	0x00000928, 0x00000935, 0x00000966, 0x00000973,
+	0x00000980, 0x000009df, 0x00000a04, 0x00000a11,
+	0x00000a3c, 0x00000a49, 0x00000a4d, 0x00000a54,
+	0x00000a5b, 0x00000a72, 0x00000a79, 0x00000a96,
+	0x00000abe, 0x00000ac5, 0x00000adc, 0x00000aec,
+	0x00000b05, 0x00000b1e, 0x00000b2e, 0x00000b35,
+	0x00000b4b, 0x00000b5e, 0x00000b65, 0x00000be8,
+	0x00000bf2, 0x00000c68, 0x00000c6c, 0x00000c9f,
 	// Entry 80 - 9F
-	0x00000cc7, 0x00000cd2, 0x00000cfc, 0x00000d0e,
-	0x00000d8f, 0x00000d9e, 0x00000db1, 0x00000dd0,
-	0x00000df5, 0x00000e05, 0x00000e24, 0x00000e31,
-	0x00000e8c, 0x00000ea2, 0x00000ec5, 0x00000ecf,
-	0x00000ee6, 0x00000efd, 0x00000f04, 0x00000f3a,
-	0x00000f41, 0x00000f5e, 0x00000f6b, 0x00000fe5,
-	0x00001001, 0x0000101d, 0x0000102d, 0x00001034,
-	0x0000103d, 0x00001052, 0x00001062, 0x0000106c,
+	0x00000caa, 0x00000cd4, 0x00000cdf, 0x00000d09,
+	0x00000d1b, 0x00000d9c, 0x00000dab, 0x00000dbe,
+	0x00000ddd, 0x00000e02, 0x00000e12, 0x00000e31,
+	0x00000e3e, 0x00000e99, 0x00000eaf, 0x00000ed2,
+	0x00000edc, 0x00000ef3, 0x00000f0a, 0x00000f11,
+	0x00000f47, 0x00000f4e, 0x00000f6b, 0x00000f78,
+	0x00000ff2, 0x0000100e, 0x0000102a, 0x0000103a,
+	0x00001041, 0x0000104a, 0x0000105f, 0x0000106f,
 	// Entry A0 - BF
-	0x00001085, 0x0000108c, 0x00001096, 0x000010b0,
-	0x000010c4, 0x000010d1, 0x000010e4, 0x000010fd,
-	0x00001125, 0x00001171, 0x00001181, 0x00001188,
-	0x00001195, 0x000011a5, 0x000011b2, 0x000011bc,
-	0x000011c3, 0x000011d0, 0x000011da, 0x000011e7,
-	0x000011eb, 0x000011f2, 0x000011ff, 0x0000120c,
-	0x00001222, 0x0000122c, 0x0000123c, 0x0000124c,
-	0x00001253, 0x0000125a, 0x00001261, 0x00001268,
+	0x00001079, 0x00001092, 0x00001099, 0x000010a3,
+	0x000010bd, 0x000010d1, 0x000010de, 0x000010f1,
+	0x0000110a, 0x00001132, 0x0000117e, 0x0000118e,
+	0x00001195, 0x000011a2, 0x000011b2, 0x000011bf,
+	0x000011c9, 0x000011d0, 0x000011dd, 0x000011e7,
+	0x000011f4, 0x000011f8, 0x000011ff, 0x0000120c,
+	0x00001219, 0x0000122f, 0x00001239, 0x00001249,
+	0x00001259, 0x00001260, 0x00001267, 0x0000126e,
 	// Entry C0 - DF
-	0x0000126f, 0x0000127c, 0x00001292, 0x000012ac,
-	0x000012b3, 0x000012ba, 0x000012c4, 0x000012cb,
-	0x000012d8, 0x000012e2, 0x000012e9, 0x000012f6,
-	0x00001309, 0x0000131c, 0x00001330, 0x00001337,
-	0x00001341, 0x0000135e, 0x000013ce, 0x000013dd,
-	0x0000143b, 0x00001451, 0x0000145b, 0x00001468,
-	0x00001475, 0x0000148b, 0x000014a7, 0x000014bd,
-	0x000014d8, 0x00001508, 0x0000151f, 0x0000153f,
+	0x00001275, 0x0000127c, 0x00001289, 0x0000129f,
+	0x000012b9, 0x000012c0, 0x000012c7, 0x000012d1,
+	0x000012d8, 0x000012e5, 0x000012ef, 0x000012f6,
+	0x00001303, 0x00001316, 0x00001329, 0x0000133d,
+	0x00001344, 0x0000134e, 0x0000136b, 0x000013db,
+	0x000013ea, 0x00001448, 0x0000145e, 0x00001468,
+	0x00001475, 0x00001482, 0x00001498, 0x000014b4,
+	0x000014ca, 0x000014e5, 0x00001515, 0x0000152c,
 	// Entry E0 - FF
-	0x00001546, 0x0000154c, 0x000015c0, 0x000015d0,
-	0x00001619, 0x0000161d, 0x00001722, 0x00001729,
-	0x00001730, 0x00001734, 0x0000173c, 0x00001744,
-	0x0000174c, 0x00001754, 0x00001773, 0x000017c0,
-	0x00001807, 0x0000181a, 0x00001839, 0x000018a1,
-	0x000018e8, 0x000018fb, 0x00001914, 0x00001972,
-	0x0000197f, 0x000019d6, 0x00001a15, 0x00001a22,
-	0x00001a5b, 0x00001a62, 0x00001ab0, 0x00001ac6,
+	0x0000154c, 0x00001553, 0x00001559, 0x000015cd,
+	0x000015dd, 0x00001626, 0x0000162a, 0x0000172f,
+	0x00001736, 0x0000173d, 0x00001741, 0x00001749,
+	0x00001751, 0x00001759, 0x00001761, 0x00001780,
+	0x000017cd, 0x00001814, 0x00001827, 0x00001846,
+	0x000018ae, 0x000018f5, 0x00001908, 0x00001921,
+	0x0000197f, 0x0000198c, 0x000019e3, 0x00001a22,
+	0x00001a2f, 0x00001a68, 0x00001a6f, 0x00001abd,
 	// Entry 100 - 11F
-	0x00001ad3, 0x00001b26, 0x00001b36, 0x00001b3d,
-	0x00001b53, 0x00001bb4, 0x00001bc7, 0x00001c2b,
-	0x00001c38, 0x00001cc1, 0x00001cce, 0x00001d81,
-	0x00001d91, 0x00001d98, 0x00001dbd, 0x00001dcd,
-	0x00001e15, 0x00001e1f, 0x00001ebc, 0x00001ec3,
-	0x00001eca, 0x00001ef8, 0x00001f15, 0x00001f9e,
-	0x00001fc4, 0x00002047, 0x00002054, 0x000020a9,
-	0x000020b0, 0x000020c3, 0x000020fd, 0x0000210a,
+	0x00001ad3, 0x00001ae0, 0x00001b33, 0x00001b43,
+	0x00001b4a, 0x00001b60, 0x00001bc1, 0x00001bd4,
+	0x00001c38, 0x00001c45, 0x00001cce, 0x00001cdb,
+	0x00001d8e, 0x00001d9e, 0x00001da8, 0x00001dc1,
+	0x00001dda, 0x00001e2b, 0x00001e35, 0x00001e42,
+	0x00001e5f, 0x00001e72, 0x00001e79, 0x00001e83,
+	0x00001e8d, 0x00001ea3, 0x00001eb3, 0x00001ec0,
+	0x00001ecd, 0x00001eda, 0x00001eea, 0x00001efd,
 	// Entry 120 - 13F
-	0x0000215c, 0x000021fe, 0x0000220b, 0x00002250,
-	0x0000225d, 0x000022ac, 0x000022b9, 0x00002323,
-	0x0000232a, 0x000023a2, 0x00002414, 0x0000241e,
-	0x0000242b, 0x00002432, 0x000024a6, 0x000024ad,
-	0x000024b4, 0x00002500, 0x00002513, 0x0000254d,
-	0x00002560, 0x000025b8, 0x000025d4, 0x000025db,
-	0x000025e2, 0x000025f2, 0x0000263e, 0x00002657,
-	0x00002667, 0x00002677, 0x000026b4, 0x000026bb,
+	0x00001f10, 0x00001f1d, 0x00001f2a, 0x00001f37,
+	0x00001f4a, 0x00001f61, 0x00001f6e, 0x00001f7b,
+	0x00001f88, 0x00001f95, 0x00001fb4, 0x00001fe5,
+	0x00002002, 0x00002021, 0x00002037, 0x00002053,
+	0x0000207b, 0x000020b2, 0x000020d7, 0x000020fc,
+	0x00002127, 0x00002147, 0x00002166, 0x0000218b,
+	0x000021b0, 0x000021d8, 0x000021f4, 0x000021fb,
+	0x00002220, 0x00002230, 0x00002278, 0x00002282,
 	// Entry 140 - 15F
-	0x000026c2, 0x000026c9, 0x0000271c, 0x0000272f,
-	0x0000273c, 0x00002742, 0x0000274c, 0x0000279a,
-	0x000027aa, 0x0000280d, 0x00002820, 0x000028ba,
-	0x000028c7, 0x0000294e, 0x00002961, 0x00002ac0,
-	0x00002ad3, 0x00002b46, 0x00002b62, 0x00002b9c,
-	0x00002baf, 0x00002bfa, 0x00002bff, 0x00002c0c,
-	0x00002c2e, 0x00002c3a, 0x00002ccc, 0x00002cd8,
-	0x00002d02, 0x00002d26, 0x00002d36, 0x00002d43,
+	0x0000231f, 0x00002326, 0x0000232d, 0x0000235b,
+	0x00002378, 0x00002401, 0x00002427, 0x000024aa,
+	0x000024b7, 0x0000250c, 0x00002513, 0x00002526,
+	0x00002560, 0x0000256d, 0x000025bf, 0x00002661,
+	0x0000266e, 0x000026b3, 0x000026c0, 0x0000270f,
+	0x0000271c, 0x00002786, 0x0000278d, 0x00002805,
+	0x00002877, 0x00002884, 0x0000288b, 0x000028ff,
+	0x00002906, 0x0000290d, 0x00002959, 0x0000296c,
 	// Entry 160 - 17F
-	0x00002d50, 0x00002d5d, 0x00002d64, 0x00002d85,
-	0x00002da2, 0x00002dca, 0x00002de3, 0x00002dff,
-} // Size: 1464 bytes
+	0x000029a6, 0x000029b9, 0x00002a11, 0x00002a2d,
+	0x00002a34, 0x00002a3b, 0x00002a4b, 0x00002a97,
+	0x00002ab0, 0x00002ac0, 0x00002ad0, 0x00002b0d,
+	0x00002b14, 0x00002b1b, 0x00002b22, 0x00002b75,
+	0x00002b88, 0x00002b95, 0x00002b9b, 0x00002ba5,
+	0x00002bf3, 0x00002c03, 0x00002c66, 0x00002c79,
+	0x00002d13, 0x00002d20, 0x00002da7, 0x00002dba,
+	0x00002f19, 0x00002f2c, 0x00002f9f, 0x00002fbb,
+	// Entry 180 - 19F
+	0x00002ff5, 0x00003008, 0x00003053, 0x00003058,
+	0x00003065, 0x00003087, 0x00003093, 0x00003125,
+	0x00003131, 0x0000315b, 0x0000317f, 0x0000318f,
+	0x0000319c, 0x000031a9, 0x000031b6, 0x000031bd,
+	0x000031de, 0x000031fb, 0x00003223, 0x0000323c,
+	0x00003258,
+} // Size: 1644 bytes
 
-const zh_CNData string = "" + // Size: 11775 bytes
+const zh_CNData string = "" + // Size: 12888 bytes
 	"\x02请选择一种方式验证代理：\x02ID\x02名称\x02描述\x02链接\x02需要的环境变量：\x02参数\x02环境变量\x02输入" +
-	"以开始对话，按 Shift+Enter 发送\x02发送\x02停止\x02关\x02开\x02选项\x02输入 @ 引用资源，输入 / 使" +
-	"用技能\x02暂无消息\x02思考中\x02计划\x02原始输入\x02原始输出\x02终端: %[1]s\x02复制\x02剪切\x02粘" +
-	"贴\x02查找与替换\x02锁定\x02解锁\x02取消换行\x02自动换行\x02区分大小写\x02全词匹配\x02使用正则\x02无结果" +
-	"\x02%[1]d / %[2]d\x02替换\x02全部替换\x02行 %[1]d, 列 %[2]d\x04\x01 \x00\x1d\x02" +
-	"（已选 %[1]d 个字符）\x02退出\x02选择资料库文件夹\x02选择包含课程、笔记本和文档的文件夹。Typstify 会将其保留为普" +
-	"通文件夹。\x02选择文件夹\x02登陆\x02开始\x02Typstify\x02以思维的速度编写 Typst 文档。\x02欢迎, %[" +
-	"1]s!\x02开始使用\x02新建项目...\x02打开已有项目...\x02浏览包/模板...\x02了解更多\x04\x00\x01 )" +
-	"\x02了解更多 Typstify 信息，请访问\x04\x00\x01 %\x02了解更多 TPIX 信息，请访问\x02打开/隐藏文件管理器" +
-	": %[1]s + D\x02打开/隐藏控制台: %[1]s + K\x02打开/隐藏预览器: %[1]s + P\x02打开 AI 助手: %" +
-	"[1]s + L\x02正在启动 AI 助手...\x02会话\x02新建聊天\x02还没有历史聊天。\x02同步参考文献\x02提交\x02创" +
-	"建托管参考文献出错: %[1]s\x02创建托管参考文献成功: %[1]s\x02参考文献文件名\x02托管参考文献文件名，例如 'bib-" +
-	"file-name.bib'。留空则使用自动生成的名称。\x02集合\x04\x00\x01 m\x02选择要同步的集合。请确保您或您的团队已在" +
-	" TPIX 服务器上添加了 Zotero API 密钥。\x02正在加载集合...\x02未找到集合\x02查看托管参考文献\x02取消关联" +
-	"\x02取消关联托管参考文献出错: %[1]s\x02取消关联托管参考文献成功: %[1]s\x02托管参考文献文件路径。点击下方的取消关联将把" +
-	"它转为普通文件，不再与远程 Zotero 集合同步。\x02格式:\x02Zotero 集合信息\x02命名空间: %[1]s\x02文库:" +
-	" %[1]s\x02集合: %[1]s\x02创建新项目\x02创建\x02请为项目设置一个名称。\x02请在文件管理器中选择一个文件夹来放置项" +
-	"目文件。\x02请输入有效的完整模板名称。\x02这不是创建包的请求。\x02请为您的包/模板设置一个名称。\x02请选择项目的创建位置。" +
-	"\x02创建项目出错: %[1]s\x02项目类型\x02为笔记、文章、书籍或幻灯片选择“文档”。仅在开发可复用的 Typst 包时选择“包”或" +
-	"“模板”。\x02项目位置\x02选择要创建项目的文件夹。\x02创建位置\x02项目将在当前资料库文件夹中创建。\x02选择目录\x02T" +
-	"ypst 模板\x02可以选择从 @preview/aero-check:0.1.1 等 Typst 包开始。留空则创建基本文档。\x02@pr" +
-	"eview/package:version（可选）\x02项目名称\x02将在上方位置创建同名文件夹。\x02项目名称\x02包\x02模板" +
-	"\x02文档\x02删除文件/文件夹\x02确认\x02确定要删除 '%[1]s' 吗?\x02您可以从回收站恢复此文件。\x02取消\x02移" +
-	"动文件/文件夹\x02确定要移动\x02'%[1]s' 到 '%[2]s' 吗?\x02输出文件的格式。\x02构建并导出\x02导出" +
-	"\x02正在导出文件...\x02导出文件格式\x02页面\x02要导出的页面。有效值可以是逗号分隔的页码和页码范围，例如 1,3,5,6-9。" +
-	"未指定时导出所有页面。\x02文件名\x02指定输出文件名。如果生成多个文件，文件名将附带数字后缀。未指定时使用源文件名。\x02PPI" +
-	"\x02PNG 导出使用的 PPI（每英寸像素数）。\x02PDF 版本\x02Typstify 将强制遵循的 PDF 版本。\x02PDF 标" +
-	"准\x02Typstify 将强制遵循的 PDF 标准。\x02禁用 PDF 标签\x02默认生成带标签的 PDF 以提供基本的可访问性。在" +
-	"某些情况下可能不需要。勾选此选项可禁用它。\x02无 PDF 标签\x02更改文件缩进\x02使用空格或制表符缩进\x02选择当前文件的缩进" +
-	"样式。\x02制表符宽度\x02更改制表符显示宽度。\x02转换缩进\x02根据您的选择，将缩进从空格转换为制表符或从制表符转换为空格。" +
-	"\x02选择打开方式...\x02确定要打开文件 '%[1]s' 吗?\x02发布包\x02发布包出错: %[1]s\x02发布包成功: %[1" +
-	"]s\x02打包\x02将项目文件打包为有效的 Typst 包/模板。\x02构建\x02已创建打包文件: %[1]s\x02命名空间\x04" +
-	"\x00\x01 u\x02选择要发布到的命名空间。请确保您已在应用中登录 TPIX，并且拥有可访问的命名空间。\x02正在加载命名空间..." +
-	"\x02没有可写的命名空间\x02搜索和替换\x02预览\x02AI助手\x02粘贴资源：%[1]s\x02文件浏览器\x02无项目\x02没有" +
-	"打开的项目。\x02项目\x02文件夹\x02拉取依赖出错: %[1]s\x02拉取依赖成功!\x02同步依赖\x02同步参考文献\x02查" +
-	"看参考文献信息\x02没有符合此筛选条件的项目。\x02此文件夹为空。使用“新建”创建文件、文件夹或项目。\x02%[1]d 个项目\x02" +
-	"新建\x02新建文件\x02新建文件夹\x02新建项目\x02笔记本\x02文件\x02Typst 工作\x02笔记本\x02Typst 文" +
-	"档\x02PDF\x02图片\x02其他文件\x02所有文件\x02隐藏资源管理器\x02资料库\x02打开文件夹\x02Typst 包中心" +
-	"\x02设置\x02文件\x02大纲\x02助手\x02更多\x02本地模板\x02文件资源管理器\x02有新版本可用: %[1]s\x02稍后" +
-	"\x02下载\x02已缓存\x02作者\x02最后更新\x02许可证\x02分类\x02阅读文档\x02复制导入路径\x02正在加载包..." +
-	"\x02未找到包/模板\x02清除\x02Typst 包\x02在 TPIX 上搜索包/模板\x02浏览 TPIX 服务器上的数千个包和模板，包" +
-	"括公共命名空间和您团队的私有命名空间。\x02搜索 TPIX...\x02来自 Typst 本地包文件夹的个人 @local 包和模板。无需" +
-	"账户或网络连接。\x02搜索本地模板…\x02包类型\x02使用模板\x02查询包...\x04\x00\x01 \x11\x02查询包失败" +
-	":\x02Typst 包信息已加载。\x04\x00\x01 \x11\x02下载包失败:\x04\x00\x01 \x16\x02已下载包 %" +
-	"[1]s。\x02已下载包 %[1]s 及 %[2]d 个传递依赖。\x02找到 %[1]d 个包。\x02找到 %[1]d 个本地模板。" +
-	"\x02全部\x02Agent\x02为 AI 助手配置代理。您可以手动配置自己的代理，或从下方的代理注册表中选择一个。\x02代理注册表" +
-	"\x02从注册表中选择一个代理。点击使用以覆盖上述配置。\x02MCP\x02内置 MCP 服务器默认使用动态网络端口，并在运行时向代理注册。" +
-	"\x0a某些代理不支持运行时注册，您需要固定 MCP 服务器端口并手动注册。使用静态端口时，服务器地址为 127.0.0.1:5322，传输方式" +
-	": http。\x02使用\x02刷新\x02ID:\x02版本:\x02许可:\x02作者:\x02仓库:\x02就绪 — 系统可用 npx。" +
-	"\x02需要 Node.js。请从 https://nodejs.org 安装，然后重启 Typstify。\x02如果代理启动失败，请尝试手动" +
-	"安装: npm install -g %[1]s\x02安装方式 (npx)\x02就绪 — 系统可用 uvx。\x02需要 uvx。请通过" +
-	" `pip install uv` 或 https://docs.astral.sh/uv 安装，然后重启 Typstify。\x02如果代理启" +
-	"动失败，请尝试手动安装: uv pip install %[1]s\x02安装方式 (uvx)\x02安装方式 (二进制)\x02下载适用于" +
-	"您平台的压缩包，解压后确保将二进制文件添加到 PATH 中。\x02安装方式\x02该代理不直接适用于您的平台。请访问 ACP 注册表了解更" +
-	"多详情。\x02请参见 https://agentclientprotocol.com/get-started/registry\x02代理" +
-	"名称\x02从下面选择一个Agent或者直接输入一个名字\x02命令\x02从下面选择一个Agent或者直接输入，例如：npx -y @sc" +
-	"ope/package\x02npx -y @scope/package\x02环境变量\x02额外的环境变量，空格分隔的 KEY=值 键值对，" +
-	"例如 FOO=bar BAZ=qux\x02FOO=bar BAZ=qux\x02版本\x02在浏览器中预览\x02勾选后，文档预览将在默认" +
-	"浏览器中打开。否则预览将使用内置预览器。\x02启用局部预览\x02启用后，预览器仅渲染可见区域内的页面。这尤其能提升大型文档的性能。" +
-	"\x02调试日志\x02勾选后，内置 LSP（语言服务器协议）服务器的日志将写入控制台面板。需要重启或重新加载才能生效。\x02省电模式\x02" +
-	"勾选后，LSP 服务器将运行在省电模式，仅提供基本语法检查和代码补全功能，诊断和预览将无法使用。需要重启或重新加载才能生效。\x02语言服务" +
-	"器\x02语言\x02设置用户界面的显示语言。\x02UI 文字大小\x02设置用户界面的字体大小。单位为缩放无关像素 (sp)。\x02U" +
-	"I 字体\x02设置 UI 所需的字体。使用 CSS 样式的字体族语法，即以逗号分隔的名称列表。您也可以留空让应用程序选择后备字体。\x02字体" +
-	"\x02主题\x02选择您喜欢的用户界面颜色主题。\x02外部 Typst 编译器路径\x02指定您自己的 Typst 编译器版本路径。留空则使" +
-	"用内置版本。切换前请检查兼容性。需要重启才能生效。\x02外部 LSP 服务器(Tinymist) 路径\x02指定您自己的 Tinymis" +
-	"t 版本路径。留空则使用内置版本。切换前请检查兼容性。需要重启才能生效。\x02检查更新\x02应用启动时检查更新。请启用以保持获取最新功能和错" +
-	"误修复。\x02通用\x02自动保存间隔\x02设置自动保存延迟（秒），无法完全禁用。\x02预览宽度\x02选择预览打开时占用的编辑器空间" +
-	"。编辑时仍可拖动分隔线。\x02设置编辑器所需的字体。使用 CSS 样式的字体族语法，即以逗号分隔的名称列表。您也可以留空让应用程序选择后备" +
-	"字体。\x02文字大小\x02设置编辑器的字体大小。单位为缩放无关像素 (sp)。\x02字体粗细\x02设置文本的预期粗细（或加粗程度）。" +
-	"仅适用于可变字体。\x02行高倍率\x02设置编辑器中行的行高倍率。行高倍率乘以行高以确定行与行之间的最终间距。\x02缩进\x02设置按 " +
-	"Tab 键时要使用的字符。请注意，这仅适用于空文件。非空文件的缩进将自动检测。\x02设置 Tab 等于多少个空格。请注意，这仅适用于空文件。非" +
-	"空文件的缩进将自动检测。\x02编辑器\x02文件界面\x02界面\x02“经典”保留 Typstify 现有的文件工作流。“学生”增加资料" +
-	"库主页和聚焦的项目导航。\x02经典\x02学生\x02学生模式偏好会被保存，并在再次选择“学生”时恢复。\x02学生模式偏好\x02这些选" +
-	"项立即生效，且不会更改经典界面。\x02资料库文件夹\x02学生模式启动时显示的文件夹。忘记该文件夹不会删除任何文件。\x02未选择资料库文" +
-	"件夹\x02更改\x02忘记\x02编辑器文件\x02仅显示当前项目或文件夹，或保留完整的工作区文件树。\x02当前项目或文件夹\x02整个" +
-	"工作区\x02资料库视图\x02选择文件夹、笔记本和文件的默认显示方式。\x02网格\x02列表\x02导航\x02使用资料库导航栏，或保留" +
-	" Typstify 熟悉的侧边栏和底部控件。\x02资料库导航栏\x02经典控件\x02Typst\x02包目录\x02指定存储本地 Typst" +
-	" 包/模板的位置。留空则使用默认目录。\x02包缓存目录\x02指定存储从网络获取的已缓存 Typst 包/模板的位置。留空则使用默认目录。" +
-	"\x02额外字体路径\x02导出、预览和自动补全时搜索字体的目录。请注意，当前项目根目录始终会被搜索。需要重启或重新加载才能生效。\x02导出目" +
-	"录\x02保存导出文件的目录，包括 deps.json。如果未设置，导出文件将保存到源文件旁边的 'output' 文件夹中。\x02加载外" +
-	"部输入\x02从名为 sys-inputs.json 的文件加载外部输入作为 sys.inputs。如果没有此文件，将在根目录创建。\x0a" +
-	"sys-inputs.json 文件包含用户定义的键值对，可通过 Typst 的 sys.inputs 访问。值应始终为字符串编码数据。\x0a" +
-	"更改后需要重启或重新加载才能对代码检查器、自动补全和预览生效。\x02忽略系统字体\x02是否忽略系统字体。对于代码检查、自动补全和预览，需" +
-	"要重启或重新加载才能生效。\x02忽略编译器嵌入字体\x02是否忽略嵌入字体。仅在导出文件时生效。\x02生成依赖文件\x02将编译文件的依" +
-	"赖写入项目目录中名为 deps.json 的文件。\x02TPIX\x02加载中...\x02您有一个活跃的 TPIX 会话\x02登出 T" +
-	"PIX\x02登录 TPIX 以访问 Typstify 的所有功能，包括包管理、Zotero 同步、AI 助手的 MCP 工具等。部分功能可能需" +
-	"要订阅。\x02登录 TPIX\x04\x00\x01 %\x02了解更多 TPIX 信息，请访问\x04\x00\x01 \x1f\x02" +
-	"获取 TPIX 订阅，请点击\x02检查新版本\x02更新日志\x02发布时间\x02前往下载\x02关于\x02git checkout " +
-	"%[1]s 失败: %[2]v\x02宽度: %[1]d, 高度: %[2]d\x02弹出并在独立窗口中显示预览\x02打开文件所在位置\x02" +
-	"打开文件夹所在位置"
+	"内容以开始对话\x02输入内容以开始对话，按 %[1]s 发送\x02发送\x02停止\x02关\x02开\x02选项\x02输入 @ 引用" +
+	"资源，输入 / 使用技能\x02暂无消息\x02思考中\x02计划\x02原始输入\x02原始输出\x02终端: %[1]s\x02复制" +
+	"\x02剪切\x02粘贴\x02查找与替换\x02锁定\x02解锁\x02取消换行\x02自动换行\x02区分大小写\x02全词匹配\x02使用" +
+	"正则\x02无结果\x02%[1]d / %[2]d\x02替换\x02全部替换\x02行 %[1]d, 列 %[2]d\x04\x01 " +
+	"\x00\x1d\x02（已选 %[1]d 个字符）\x02退出\x02选择资料库文件夹\x02选择包含课程、笔记本和文档的文件夹。Typsti" +
+	"fy 会将其保留为普通文件夹。\x02选择文件夹\x02登陆\x02开始\x02Typstify\x02以思维的速度编写 Typst 文档。" +
+	"\x02欢迎, %[1]s!\x02开始使用\x02新建项目...\x02打开已有项目...\x02浏览包/模板...\x02了解更多\x04" +
+	"\x00\x01 )\x02了解更多 Typstify 信息，请访问\x04\x00\x01 %\x02了解更多 TPIX 信息，请访问\x02" +
+	"打开/隐藏文件浏览器：%[1]s\x02打开/隐藏控制台：%[1]s\x02打开/隐藏预览：%[1]s\x02打开 AI 助手：%[1]s" +
+	"\x02正在启动 AI 助手...\x02会话\x02新建聊天\x02还没有历史聊天。\x02同步参考文献\x02提交\x02创建托管参考文献出" +
+	"错: %[1]s\x02创建托管参考文献成功: %[1]s\x02参考文献文件名\x02托管参考文献文件名，例如 'bib-file-nam" +
+	"e.bib'。留空则使用自动生成的名称。\x02集合\x04\x00\x01 m\x02选择要同步的集合。请确保您或您的团队已在 TPIX 服务" +
+	"器上添加了 Zotero API 密钥。\x02正在加载集合...\x02未找到集合\x02查看托管参考文献\x02取消关联\x02取消关联" +
+	"托管参考文献出错: %[1]s\x02取消关联托管参考文献成功: %[1]s\x02托管参考文献文件路径。点击下方的取消关联将把它转为普通文" +
+	"件，不再与远程 Zotero 集合同步。\x02格式:\x02Zotero 集合信息\x02命名空间: %[1]s\x02文库: %[1]s" +
+	"\x02集合: %[1]s\x02创建新项目\x02创建\x02请为项目设置一个名称。\x02请在文件管理器中选择一个文件夹来放置项目文件。" +
+	"\x02请输入有效的完整模板名称。\x02这不是创建包的请求。\x02请为您的包/模板设置一个名称。\x02请选择项目的创建位置。\x02创建项" +
+	"目出错: %[1]s\x02项目类型\x02为笔记、文章、书籍或幻灯片选择“文档”。仅在开发可复用的 Typst 包时选择“包”或“模板”。" +
+	"\x02项目位置\x02选择要创建项目的文件夹。\x02创建位置\x02项目将在当前资料库文件夹中创建。\x02选择目录\x02Typst 模板" +
+	"\x02可以选择从 @preview/aero-check:0.1.1 等 Typst 包开始。留空则创建基本文档。\x02@preview/p" +
+	"ackage:version（可选）\x02项目名称\x02将在上方位置创建同名文件夹。\x02项目名称\x02包\x02模板\x02文档" +
+	"\x02删除文件/文件夹\x02确认\x02确定要删除 '%[1]s' 吗?\x02您可以从回收站恢复此文件。\x02取消\x02移动文件/文件" +
+	"夹\x02确定要移动\x02'%[1]s' 到 '%[2]s' 吗?\x02输出文件的格式。\x02构建并导出\x02导出\x02正在导出文" +
+	"件...\x02导出文件格式\x02页面\x02要导出的页面。有效值可以是逗号分隔的页码和页码范围，例如 1,3,5,6-9。未指定时导出所" +
+	"有页面。\x02文件名\x02指定输出文件名。如果生成多个文件，文件名将附带数字后缀。未指定时使用源文件名。\x02PPI\x02PNG 导" +
+	"出使用的 PPI（每英寸像素数）。\x02PDF 版本\x02Typstify 将强制遵循的 PDF 版本。\x02PDF 标准\x02Ty" +
+	"pstify 将强制遵循的 PDF 标准。\x02禁用 PDF 标签\x02默认生成带标签的 PDF 以提供基本的可访问性。在某些情况下可能不需" +
+	"要。勾选此选项可禁用它。\x02无 PDF 标签\x02更改文件缩进\x02使用空格或制表符缩进\x02选择当前文件的缩进样式。\x02制表" +
+	"符宽度\x02更改制表符显示宽度。\x02转换缩进\x02根据您的选择，将缩进从空格转换为制表符或从制表符转换为空格。\x02选择打开方式." +
+	"..\x02确定要打开文件 '%[1]s' 吗?\x02发布包\x02发布包出错: %[1]s\x02发布包成功: %[1]s\x02打包" +
+	"\x02将项目文件打包为有效的 Typst 包/模板。\x02构建\x02已创建打包文件: %[1]s\x02命名空间\x04\x00\x01 " +
+	"u\x02选择要发布到的命名空间。请确保您已在应用中登录 TPIX，并且拥有可访问的命名空间。\x02正在加载命名空间...\x02没有可写的命" +
+	"名空间\x02搜索和替换\x02预览\x02AI助手\x02粘贴资源：%[1]s\x02文件浏览器\x02无项目\x02没有打开的项目。" +
+	"\x02项目\x02文件夹\x02拉取依赖出错: %[1]s\x02拉取依赖成功!\x02同步依赖\x02同步参考文献\x02查看参考文献信息" +
+	"\x02没有符合此筛选条件的项目。\x02此文件夹为空。使用“新建”创建文件、文件夹或项目。\x02%[1]d 个项目\x02新建\x02新建文" +
+	"件\x02新建文件夹\x02新建项目\x02笔记本\x02文件\x02Typst 工作\x02笔记本\x02Typst 文档\x02PDF" +
+	"\x02图片\x02其他文件\x02所有文件\x02隐藏资源管理器\x02资料库\x02打开文件夹\x02Typst 包中心\x02设置\x02" +
+	"文件\x02大纲\x02助手\x02更多\x02本地模板\x02文件资源管理器\x02有新版本可用: %[1]s\x02稍后\x02下载" +
+	"\x02已缓存\x02作者\x02最后更新\x02许可证\x02分类\x02阅读文档\x02复制导入路径\x02正在加载包...\x02未找到包" +
+	"/模板\x02清除\x02Typst 包\x02在 TPIX 上搜索包/模板\x02浏览 TPIX 服务器上的数千个包和模板，包括公共命名空间和" +
+	"您团队的私有命名空间。\x02搜索 TPIX...\x02来自 Typst 本地包文件夹的个人 @local 包和模板。无需账户或网络连接。" +
+	"\x02搜索本地模板…\x02包类型\x02使用模板\x02查询包...\x04\x00\x01 \x11\x02查询包失败:\x02Typst" +
+	" 包信息已加载。\x04\x00\x01 \x11\x02下载包失败:\x04\x00\x01 \x16\x02已下载包 %[1]s。\x02已" +
+	"下载包 %[1]s 及 %[2]d 个传递依赖。\x02找到 %[1]d 个包。\x02找到 %[1]d 个本地模板。\x02全部\x02A" +
+	"gent\x02为 AI 助手配置代理。您可以手动配置自己的代理，或从下方的代理注册表中选择一个。\x02代理注册表\x02从注册表中选择一个代" +
+	"理。点击使用以覆盖上述配置。\x02MCP\x02内置 MCP 服务器默认使用动态网络端口，并在运行时向代理注册。\x0a某些代理不支持运行" +
+	"时注册，您需要固定 MCP 服务器端口并手动注册。使用静态端口时，服务器地址为 127.0.0.1:5322，传输方式: http。\x02" +
+	"使用\x02刷新\x02ID:\x02版本:\x02许可:\x02作者:\x02仓库:\x02就绪 — 系统可用 npx。\x02需要 No" +
+	"de.js。请从 https://nodejs.org 安装，然后重启 Typstify。\x02如果代理启动失败，请尝试手动安装: npm i" +
+	"nstall -g %[1]s\x02安装方式 (npx)\x02就绪 — 系统可用 uvx。\x02需要 uvx。请通过 `pip insta" +
+	"ll uv` 或 https://docs.astral.sh/uv 安装，然后重启 Typstify。\x02如果代理启动失败，请尝试手动安装" +
+	": uv pip install %[1]s\x02安装方式 (uvx)\x02安装方式 (二进制)\x02下载适用于您平台的压缩包，解压后确保" +
+	"将二进制文件添加到 PATH 中。\x02安装方式\x02该代理不直接适用于您的平台。请访问 ACP 注册表了解更多详情。\x02请参见 h" +
+	"ttps://agentclientprotocol.com/get-started/registry\x02代理名称\x02从下面选择一个Ag" +
+	"ent或者直接输入一个名字\x02命令\x02从下面选择一个Agent或者直接输入，例如：npx -y @scope/package\x02np" +
+	"x -y @scope/package\x02环境变量\x02额外的环境变量，空格分隔的 KEY=值 键值对，例如 FOO=bar BAZ=qu" +
+	"x\x02FOO=bar BAZ=qux\x02版本\x02在浏览器中预览\x02勾选后，文档预览将在默认浏览器中打开。否则预览将使用内置预览器" +
+	"。\x02启用局部预览\x02启用后，预览器仅渲染可见区域内的页面。这尤其能提升大型文档的性能。\x02调试日志\x02勾选后，内置 LSP" +
+	"（语言服务器协议）服务器的日志将写入控制台面板。需要重启或重新加载才能生效。\x02省电模式\x02勾选后，LSP 服务器将运行在省电模式，" +
+	"仅提供基本语法检查和代码补全功能，诊断和预览将无法使用。需要重启或重新加载才能生效。\x02语言服务器\x02快捷键\x02搜索操作或快捷键" +
+	"\x02恢复所有默认设置\x02点击快捷键字段，然后按下新的组合键。按 Escape 取消录制。\x02已禁用\x02启用 %[1]s\x02%" +
+	"[1]s 已被 %[2]s 使用。\x02按下快捷键…\x02重置\x02工作区\x02编辑器\x02切换文件浏览器\x02切换控制台\x02切" +
+	"换助手\x02切换预览\x02保存文件\x02查找和替换\x02切换只读模式\x02切换自动换行\x02复制文本\x02剪切文本\x02粘贴" +
+	"文本\x02显示补全建议\x02插入 Typst 换行符\x02复制文件\x02剪切文件\x02粘贴文件\x02发送提示\x02显示或隐藏项" +
+	"目文件。\x02显示或隐藏编译器及应用程序输出。\x02打开或关闭 AI 助手。\x02显示或隐藏文档预览。\x02保存当前文档。\x02在" +
+	"当前文档中搜索。\x02锁定或解锁当前文档的编辑。\x02为编辑器中的长行启用或取消自动换行。\x02复制编辑器中的选中内容。\x02剪切编" +
+	"辑器中的选中内容。\x02将剪贴板文本粘贴到编辑器中。\x02打开代码和 Typst 建议。\x02插入 \\ 并在新行继续。\x02复制选" +
+	"中的文件或文件夹。\x02剪切选中的文件或文件夹。\x02将文件粘贴到选中的文件夹。\x02发送当前助手消息。\x02语言\x02设置用户界" +
+	"面的显示语言。\x02UI 文字大小\x02设置用户界面的字体大小。单位为缩放无关像素 (sp)。\x02UI 字体\x02设置 UI 所需" +
+	"的字体。使用 CSS 样式的字体族语法，即以逗号分隔的名称列表。您也可以留空让应用程序选择后备字体。\x02字体\x02主题\x02选择您喜" +
+	"欢的用户界面颜色主题。\x02外部 Typst 编译器路径\x02指定您自己的 Typst 编译器版本路径。留空则使用内置版本。切换前请检查" +
+	"兼容性。需要重启才能生效。\x02外部 LSP 服务器(Tinymist) 路径\x02指定您自己的 Tinymist 版本路径。留空则使用" +
+	"内置版本。切换前请检查兼容性。需要重启才能生效。\x02检查更新\x02应用启动时检查更新。请启用以保持获取最新功能和错误修复。\x02通用" +
+	"\x02自动保存间隔\x02设置自动保存延迟（秒），无法完全禁用。\x02预览宽度\x02选择预览打开时占用的编辑器空间。编辑时仍可拖动分隔线。" +
+	"\x02设置编辑器所需的字体。使用 CSS 样式的字体族语法，即以逗号分隔的名称列表。您也可以留空让应用程序选择后备字体。\x02文字大小" +
+	"\x02设置编辑器的字体大小。单位为缩放无关像素 (sp)。\x02字体粗细\x02设置文本的预期粗细（或加粗程度）。仅适用于可变字体。\x02" +
+	"行高倍率\x02设置编辑器中行的行高倍率。行高倍率乘以行高以确定行与行之间的最终间距。\x02缩进\x02设置按 Tab 键时要使用的字符。" +
+	"请注意，这仅适用于空文件。非空文件的缩进将自动检测。\x02设置 Tab 等于多少个空格。请注意，这仅适用于空文件。非空文件的缩进将自动检测" +
+	"。\x02文件界面\x02界面\x02“经典”保留 Typstify 现有的文件工作流。“学生”增加资料库主页和聚焦的项目导航。\x02经典" +
+	"\x02学生\x02学生模式偏好会被保存，并在再次选择“学生”时恢复。\x02学生模式偏好\x02这些选项立即生效，且不会更改经典界面。\x02" +
+	"资料库文件夹\x02学生模式启动时显示的文件夹。忘记该文件夹不会删除任何文件。\x02未选择资料库文件夹\x02更改\x02忘记\x02编辑" +
+	"器文件\x02仅显示当前项目或文件夹，或保留完整的工作区文件树。\x02当前项目或文件夹\x02整个工作区\x02资料库视图\x02选择文件" +
+	"夹、笔记本和文件的默认显示方式。\x02网格\x02列表\x02导航\x02使用资料库导航栏，或保留 Typstify 熟悉的侧边栏和底部控" +
+	"件。\x02资料库导航栏\x02经典控件\x02Typst\x02包目录\x02指定存储本地 Typst 包/模板的位置。留空则使用默认目录" +
+	"。\x02包缓存目录\x02指定存储从网络获取的已缓存 Typst 包/模板的位置。留空则使用默认目录。\x02额外字体路径\x02导出、预" +
+	"览和自动补全时搜索字体的目录。请注意，当前项目根目录始终会被搜索。需要重启或重新加载才能生效。\x02导出目录\x02保存导出文件的目录，包" +
+	"括 deps.json。如果未设置，导出文件将保存到源文件旁边的 'output' 文件夹中。\x02加载外部输入\x02从名为 sys-i" +
+	"nputs.json 的文件加载外部输入作为 sys.inputs。如果没有此文件，将在根目录创建。\x0asys-inputs.json 文件" +
+	"包含用户定义的键值对，可通过 Typst 的 sys.inputs 访问。值应始终为字符串编码数据。\x0a更改后需要重启或重新加载才能对代" +
+	"码检查器、自动补全和预览生效。\x02忽略系统字体\x02是否忽略系统字体。对于代码检查、自动补全和预览，需要重启或重新加载才能生效。" +
+	"\x02忽略编译器嵌入字体\x02是否忽略嵌入字体。仅在导出文件时生效。\x02生成依赖文件\x02将编译文件的依赖写入项目目录中名为 deps" +
+	".json 的文件。\x02TPIX\x02加载中...\x02您有一个活跃的 TPIX 会话\x02登出 TPIX\x02登录 TPIX 以访" +
+	"问 Typstify 的所有功能，包括包管理、Zotero 同步、AI 助手的 MCP 工具等。部分功能可能需要订阅。\x02登录 TPIX" +
+	"\x04\x00\x01 %\x02了解更多 TPIX 信息，请访问\x04\x00\x01 \x1f\x02获取 TPIX 订阅，请点击" +
+	"\x02检查新版本\x02更新日志\x02发布时间\x02前往下载\x02关于\x02git checkout %[1]s 失败: %[2]v" +
+	"\x02宽度: %[1]d, 高度: %[2]d\x02弹出并在独立窗口中显示预览\x02打开文件所在位置\x02打开文件夹所在位置"
 
-	// Total table size 44919 bytes (43KiB); checksum: 55CF98B9
+	// Total table size 49130 bytes (47KiB); checksum: 65B7BE8D

@@ -58,10 +58,27 @@
             "fuzzy": true
         },
         {
-            "id": "Type to start a conversation, press Shift+Enter to send",
-            "message": "Type to start a conversation, press Shift+Enter to send",
-            "translation": "Type to start a conversation, press Shift+Enter to send",
+            "id": "Type to start a conversation",
+            "message": "Type to start a conversation",
+            "translation": "Type to start a conversation",
             "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Type to start a conversation, press {Shortcut} to send",
+            "message": "Type to start a conversation, press {Shortcut} to send",
+            "translation": "Type to start a conversation, press {Shortcut} to send",
+            "translatorComment": "Copied from source.",
+            "placeholders": [
+                {
+                    "id": "Shortcut",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "shortcut"
+                }
+            ],
             "fuzzy": true
         },
         {
@@ -466,69 +483,69 @@
             "fuzzy": true
         },
         {
-            "id": "Open/Hide File Explorer: {String} + D",
-            "message": "Open/Hide File Explorer: {String} + D",
-            "translation": "Open/Hide File Explorer: {String} + D",
+            "id": "Open/Hide File Explorer: {ShortcutToggleFileExplorer}",
+            "message": "Open/Hide File Explorer: {ShortcutToggleFileExplorer}",
+            "translation": "Open/Hide File Explorer: {ShortcutToggleFileExplorer}",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
-                    "id": "String",
+                    "id": "ShortcutToggleFileExplorer",
                     "string": "%[1]s",
                     "type": "string",
                     "underlyingType": "string",
                     "argNum": 1,
-                    "expr": "key.ModShortcut.String()"
+                    "expr": "config.ShortcutDisplay(shortcuts, config.ShortcutToggleFileExplorer)"
                 }
             ],
             "fuzzy": true
         },
         {
-            "id": "Open/Hide Console: {String} + K",
-            "message": "Open/Hide Console: {String} + K",
-            "translation": "Open/Hide Console: {String} + K",
+            "id": "Open/Hide Console: {ShortcutToggleConsole}",
+            "message": "Open/Hide Console: {ShortcutToggleConsole}",
+            "translation": "Open/Hide Console: {ShortcutToggleConsole}",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
-                    "id": "String",
+                    "id": "ShortcutToggleConsole",
                     "string": "%[1]s",
                     "type": "string",
                     "underlyingType": "string",
                     "argNum": 1,
-                    "expr": "key.ModShortcut.String()"
+                    "expr": "config.ShortcutDisplay(shortcuts, config.ShortcutToggleConsole)"
                 }
             ],
             "fuzzy": true
         },
         {
-            "id": "Open/Hide Previewer: {String} + P",
-            "message": "Open/Hide Previewer: {String} + P",
-            "translation": "Open/Hide Previewer: {String} + P",
+            "id": "Open/Hide Previewer: {ShortcutTogglePreview}",
+            "message": "Open/Hide Previewer: {ShortcutTogglePreview}",
+            "translation": "Open/Hide Previewer: {ShortcutTogglePreview}",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
-                    "id": "String",
+                    "id": "ShortcutTogglePreview",
                     "string": "%[1]s",
                     "type": "string",
                     "underlyingType": "string",
                     "argNum": 1,
-                    "expr": "key.ModShortcut.String()"
+                    "expr": "config.ShortcutDisplay(shortcuts, config.ShortcutTogglePreview)"
                 }
             ],
             "fuzzy": true
         },
         {
-            "id": "Open AI Assistant: {String} + L",
-            "message": "Open AI Assistant: {String} + L",
-            "translation": "Open AI Assistant: {String} + L",
+            "id": "Open AI Assistant: {ShortcutToggleAssistant}",
+            "message": "Open AI Assistant: {ShortcutToggleAssistant}",
+            "translation": "Open AI Assistant: {ShortcutToggleAssistant}",
             "translatorComment": "Copied from source.",
             "placeholders": [
                 {
-                    "id": "String",
+                    "id": "ShortcutToggleAssistant",
                     "string": "%[1]s",
                     "type": "string",
                     "underlyingType": "string",
                     "argNum": 1,
-                    "expr": "key.ModShortcut.String()"
+                    "expr": "config.ShortcutDisplay(shortcuts, config.ShortcutToggleAssistant)"
                 }
             ],
             "fuzzy": true
@@ -2263,6 +2280,349 @@
             "fuzzy": true
         },
         {
+            "id": "Shortcuts",
+            "message": "Shortcuts",
+            "translation": "Shortcuts",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Search actions or shortcuts",
+            "message": "Search actions or shortcuts",
+            "translation": "Search actions or shortcuts",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Restore all defaults",
+            "message": "Restore all defaults",
+            "translation": "Restore all defaults",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Click a shortcut field, then press the new key combination. Escape cancels recording.",
+            "message": "Click a shortcut field, then press the new key combination. Escape cancels recording.",
+            "translation": "Click a shortcut field, then press the new key combination. Escape cancels recording.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Disabled",
+            "message": "Disabled",
+            "translation": "Disabled",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Enable {ID}",
+            "message": "Enable {ID}",
+            "translation": "Enable {ID}",
+            "translatorComment": "Copied from source.",
+            "placeholders": [
+                {
+                    "id": "ID",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "shortcutNameLabel(definition.ID)"
+                }
+            ],
+            "fuzzy": true
+        },
+        {
+            "id": "{Display} is already used by {ID}.",
+            "message": "{Display} is already used by {ID}.",
+            "translation": "{Display} is already used by {ID}.",
+            "translatorComment": "Copied from source.",
+            "placeholders": [
+                {
+                    "id": "Display",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "binding.Display()"
+                },
+                {
+                    "id": "ID",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "shortcutNameLabel(conflict.ID)"
+                }
+            ],
+            "fuzzy": true
+        },
+        {
+            "id": "Press shortcut…",
+            "message": "Press shortcut…",
+            "translation": "Press shortcut…",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Reset",
+            "message": "Reset",
+            "translation": "Reset",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Workspace",
+            "message": "Workspace",
+            "translation": "Workspace",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Editor",
+            "message": "Editor",
+            "translation": "Editor",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Toggle file explorer",
+            "message": "Toggle file explorer",
+            "translation": "Toggle file explorer",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Toggle console",
+            "message": "Toggle console",
+            "translation": "Toggle console",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Toggle assistant",
+            "message": "Toggle assistant",
+            "translation": "Toggle assistant",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Toggle preview",
+            "message": "Toggle preview",
+            "translation": "Toggle preview",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Save file",
+            "message": "Save file",
+            "translation": "Save file",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Find and replace",
+            "message": "Find and replace",
+            "translation": "Find and replace",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Toggle read-only mode",
+            "message": "Toggle read-only mode",
+            "translation": "Toggle read-only mode",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Toggle line wrapping",
+            "message": "Toggle line wrapping",
+            "translation": "Toggle line wrapping",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Copy text",
+            "message": "Copy text",
+            "translation": "Copy text",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Cut text",
+            "message": "Cut text",
+            "translation": "Cut text",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Paste text",
+            "message": "Paste text",
+            "translation": "Paste text",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Show completions",
+            "message": "Show completions",
+            "translation": "Show completions",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Insert Typst line break",
+            "message": "Insert Typst line break",
+            "translation": "Insert Typst line break",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Copy file",
+            "message": "Copy file",
+            "translation": "Copy file",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Cut file",
+            "message": "Cut file",
+            "translation": "Cut file",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Paste file",
+            "message": "Paste file",
+            "translation": "Paste file",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Send prompt",
+            "message": "Send prompt",
+            "translation": "Send prompt",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Show or hide the project files.",
+            "message": "Show or hide the project files.",
+            "translation": "Show or hide the project files.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Show or hide compiler and application output.",
+            "message": "Show or hide compiler and application output.",
+            "translation": "Show or hide compiler and application output.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Open or close the AI assistant.",
+            "message": "Open or close the AI assistant.",
+            "translation": "Open or close the AI assistant.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Show or hide the document preview.",
+            "message": "Show or hide the document preview.",
+            "translation": "Show or hide the document preview.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Save the active document.",
+            "message": "Save the active document.",
+            "translation": "Save the active document.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Search in the active document.",
+            "message": "Search in the active document.",
+            "translation": "Search in the active document.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Lock or unlock editing for the active document.",
+            "message": "Lock or unlock editing for the active document.",
+            "translation": "Lock or unlock editing for the active document.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Wrap or unwrap long editor lines.",
+            "message": "Wrap or unwrap long editor lines.",
+            "translation": "Wrap or unwrap long editor lines.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Copy the editor selection.",
+            "message": "Copy the editor selection.",
+            "translation": "Copy the editor selection.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Cut the editor selection.",
+            "message": "Cut the editor selection.",
+            "translation": "Cut the editor selection.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Paste clipboard text into the editor.",
+            "message": "Paste clipboard text into the editor.",
+            "translation": "Paste clipboard text into the editor.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Open code and Typst suggestions.",
+            "message": "Open code and Typst suggestions.",
+            "translation": "Open code and Typst suggestions.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Insert \\ and continue on a new line.",
+            "message": "Insert \\ and continue on a new line.",
+            "translation": "Insert \\ and continue on a new line.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Copy the selected file or folder.",
+            "message": "Copy the selected file or folder.",
+            "translation": "Copy the selected file or folder.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Cut the selected file or folder.",
+            "message": "Cut the selected file or folder.",
+            "translation": "Cut the selected file or folder.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Paste files into the selected folder.",
+            "message": "Paste files into the selected folder.",
+            "translation": "Paste files into the selected folder.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Send the current assistant message.",
+            "message": "Send the current assistant message.",
+            "translation": "Send the current assistant message.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
             "id": "Language",
             "message": "Language",
             "translation": "Language",
@@ -2469,13 +2829,6 @@
             "id": "Set how many number of spaces the Tab is equal to. Please be noted that this works only for empty file. Indentation for non-empty files are auto detected.",
             "message": "Set how many number of spaces the Tab is equal to. Please be noted that this works only for empty file. Indentation for non-empty files are auto detected.",
             "translation": "Set how many number of spaces the Tab is equal to. Please be noted that this works only for empty file. Indentation for non-empty files are auto detected.",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
-            "id": "Editor",
-            "message": "Editor",
-            "translation": "Editor",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },

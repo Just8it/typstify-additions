@@ -69,6 +69,8 @@ The settings page presents the master interface choice first. When Classic is se
 
 The shared Editor settings include a persisted inline-preview width from 20% to 60%, with 30% as the backwards-compatible default. Opening the preview applies that saved width, and changing the setting updates an already-open preview immediately. Dragging the existing divider remains a temporary adjustment, and reopening the preview restores the configured width. This behavior is shared by Classic and Student modes.
 
+The shared Shortcuts settings apply to both interfaces. The Files shortcut keeps `Ctrl+D` as its default and preserves the Student behavior of toggling the contextual drawer rather than bypassing the Library shell.
+
 Keep navigation state separate:
 
 - Classic retains its expanded-node snapshot.

@@ -42,9 +42,24 @@
             "translation": "Umgebung"
         },
         {
-            "id": "Type to start a conversation, press Shift+Enter to send",
-            "message": "Type to start a conversation, press Shift+Enter to send",
-            "translation": "Tippen Sie, um ein Gespräch zu beginnen. Mit Shift+Enter senden"
+            "id": "Type to start a conversation",
+            "message": "Type to start a conversation",
+            "translation": "Tippe, um eine Unterhaltung zu beginnen"
+        },
+        {
+            "id": "Type to start a conversation, press {Shortcut} to send",
+            "message": "Type to start a conversation, press {Shortcut} to send",
+            "translation": "Tippe, um eine Unterhaltung zu beginnen, und drücke zum Senden {Shortcut}",
+            "placeholders": [
+                {
+                    "id": "Shortcut",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "shortcut"
+                }
+            ]
         },
         {
             "id": "Send",
@@ -358,62 +373,62 @@
             "translation": "Um mehr über TPIX zu erfahren, klicken Sie"
         },
         {
-            "id": "Open/Hide File Explorer: {String} + D",
-            "message": "Open/Hide File Explorer: {String} + D",
-            "translation": "Datei-Explorer öffnen/ausblenden: {String} + D",
+            "id": "Open/Hide File Explorer: {ShortcutToggleFileExplorer}",
+            "message": "Open/Hide File Explorer: {ShortcutToggleFileExplorer}",
+            "translation": "Datei-Explorer öffnen/ausblenden: {ShortcutToggleFileExplorer}",
             "placeholders": [
                 {
-                    "id": "String",
+                    "id": "ShortcutToggleFileExplorer",
                     "string": "%[1]s",
                     "type": "string",
                     "underlyingType": "string",
                     "argNum": 1,
-                    "expr": "key.ModShortcut.String()"
+                    "expr": "config.ShortcutDisplay(shortcuts, config.ShortcutToggleFileExplorer)"
                 }
             ]
         },
         {
-            "id": "Open/Hide Console: {String} + K",
-            "message": "Open/Hide Console: {String} + K",
-            "translation": "Konsole öffnen/ausblenden: {String} + K",
+            "id": "Open/Hide Console: {ShortcutToggleConsole}",
+            "message": "Open/Hide Console: {ShortcutToggleConsole}",
+            "translation": "Konsole öffnen/ausblenden: {ShortcutToggleConsole}",
             "placeholders": [
                 {
-                    "id": "String",
+                    "id": "ShortcutToggleConsole",
                     "string": "%[1]s",
                     "type": "string",
                     "underlyingType": "string",
                     "argNum": 1,
-                    "expr": "key.ModShortcut.String()"
+                    "expr": "config.ShortcutDisplay(shortcuts, config.ShortcutToggleConsole)"
                 }
             ]
         },
         {
-            "id": "Open/Hide Previewer: {String} + P",
-            "message": "Open/Hide Previewer: {String} + P",
-            "translation": "Vorschau öffnen/ausblenden: {String} + P",
+            "id": "Open/Hide Previewer: {ShortcutTogglePreview}",
+            "message": "Open/Hide Previewer: {ShortcutTogglePreview}",
+            "translation": "Vorschau öffnen/ausblenden: {ShortcutTogglePreview}",
             "placeholders": [
                 {
-                    "id": "String",
+                    "id": "ShortcutTogglePreview",
                     "string": "%[1]s",
                     "type": "string",
                     "underlyingType": "string",
                     "argNum": 1,
-                    "expr": "key.ModShortcut.String()"
+                    "expr": "config.ShortcutDisplay(shortcuts, config.ShortcutTogglePreview)"
                 }
             ]
         },
         {
-            "id": "Open AI Assistant: {String} + L",
-            "message": "Open AI Assistant: {String} + L",
-            "translation": "KI-Assistent öffnen: {String} + L",
+            "id": "Open AI Assistant: {ShortcutToggleAssistant}",
+            "message": "Open AI Assistant: {ShortcutToggleAssistant}",
+            "translation": "KI-Assistent öffnen: {ShortcutToggleAssistant}",
             "placeholders": [
                 {
-                    "id": "String",
+                    "id": "ShortcutToggleAssistant",
                     "string": "%[1]s",
                     "type": "string",
                     "underlyingType": "string",
                     "argNum": 1,
-                    "expr": "key.ModShortcut.String()"
+                    "expr": "config.ShortcutDisplay(shortcuts, config.ShortcutToggleAssistant)"
                 }
             ]
         },
@@ -1727,6 +1742,259 @@
             "translation": "Sprachserver"
         },
         {
+            "id": "Shortcuts",
+            "message": "Shortcuts",
+            "translation": "Tastenkürzel"
+        },
+        {
+            "id": "Search actions or shortcuts",
+            "message": "Search actions or shortcuts",
+            "translation": "Aktionen oder Tastenkürzel suchen"
+        },
+        {
+            "id": "Restore all defaults",
+            "message": "Restore all defaults",
+            "translation": "Alle Standards wiederherstellen"
+        },
+        {
+            "id": "Click a shortcut field, then press the new key combination. Escape cancels recording.",
+            "message": "Click a shortcut field, then press the new key combination. Escape cancels recording.",
+            "translation": "Klicke auf ein Tastenkürzelfeld und drücke dann die neue Tastenkombination. Escape bricht die Aufnahme ab."
+        },
+        {
+            "id": "Disabled",
+            "message": "Disabled",
+            "translation": "Deaktiviert"
+        },
+        {
+            "id": "Enable {ID}",
+            "message": "Enable {ID}",
+            "translation": "{ID} aktivieren",
+            "placeholders": [
+                {
+                    "id": "ID",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "shortcutNameLabel(definition.ID)"
+                }
+            ]
+        },
+        {
+            "id": "{Display} is already used by {ID}.",
+            "message": "{Display} is already used by {ID}.",
+            "translation": "{Display} wird bereits von {ID} verwendet.",
+            "placeholders": [
+                {
+                    "id": "Display",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "binding.Display()"
+                },
+                {
+                    "id": "ID",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "shortcutNameLabel(conflict.ID)"
+                }
+            ]
+        },
+        {
+            "id": "Press shortcut…",
+            "message": "Press shortcut…",
+            "translation": "Tastenkürzel drücken …"
+        },
+        {
+            "id": "Reset",
+            "message": "Reset",
+            "translation": "Zurücksetzen"
+        },
+        {
+            "id": "Workspace",
+            "message": "Workspace",
+            "translation": "Arbeitsbereich"
+        },
+        {
+            "id": "Editor",
+            "message": "Editor",
+            "translation": "Editor"
+        },
+        {
+            "id": "Toggle file explorer",
+            "message": "Toggle file explorer",
+            "translation": "Datei-Explorer ein-/ausblenden"
+        },
+        {
+            "id": "Toggle console",
+            "message": "Toggle console",
+            "translation": "Konsole ein-/ausblenden"
+        },
+        {
+            "id": "Toggle assistant",
+            "message": "Toggle assistant",
+            "translation": "Assistenten ein-/ausblenden"
+        },
+        {
+            "id": "Toggle preview",
+            "message": "Toggle preview",
+            "translation": "Vorschau ein-/ausblenden"
+        },
+        {
+            "id": "Save file",
+            "message": "Save file",
+            "translation": "Datei speichern"
+        },
+        {
+            "id": "Find and replace",
+            "message": "Find and replace",
+            "translation": "Suchen und Ersetzen"
+        },
+        {
+            "id": "Toggle read-only mode",
+            "message": "Toggle read-only mode",
+            "translation": "Schreibschutz ein-/ausschalten"
+        },
+        {
+            "id": "Toggle line wrapping",
+            "message": "Toggle line wrapping",
+            "translation": "Zeilenumbruch ein-/ausschalten"
+        },
+        {
+            "id": "Copy text",
+            "message": "Copy text",
+            "translation": "Text kopieren"
+        },
+        {
+            "id": "Cut text",
+            "message": "Cut text",
+            "translation": "Text ausschneiden"
+        },
+        {
+            "id": "Paste text",
+            "message": "Paste text",
+            "translation": "Text einfügen"
+        },
+        {
+            "id": "Show completions",
+            "message": "Show completions",
+            "translation": "Vervollständigungen anzeigen"
+        },
+        {
+            "id": "Insert Typst line break",
+            "message": "Insert Typst line break",
+            "translation": "Typst-Zeilenumbruch einfügen"
+        },
+        {
+            "id": "Copy file",
+            "message": "Copy file",
+            "translation": "Datei kopieren"
+        },
+        {
+            "id": "Cut file",
+            "message": "Cut file",
+            "translation": "Datei ausschneiden"
+        },
+        {
+            "id": "Paste file",
+            "message": "Paste file",
+            "translation": "Datei einfügen"
+        },
+        {
+            "id": "Send prompt",
+            "message": "Send prompt",
+            "translation": "Eingabe senden"
+        },
+        {
+            "id": "Show or hide the project files.",
+            "message": "Show or hide the project files.",
+            "translation": "Projektdateien anzeigen oder ausblenden."
+        },
+        {
+            "id": "Show or hide compiler and application output.",
+            "message": "Show or hide compiler and application output.",
+            "translation": "Compiler- und Anwendungsausgabe anzeigen oder ausblenden."
+        },
+        {
+            "id": "Open or close the AI assistant.",
+            "message": "Open or close the AI assistant.",
+            "translation": "KI-Assistenten öffnen oder schließen."
+        },
+        {
+            "id": "Show or hide the document preview.",
+            "message": "Show or hide the document preview.",
+            "translation": "Dokumentvorschau anzeigen oder ausblenden."
+        },
+        {
+            "id": "Save the active document.",
+            "message": "Save the active document.",
+            "translation": "Aktives Dokument speichern."
+        },
+        {
+            "id": "Search in the active document.",
+            "message": "Search in the active document.",
+            "translation": "Im aktiven Dokument suchen."
+        },
+        {
+            "id": "Lock or unlock editing for the active document.",
+            "message": "Lock or unlock editing for the active document.",
+            "translation": "Bearbeitung des aktiven Dokuments sperren oder entsperren."
+        },
+        {
+            "id": "Wrap or unwrap long editor lines.",
+            "message": "Wrap or unwrap long editor lines.",
+            "translation": "Lange Editorzeilen umbrechen oder den Umbruch aufheben."
+        },
+        {
+            "id": "Copy the editor selection.",
+            "message": "Copy the editor selection.",
+            "translation": "Auswahl im Editor kopieren."
+        },
+        {
+            "id": "Cut the editor selection.",
+            "message": "Cut the editor selection.",
+            "translation": "Auswahl im Editor ausschneiden."
+        },
+        {
+            "id": "Paste clipboard text into the editor.",
+            "message": "Paste clipboard text into the editor.",
+            "translation": "Text aus der Zwischenablage in den Editor einfügen."
+        },
+        {
+            "id": "Open code and Typst suggestions.",
+            "message": "Open code and Typst suggestions.",
+            "translation": "Code- und Typst-Vorschläge öffnen."
+        },
+        {
+            "id": "Insert \\ and continue on a new line.",
+            "message": "Insert \\ and continue on a new line.",
+            "translation": "\\ einfügen und in einer neuen Zeile fortfahren."
+        },
+        {
+            "id": "Copy the selected file or folder.",
+            "message": "Copy the selected file or folder.",
+            "translation": "Ausgewählte Datei oder ausgewählten Ordner kopieren."
+        },
+        {
+            "id": "Cut the selected file or folder.",
+            "message": "Cut the selected file or folder.",
+            "translation": "Ausgewählte Datei oder ausgewählten Ordner ausschneiden."
+        },
+        {
+            "id": "Paste files into the selected folder.",
+            "message": "Paste files into the selected folder.",
+            "translation": "Dateien in den ausgewählten Ordner einfügen."
+        },
+        {
+            "id": "Send the current assistant message.",
+            "message": "Send the current assistant message.",
+            "translation": "Aktuelle Nachricht an den Assistenten senden."
+        },
+        {
             "id": "Language",
             "message": "Language",
             "translation": "Sprache"
@@ -1875,11 +2143,6 @@
             "id": "Set how many number of spaces the Tab is equal to. Please be noted that this works only for empty file. Indentation for non-empty files are auto detected.",
             "message": "Set how many number of spaces the Tab is equal to. Please be noted that this works only for empty file. Indentation for non-empty files are auto detected.",
             "translation": "Legen Sie fest, wie vielen Leerzeichen ein Tab entspricht. Beachten Sie, dass dies nur für leere Dateien gilt. Der Einzug für nicht-leere Dateien wird automatisch erkannt."
-        },
-        {
-            "id": "Editor",
-            "message": "Editor",
-            "translation": "Editor"
         },
         {
             "id": "File Interface",

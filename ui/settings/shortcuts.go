@@ -85,10 +85,10 @@ func (view *ShortcutsView) Layout(gtx C, th *theme.Theme) D {
 		}
 		if definition.Category != category {
 			category = definition.Category
-			name := category
+			name := shortcutCategoryLabel(category)
 			children = append(children, layout.Rigid(func(gtx C) D {
 				return layout.Inset{Top: unit.Dp(10), Bottom: unit.Dp(8)}.Layout(gtx, func(gtx C) D {
-					label := material.Label(th.Theme, th.TextSize*0.85, i18n.Translate(name))
+					label := material.Label(th.Theme, th.TextSize*0.85, name)
 					label.Font.Weight = 600
 					label.Color = misc.WithAlpha(th.Fg, 0xc0)
 					return label.Layout(gtx)
@@ -130,7 +130,7 @@ func (view *ShortcutsView) matches(definition config.ShortcutDefinition, query s
 	if enabled {
 		shortcut = binding.Display()
 	}
-	text := definition.Category + " " + definition.Name + " " + definition.Description + " " + shortcut
+	text := shortcutCategoryLabel(definition.Category) + " " + shortcutNameLabel(definition.ID) + " " + shortcutDescriptionLabel(definition.ID) + " " + shortcut
 	return strings.Contains(strings.ToLower(text), query)
 }
 
@@ -154,19 +154,19 @@ func (view *ShortcutsView) layoutRow(gtx C, th *theme.Theme, definition config.S
 							layout.Flexed(1, func(gtx C) D {
 								return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
 									layout.Rigid(func(gtx C) D {
-										label := material.Label(th.Theme, th.TextSize, i18n.Translate(definition.Name))
+										label := material.Label(th.Theme, th.TextSize, shortcutNameLabel(definition.ID))
 										label.Font.Weight = 500
 										return label.Layout(gtx)
 									}),
 									layout.Rigid(func(gtx C) D {
-										label := material.Label(th.Theme, th.TextSize*0.78, i18n.Translate(definition.Description))
+										label := material.Label(th.Theme, th.TextSize*0.78, shortcutDescriptionLabel(definition.ID))
 										label.Color = misc.WithAlpha(th.Fg, 0x90)
 										return label.Layout(gtx)
 									}),
 								)
 							}),
 							layout.Rigid(func(gtx C) D {
-								return material.Switch(th.Theme, &row.enabled, "Enable "+definition.Name).Layout(gtx)
+								return material.Switch(th.Theme, &row.enabled, i18n.Translate("Enable %s", shortcutNameLabel(definition.ID))).Layout(gtx)
 							}),
 							layout.Rigid(layout.Spacer{Width: unit.Dp(10)}.Layout),
 							layout.Rigid(func(gtx C) D {
@@ -248,7 +248,7 @@ func (view *ShortcutsView) updateRow(gtx C, definition config.ShortcutDefinition
 				continue
 			}
 			if conflict, exists := config.ShortcutConflict(view.setting, definition.ID, binding); exists {
-				row.warning = i18n.Translate("%s is already used by %s.", binding.Display(), conflict.Name)
+				row.warning = i18n.Translate("%s is already used by %s.", binding.Display(), shortcutNameLabel(conflict.ID))
 				continue
 			}
 			view.lastErr = view.setting.SetShortcut(definition.ID, binding)
@@ -325,4 +325,101 @@ func (view *ShortcutsView) layoutReset(gtx C, th *theme.Theme, definition config
 			return label.Layout(gtx)
 		})
 	})
+}
+
+func shortcutCategoryLabel(category string) string {
+	switch category {
+	case "Workspace":
+		return i18n.Translate("Workspace")
+	case "Editor":
+		return i18n.Translate("Editor")
+	case "Files":
+		return i18n.Translate("Files")
+	case "Assistant":
+		return i18n.Translate("Assistant")
+	default:
+		return category
+	}
+}
+
+func shortcutNameLabel(id config.ShortcutID) string {
+	switch id {
+	case config.ShortcutToggleFileExplorer:
+		return i18n.Translate("Toggle file explorer")
+	case config.ShortcutToggleConsole:
+		return i18n.Translate("Toggle console")
+	case config.ShortcutToggleAssistant:
+		return i18n.Translate("Toggle assistant")
+	case config.ShortcutTogglePreview:
+		return i18n.Translate("Toggle preview")
+	case config.ShortcutSave:
+		return i18n.Translate("Save file")
+	case config.ShortcutFind:
+		return i18n.Translate("Find and replace")
+	case config.ShortcutToggleReadOnly:
+		return i18n.Translate("Toggle read-only mode")
+	case config.ShortcutToggleWrap:
+		return i18n.Translate("Toggle line wrapping")
+	case config.ShortcutEditorCopy:
+		return i18n.Translate("Copy text")
+	case config.ShortcutEditorCut:
+		return i18n.Translate("Cut text")
+	case config.ShortcutEditorPaste:
+		return i18n.Translate("Paste text")
+	case config.ShortcutCompletion:
+		return i18n.Translate("Show completions")
+	case config.ShortcutTypstLineBreak:
+		return i18n.Translate("Insert Typst line break")
+	case config.ShortcutFileCopy:
+		return i18n.Translate("Copy file")
+	case config.ShortcutFileCut:
+		return i18n.Translate("Cut file")
+	case config.ShortcutFilePaste:
+		return i18n.Translate("Paste file")
+	case config.ShortcutSendPrompt:
+		return i18n.Translate("Send prompt")
+	default:
+		return string(id)
+	}
+}
+
+func shortcutDescriptionLabel(id config.ShortcutID) string {
+	switch id {
+	case config.ShortcutToggleFileExplorer:
+		return i18n.Translate("Show or hide the project files.")
+	case config.ShortcutToggleConsole:
+		return i18n.Translate("Show or hide compiler and application output.")
+	case config.ShortcutToggleAssistant:
+		return i18n.Translate("Open or close the AI assistant.")
+	case config.ShortcutTogglePreview:
+		return i18n.Translate("Show or hide the document preview.")
+	case config.ShortcutSave:
+		return i18n.Translate("Save the active document.")
+	case config.ShortcutFind:
+		return i18n.Translate("Search in the active document.")
+	case config.ShortcutToggleReadOnly:
+		return i18n.Translate("Lock or unlock editing for the active document.")
+	case config.ShortcutToggleWrap:
+		return i18n.Translate("Wrap or unwrap long editor lines.")
+	case config.ShortcutEditorCopy:
+		return i18n.Translate("Copy the editor selection.")
+	case config.ShortcutEditorCut:
+		return i18n.Translate("Cut the editor selection.")
+	case config.ShortcutEditorPaste:
+		return i18n.Translate("Paste clipboard text into the editor.")
+	case config.ShortcutCompletion:
+		return i18n.Translate("Open code and Typst suggestions.")
+	case config.ShortcutTypstLineBreak:
+		return i18n.Translate("Insert \\ and continue on a new line.")
+	case config.ShortcutFileCopy:
+		return i18n.Translate("Copy the selected file or folder.")
+	case config.ShortcutFileCut:
+		return i18n.Translate("Cut the selected file or folder.")
+	case config.ShortcutFilePaste:
+		return i18n.Translate("Paste files into the selected folder.")
+	case config.ShortcutSendPrompt:
+		return i18n.Translate("Send the current assistant message.")
+	default:
+		return ""
+	}
 }

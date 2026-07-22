@@ -42,9 +42,24 @@
             "translation": "环境变量"
         },
         {
-            "id": "Type to start a conversation, press Shift+Enter to send",
-            "message": "Type to start a conversation, press Shift+Enter to send",
-            "translation": "输入以开始对话，按 Shift+Enter 发送"
+            "id": "Type to start a conversation",
+            "message": "Type to start a conversation",
+            "translation": "输入内容以开始对话"
+        },
+        {
+            "id": "Type to start a conversation, press {Shortcut} to send",
+            "message": "Type to start a conversation, press {Shortcut} to send",
+            "translation": "输入内容以开始对话，按 {Shortcut} 发送",
+            "placeholders": [
+                {
+                    "id": "Shortcut",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "shortcut"
+                }
+            ]
         },
         {
             "id": "Send",
@@ -358,62 +373,62 @@
             "translation": "了解更多 TPIX 信息，请访问"
         },
         {
-            "id": "Open/Hide File Explorer: {String} + D",
-            "message": "Open/Hide File Explorer: {String} + D",
-            "translation": "打开/隐藏文件管理器: {String} + D",
+            "id": "Open/Hide File Explorer: {ShortcutToggleFileExplorer}",
+            "message": "Open/Hide File Explorer: {ShortcutToggleFileExplorer}",
+            "translation": "打开/隐藏文件浏览器：{ShortcutToggleFileExplorer}",
             "placeholders": [
                 {
-                    "id": "String",
+                    "id": "ShortcutToggleFileExplorer",
                     "string": "%[1]s",
                     "type": "string",
                     "underlyingType": "string",
                     "argNum": 1,
-                    "expr": "key.ModShortcut.String()"
+                    "expr": "config.ShortcutDisplay(shortcuts, config.ShortcutToggleFileExplorer)"
                 }
             ]
         },
         {
-            "id": "Open/Hide Console: {String} + K",
-            "message": "Open/Hide Console: {String} + K",
-            "translation": "打开/隐藏控制台: {String} + K",
+            "id": "Open/Hide Console: {ShortcutToggleConsole}",
+            "message": "Open/Hide Console: {ShortcutToggleConsole}",
+            "translation": "打开/隐藏控制台：{ShortcutToggleConsole}",
             "placeholders": [
                 {
-                    "id": "String",
+                    "id": "ShortcutToggleConsole",
                     "string": "%[1]s",
                     "type": "string",
                     "underlyingType": "string",
                     "argNum": 1,
-                    "expr": "key.ModShortcut.String()"
+                    "expr": "config.ShortcutDisplay(shortcuts, config.ShortcutToggleConsole)"
                 }
             ]
         },
         {
-            "id": "Open/Hide Previewer: {String} + P",
-            "message": "Open/Hide Previewer: {String} + P",
-            "translation": "打开/隐藏预览器: {String} + P",
+            "id": "Open/Hide Previewer: {ShortcutTogglePreview}",
+            "message": "Open/Hide Previewer: {ShortcutTogglePreview}",
+            "translation": "打开/隐藏预览：{ShortcutTogglePreview}",
             "placeholders": [
                 {
-                    "id": "String",
+                    "id": "ShortcutTogglePreview",
                     "string": "%[1]s",
                     "type": "string",
                     "underlyingType": "string",
                     "argNum": 1,
-                    "expr": "key.ModShortcut.String()"
+                    "expr": "config.ShortcutDisplay(shortcuts, config.ShortcutTogglePreview)"
                 }
             ]
         },
         {
-            "id": "Open AI Assistant: {String} + L",
-            "message": "Open AI Assistant: {String} + L",
-            "translation": "打开 AI 助手: {String} + L",
+            "id": "Open AI Assistant: {ShortcutToggleAssistant}",
+            "message": "Open AI Assistant: {ShortcutToggleAssistant}",
+            "translation": "打开 AI 助手：{ShortcutToggleAssistant}",
             "placeholders": [
                 {
-                    "id": "String",
+                    "id": "ShortcutToggleAssistant",
                     "string": "%[1]s",
                     "type": "string",
                     "underlyingType": "string",
                     "argNum": 1,
-                    "expr": "key.ModShortcut.String()"
+                    "expr": "config.ShortcutDisplay(shortcuts, config.ShortcutToggleAssistant)"
                 }
             ]
         },
@@ -1727,6 +1742,259 @@
             "translation": "语言服务器"
         },
         {
+            "id": "Shortcuts",
+            "message": "Shortcuts",
+            "translation": "快捷键"
+        },
+        {
+            "id": "Search actions or shortcuts",
+            "message": "Search actions or shortcuts",
+            "translation": "搜索操作或快捷键"
+        },
+        {
+            "id": "Restore all defaults",
+            "message": "Restore all defaults",
+            "translation": "恢复所有默认设置"
+        },
+        {
+            "id": "Click a shortcut field, then press the new key combination. Escape cancels recording.",
+            "message": "Click a shortcut field, then press the new key combination. Escape cancels recording.",
+            "translation": "点击快捷键字段，然后按下新的组合键。按 Escape 取消录制。"
+        },
+        {
+            "id": "Disabled",
+            "message": "Disabled",
+            "translation": "已禁用"
+        },
+        {
+            "id": "Enable {ID}",
+            "message": "Enable {ID}",
+            "translation": "启用 {ID}",
+            "placeholders": [
+                {
+                    "id": "ID",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "shortcutNameLabel(definition.ID)"
+                }
+            ]
+        },
+        {
+            "id": "{Display} is already used by {ID}.",
+            "message": "{Display} is already used by {ID}.",
+            "translation": "{Display} 已被 {ID} 使用。",
+            "placeholders": [
+                {
+                    "id": "Display",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "binding.Display()"
+                },
+                {
+                    "id": "ID",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "shortcutNameLabel(conflict.ID)"
+                }
+            ]
+        },
+        {
+            "id": "Press shortcut…",
+            "message": "Press shortcut…",
+            "translation": "按下快捷键…"
+        },
+        {
+            "id": "Reset",
+            "message": "Reset",
+            "translation": "重置"
+        },
+        {
+            "id": "Workspace",
+            "message": "Workspace",
+            "translation": "工作区"
+        },
+        {
+            "id": "Editor",
+            "message": "Editor",
+            "translation": "编辑器"
+        },
+        {
+            "id": "Toggle file explorer",
+            "message": "Toggle file explorer",
+            "translation": "切换文件浏览器"
+        },
+        {
+            "id": "Toggle console",
+            "message": "Toggle console",
+            "translation": "切换控制台"
+        },
+        {
+            "id": "Toggle assistant",
+            "message": "Toggle assistant",
+            "translation": "切换助手"
+        },
+        {
+            "id": "Toggle preview",
+            "message": "Toggle preview",
+            "translation": "切换预览"
+        },
+        {
+            "id": "Save file",
+            "message": "Save file",
+            "translation": "保存文件"
+        },
+        {
+            "id": "Find and replace",
+            "message": "Find and replace",
+            "translation": "查找和替换"
+        },
+        {
+            "id": "Toggle read-only mode",
+            "message": "Toggle read-only mode",
+            "translation": "切换只读模式"
+        },
+        {
+            "id": "Toggle line wrapping",
+            "message": "Toggle line wrapping",
+            "translation": "切换自动换行"
+        },
+        {
+            "id": "Copy text",
+            "message": "Copy text",
+            "translation": "复制文本"
+        },
+        {
+            "id": "Cut text",
+            "message": "Cut text",
+            "translation": "剪切文本"
+        },
+        {
+            "id": "Paste text",
+            "message": "Paste text",
+            "translation": "粘贴文本"
+        },
+        {
+            "id": "Show completions",
+            "message": "Show completions",
+            "translation": "显示补全建议"
+        },
+        {
+            "id": "Insert Typst line break",
+            "message": "Insert Typst line break",
+            "translation": "插入 Typst 换行符"
+        },
+        {
+            "id": "Copy file",
+            "message": "Copy file",
+            "translation": "复制文件"
+        },
+        {
+            "id": "Cut file",
+            "message": "Cut file",
+            "translation": "剪切文件"
+        },
+        {
+            "id": "Paste file",
+            "message": "Paste file",
+            "translation": "粘贴文件"
+        },
+        {
+            "id": "Send prompt",
+            "message": "Send prompt",
+            "translation": "发送提示"
+        },
+        {
+            "id": "Show or hide the project files.",
+            "message": "Show or hide the project files.",
+            "translation": "显示或隐藏项目文件。"
+        },
+        {
+            "id": "Show or hide compiler and application output.",
+            "message": "Show or hide compiler and application output.",
+            "translation": "显示或隐藏编译器及应用程序输出。"
+        },
+        {
+            "id": "Open or close the AI assistant.",
+            "message": "Open or close the AI assistant.",
+            "translation": "打开或关闭 AI 助手。"
+        },
+        {
+            "id": "Show or hide the document preview.",
+            "message": "Show or hide the document preview.",
+            "translation": "显示或隐藏文档预览。"
+        },
+        {
+            "id": "Save the active document.",
+            "message": "Save the active document.",
+            "translation": "保存当前文档。"
+        },
+        {
+            "id": "Search in the active document.",
+            "message": "Search in the active document.",
+            "translation": "在当前文档中搜索。"
+        },
+        {
+            "id": "Lock or unlock editing for the active document.",
+            "message": "Lock or unlock editing for the active document.",
+            "translation": "锁定或解锁当前文档的编辑。"
+        },
+        {
+            "id": "Wrap or unwrap long editor lines.",
+            "message": "Wrap or unwrap long editor lines.",
+            "translation": "为编辑器中的长行启用或取消自动换行。"
+        },
+        {
+            "id": "Copy the editor selection.",
+            "message": "Copy the editor selection.",
+            "translation": "复制编辑器中的选中内容。"
+        },
+        {
+            "id": "Cut the editor selection.",
+            "message": "Cut the editor selection.",
+            "translation": "剪切编辑器中的选中内容。"
+        },
+        {
+            "id": "Paste clipboard text into the editor.",
+            "message": "Paste clipboard text into the editor.",
+            "translation": "将剪贴板文本粘贴到编辑器中。"
+        },
+        {
+            "id": "Open code and Typst suggestions.",
+            "message": "Open code and Typst suggestions.",
+            "translation": "打开代码和 Typst 建议。"
+        },
+        {
+            "id": "Insert \\ and continue on a new line.",
+            "message": "Insert \\ and continue on a new line.",
+            "translation": "插入 \\ 并在新行继续。"
+        },
+        {
+            "id": "Copy the selected file or folder.",
+            "message": "Copy the selected file or folder.",
+            "translation": "复制选中的文件或文件夹。"
+        },
+        {
+            "id": "Cut the selected file or folder.",
+            "message": "Cut the selected file or folder.",
+            "translation": "剪切选中的文件或文件夹。"
+        },
+        {
+            "id": "Paste files into the selected folder.",
+            "message": "Paste files into the selected folder.",
+            "translation": "将文件粘贴到选中的文件夹。"
+        },
+        {
+            "id": "Send the current assistant message.",
+            "message": "Send the current assistant message.",
+            "translation": "发送当前助手消息。"
+        },
+        {
             "id": "Language",
             "message": "Language",
             "translation": "语言"
@@ -1875,11 +2143,6 @@
             "id": "Set how many number of spaces the Tab is equal to. Please be noted that this works only for empty file. Indentation for non-empty files are auto detected.",
             "message": "Set how many number of spaces the Tab is equal to. Please be noted that this works only for empty file. Indentation for non-empty files are auto detected.",
             "translation": "设置 Tab 等于多少个空格。请注意，这仅适用于空文件。非空文件的缩进将自动检测。"
-        },
-        {
-            "id": "Editor",
-            "message": "Editor",
-            "translation": "编辑器"
         },
         {
             "id": "File Interface",

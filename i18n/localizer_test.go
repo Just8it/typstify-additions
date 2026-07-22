@@ -17,6 +17,9 @@ func TestStudentInterfaceTranslations(t *testing.T) {
 	if got := Translate("Paste asset: %s", "Fehler"); got != "Asset einfügen: Fehler" {
 		t.Fatalf("German paste error = %q", got)
 	}
+	if got := Translate("Shortcuts"); got != "Tastenkürzel" {
+		t.Fatalf("German shortcuts label = %q", got)
+	}
 
 	if err := SetLocale("zh-cn"); err != nil {
 		t.Fatal(err)
