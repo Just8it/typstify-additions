@@ -58,11 +58,6 @@ const (
 	FixedProjectDirParam = "fixedProjectDir"
 )
 
-var (
-	tip1 = `Choose Document for notes, articles, books, or slides. Choose Package or Template only when developing reusable Typst packages.`
-	tip2 = `Optionally start from a Typst package such as @preview/aero-check:0.1.1. Leave this empty to create a basic document.`
-)
-
 var projectKinds = []ProjectKind{DocumentKind, PackageKind, TemplateKind}
 
 var (
@@ -135,7 +130,7 @@ func (d *CreateProjectDialog) createDocumentProject(req *ProjectCreateReq) (stri
 
 func (d *CreateProjectDialog) createPackageProject(req *ProjectCreateReq) (string, error) {
 	if req.Kind != PackageKind && req.Kind != TemplateKind {
-		return "", errors.New("not a package creation request")
+		return "", errors.New(i18n.Translate("Not a package creation request."))
 	}
 
 	if req.Name == "" {
@@ -213,7 +208,7 @@ func (d *CreateProjectDialog) LayoutBody(gtx C, th *theme.Theme) D {
 		for _, name := range projectKinds {
 			name := name
 			d.kindChoices = append(d.kindChoices, layout.Rigid(func(gtx C) D {
-				return material.RadioButton(th.Theme, &d.kindEnum, string(name), string(name)).Layout(gtx)
+				return material.RadioButton(th.Theme, &d.kindEnum, string(name), projectKindLabel(name)).Layout(gtx)
 			}))
 		}
 	}
@@ -222,7 +217,7 @@ func (d *CreateProjectDialog) LayoutBody(gtx C, th *theme.Theme) D {
 		Axis: layout.Vertical,
 	}.Layout(gtx,
 		layout.Rigid(func(gtx C) D {
-			return formItem{Axis: layout.Vertical}.Layout(gtx, th, i18n.Translate("Project Type"), i18n.Translate(strings.ReplaceAll(tip1, "\t", " ")),
+			return formItem{Axis: layout.Vertical}.Layout(gtx, th, i18n.Translate("Project Type"), i18n.Translate("Choose Document for notes, articles, books, or slides. Choose Package or Template only when developing reusable Typst packages."),
 				func(gtx C) D {
 					return layout.Flex{
 						Axis: layout.Horizontal,
@@ -251,7 +246,7 @@ func (d *CreateProjectDialog) LayoutBody(gtx C, th *theme.Theme) D {
 							d.projectDirInput.SetText(d.projectDir)
 						}
 
-						return d.projectDirInput.Layout(gtx, th, "Select a directory")
+						return d.projectDirInput.Layout(gtx, th, i18n.Translate("Select a directory"))
 					}
 					if d.fixedProjectDir {
 						return locationField(gtx)
@@ -264,9 +259,9 @@ func (d *CreateProjectDialog) LayoutBody(gtx C, th *theme.Theme) D {
 			if d.kindEnum.Value != string(DocumentKind) {
 				return D{}
 			}
-			return formItem{Axis: layout.Vertical}.Layout(gtx, th, i18n.Translate("Typst Template"), i18n.Translate(tip2), func(gtx C) D {
+			return formItem{Axis: layout.Vertical}.Layout(gtx, th, i18n.Translate("Typst Template"), i18n.Translate("Optionally start from a Typst package such as @preview/aero-check:0.1.1. Leave this empty to create a basic document."), func(gtx C) D {
 				d.templateInput.Alignment = text.Start
-				return d.templateInput.Layout(gtx, th, "@preview/package:version (optional)")
+				return d.templateInput.Layout(gtx, th, i18n.Translate("@preview/package:version (optional)"))
 			})
 		}),
 
@@ -276,9 +271,20 @@ func (d *CreateProjectDialog) LayoutBody(gtx C, th *theme.Theme) D {
 				func(gtx C) D {
 					d.nameInput.Alignment = text.Start
 					d.nameInput.SingleLine = true
-					return d.nameInput.Layout(gtx, th, "Project name")
+					return d.nameInput.Layout(gtx, th, i18n.Translate("Project name"))
 				})
 		}),
 	)
 
+}
+
+func projectKindLabel(kind ProjectKind) string {
+	switch kind {
+	case PackageKind:
+		return i18n.Translate("Package")
+	case TemplateKind:
+		return i18n.Translate("Template")
+	default:
+		return i18n.Translate("Document")
+	}
 }

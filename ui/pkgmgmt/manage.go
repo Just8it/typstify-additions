@@ -63,7 +63,7 @@ func (vw *PkgListView) Title() string {
 	if vw.localTemplates {
 		return i18n.Translate("Local Templates")
 	}
-	return "Typst Packages"
+	return i18n.Translate("Typst Packages")
 }
 
 func (vw *PkgListView) OnNavTo(intent view.Intent) error {
@@ -352,7 +352,11 @@ func NewPkgListView(srv *service.ServiceFacade, vm view.ViewManager) view.View {
 		srv:          srv,
 		vm:           vm,
 		categoryList: newCategoryList(),
-		kindSelect:   widgets.NewDropDown(map[string]any{"all": "All", "pkg": "Package", "template": "Template"}),
-		packageList:  newPkgList(nil, false),
+		kindSelect: widgets.NewDropDown(map[string]any{
+			"all":      i18n.Translate("All"),
+			"pkg":      i18n.Translate("Package"),
+			"template": i18n.Translate("Template"),
+		}),
+		packageList: newPkgList(nil, false),
 	}
 }

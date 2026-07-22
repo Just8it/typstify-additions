@@ -351,6 +351,34 @@
             "fuzzy": true
         },
         {
+            "id": "Choose your Library folder",
+            "message": "Choose your Library folder",
+            "translation": "Choose your Library folder",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Select the folder that contains your courses, notebooks, and documents. Typstify keeps it as a normal folder.",
+            "message": "Select the folder that contains your courses, notebooks, and documents. Typstify keeps it as a normal folder.",
+            "translation": "Select the folder that contains your courses, notebooks, and documents. Typstify keeps it as a normal folder.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Choose folder",
+            "message": "Choose folder",
+            "translation": "Choose folder",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Sign In",
+            "message": "Sign In",
+            "translation": "Sign In",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
             "id": "Start",
             "message": "Start",
             "translation": "Start",
@@ -516,6 +544,20 @@
             "id": "Sessions",
             "message": "Sessions",
             "translation": "Sessions",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "New chat",
+            "message": "New chat",
+            "translation": "New chat",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "No previous chats yet.",
+            "message": "No previous chats yet.",
+            "translation": "No previous chats yet.",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -730,16 +772,6 @@
             "fuzzy": true
         },
         {
-            "id": [
-                "tip2",
-                "Find the desired template in Typst Packages explorer. Both local and remote templates can be used. \nA template name should have the form @namespace/package-name:version, for example: '@preview/aero-check:0.1.1'.\nIf you want to create project without template, just leave it empty."
-            ],
-            "message": "Find the desired template in Typst Packages explorer. Both local and remote templates can be used. \nA template name should have the form @namespace/package-name:version, for example: '@preview/aero-check:0.1.1'.\nIf you want to create project without template, just leave it empty.",
-            "translation": "Find the desired template in Typst Packages explorer. Both local and remote templates can be used. \nA template name should have the form @namespace/package-name:version, for example: '@preview/aero-check:0.1.1'.\nIf you want to create project without template, just leave it empty.",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
             "id": "Create New Project",
             "message": "Create New Project",
             "translation": "Create New Project",
@@ -775,9 +807,23 @@
             "fuzzy": true
         },
         {
+            "id": "Not a package creation request.",
+            "message": "Not a package creation request.",
+            "translation": "Not a package creation request.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
             "id": "Please set a name for your package/template.",
             "message": "Please set a name for your package/template.",
             "translation": "Please set a name for your package/template.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Please select where the project should be created.",
+            "message": "Please select where the project should be created.",
+            "translation": "Please select where the project should be created.",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -806,6 +852,13 @@
             "fuzzy": true
         },
         {
+            "id": "Choose Document for notes, articles, books, or slides. Choose Package or Template only when developing reusable Typst packages.",
+            "message": "Choose Document for notes, articles, books, or slides. Choose Package or Template only when developing reusable Typst packages.",
+            "translation": "Choose Document for notes, articles, books, or slides. Choose Package or Template only when developing reusable Typst packages.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
             "id": "Project Location",
             "message": "Project Location",
             "translation": "Project Location",
@@ -813,9 +866,30 @@
             "fuzzy": true
         },
         {
-            "id": "Select the location where the project will be created.",
-            "message": "Select the location where the project will be created.",
-            "translation": "Select the location where the project will be created.",
+            "id": "Select the folder where the project will be created.",
+            "message": "Select the folder where the project will be created.",
+            "translation": "Select the folder where the project will be created.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Create In",
+            "message": "Create In",
+            "translation": "Create In",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "The project will be created inside the current Library folder.",
+            "message": "The project will be created inside the current Library folder.",
+            "translation": "The project will be created inside the current Library folder.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Select a directory",
+            "message": "Select a directory",
+            "translation": "Select a directory",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -827,6 +901,20 @@
             "fuzzy": true
         },
         {
+            "id": "Optionally start from a Typst package such as @preview/aero-check:0.1.1. Leave this empty to create a basic document.",
+            "message": "Optionally start from a Typst package such as @preview/aero-check:0.1.1. Leave this empty to create a basic document.",
+            "translation": "Optionally start from a Typst package such as @preview/aero-check:0.1.1. Leave this empty to create a basic document.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "@preview/package:version (optional)",
+            "message": "@preview/package:version (optional)",
+            "translation": "@preview/package:version (optional)",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
             "id": "Project Name",
             "message": "Project Name",
             "translation": "Project Name",
@@ -834,9 +922,37 @@
             "fuzzy": true
         },
         {
-            "id": "The name of your project. A new folder will be created inside of the directory selected.",
-            "message": "The name of your project. A new folder will be created inside of the directory selected.",
-            "translation": "The name of your project. A new folder will be created inside of the directory selected.",
+            "id": "A folder with this name will be created at the location above.",
+            "message": "A folder with this name will be created at the location above.",
+            "translation": "A folder with this name will be created at the location above.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Project name",
+            "message": "Project name",
+            "translation": "Project name",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Package",
+            "message": "Package",
+            "translation": "Package",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Template",
+            "message": "Template",
+            "translation": "Template",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Document",
+            "message": "Document",
+            "translation": "Document",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -1234,6 +1350,51 @@
             "fuzzy": true
         },
         {
+            "id": "Search \u0026 Replace",
+            "message": "Search \u0026 Replace",
+            "translation": "Search \u0026 Replace",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Preview",
+            "message": "Preview",
+            "translation": "Preview",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "AI Assistant",
+            "message": "AI Assistant",
+            "translation": "AI Assistant",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Paste asset: {Error}",
+            "message": "Paste asset: {Error}",
+            "translation": "Paste asset: {Error}",
+            "translatorComment": "Copied from source.",
+            "placeholders": [
+                {
+                    "id": "Error",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "err.Error()"
+                }
+            ],
+            "fuzzy": true
+        },
+        {
+            "id": "Explorer",
+            "message": "Explorer",
+            "translation": "Explorer",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
             "id": "No project",
             "message": "No project",
             "translation": "No project",
@@ -1244,6 +1405,20 @@
             "id": "No open project.",
             "message": "No open project.",
             "translation": "No open project.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Project",
+            "message": "Project",
+            "translation": "Project",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Folder",
+            "message": "Folder",
+            "translation": "Folder",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -1293,16 +1468,54 @@
             "fuzzy": true
         },
         {
-            "id": "Hide Explorer",
-            "message": "Hide Explorer",
-            "translation": "Hide Explorer",
+            "id": "No items match this filter.",
+            "message": "No items match this filter.",
+            "translation": "No items match this filter.",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
-            "id": "Open Folder",
-            "message": "Open Folder",
-            "translation": "Open Folder",
+            "id": "This folder is empty. Use New to create a file, folder, or project.",
+            "message": "This folder is empty. Use New to create a file, folder, or project.",
+            "translation": "This folder is empty. Use New to create a file, folder, or project.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "{VisibleEntries} items",
+            "message": "{VisibleEntries} items",
+            "translation": "{VisibleEntries} items",
+            "translatorComment": "Copied from source.",
+            "placeholders": [
+                {
+                    "id": "VisibleEntries",
+                    "string": "%[1]d",
+                    "type": "int",
+                    "underlyingType": "int",
+                    "argNum": 1,
+                    "expr": "len(l.visibleEntries())"
+                }
+            ],
+            "fuzzy": true
+        },
+        {
+            "id": "New",
+            "message": "New",
+            "translation": "New",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "New File",
+            "message": "New File",
+            "translation": "New File",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "New Folder",
+            "message": "New Folder",
+            "translation": "New Folder",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -1310,6 +1523,90 @@
             "id": "New Project",
             "message": "New Project",
             "translation": "New Project",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Notebook",
+            "message": "Notebook",
+            "translation": "Notebook",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "File",
+            "message": "File",
+            "translation": "File",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Typst work",
+            "message": "Typst work",
+            "translation": "Typst work",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Notebooks",
+            "message": "Notebooks",
+            "translation": "Notebooks",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Typst documents",
+            "message": "Typst documents",
+            "translation": "Typst documents",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "PDFs",
+            "message": "PDFs",
+            "translation": "PDFs",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Images",
+            "message": "Images",
+            "translation": "Images",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Other files",
+            "message": "Other files",
+            "translation": "Other files",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "All files",
+            "message": "All files",
+            "translation": "All files",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Hide Explorer",
+            "message": "Hide Explorer",
+            "translation": "Hide Explorer",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Library",
+            "message": "Library",
+            "translation": "Library",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Open Folder",
+            "message": "Open Folder",
+            "translation": "Open Folder",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -1328,9 +1625,9 @@
             "fuzzy": true
         },
         {
-            "id": "File Explorer",
-            "message": "File Explorer",
-            "translation": "File Explorer",
+            "id": "Files",
+            "message": "Files",
+            "translation": "Files",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -1338,6 +1635,34 @@
             "id": "Outline",
             "message": "Outline",
             "translation": "Outline",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Assistant",
+            "message": "Assistant",
+            "translation": "Assistant",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "More",
+            "message": "More",
+            "translation": "More",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Local Templates",
+            "message": "Local Templates",
+            "translation": "Local Templates",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "File Explorer",
+            "message": "File Explorer",
+            "translation": "File Explorer",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -1380,6 +1705,48 @@
             "fuzzy": true
         },
         {
+            "id": "Author",
+            "message": "Author",
+            "translation": "Author",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Last Updated",
+            "message": "Last Updated",
+            "translation": "Last Updated",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "License",
+            "message": "License",
+            "translation": "License",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Category",
+            "message": "Category",
+            "translation": "Category",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Read the docs",
+            "message": "Read the docs",
+            "translation": "Read the docs",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Copy import path",
+            "message": "Copy import path",
+            "translation": "Copy import path",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
             "id": "Loading packages...",
             "message": "Loading packages...",
             "translation": "Loading packages...",
@@ -1394,13 +1761,6 @@
             "fuzzy": true
         },
         {
-            "id": "Category",
-            "message": "Category",
-            "translation": "Category",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
             "id": "Clear",
             "message": "Clear",
             "translation": "Clear",
@@ -1408,9 +1768,9 @@
             "fuzzy": true
         },
         {
-            "id": "Package kind",
-            "message": "Package kind",
-            "translation": "Package kind",
+            "id": "Typst Packages",
+            "message": "Typst Packages",
+            "translation": "Typst Packages",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -1432,6 +1792,34 @@
             "id": "Search TPIX...",
             "message": "Search TPIX...",
             "translation": "Search TPIX...",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Personal @local packages and templates from Typst's local package folder. No account or network connection is required.",
+            "message": "Personal @local packages and templates from Typst's local package folder. No account or network connection is required.",
+            "translation": "Personal @local packages and templates from Typst's local package folder. No account or network connection is required.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Search local templates...",
+            "message": "Search local templates...",
+            "translation": "Search local templates...",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Package kind",
+            "message": "Package kind",
+            "translation": "Package kind",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Use template",
+            "message": "Use template",
+            "translation": "Use template",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -1520,6 +1908,30 @@
                     "expr": "vw.lastFetchedCount"
                 }
             ],
+            "fuzzy": true
+        },
+        {
+            "id": "Found {LastFetchedCount} local templates.",
+            "message": "Found {LastFetchedCount} local templates.",
+            "translation": "Found {LastFetchedCount} local templates.",
+            "translatorComment": "Copied from source.",
+            "placeholders": [
+                {
+                    "id": "LastFetchedCount",
+                    "string": "%[1]d",
+                    "type": "int",
+                    "underlyingType": "int",
+                    "argNum": 1,
+                    "expr": "vw.lastFetchedCount"
+                }
+            ],
+            "fuzzy": true
+        },
+        {
+            "id": "All",
+            "message": "All",
+            "translation": "All",
+            "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
@@ -1732,9 +2144,9 @@
             "fuzzy": true
         },
         {
-            "id": "Select an agent above or type a name directly.",
-            "message": "Select an agent above or type a name directly.",
-            "translation": "Select an agent above or type a name directly.",
+            "id": "Select an agent below or type a name directly.",
+            "message": "Select an agent below or type a name directly.",
+            "translation": "Select an agent below or type a name directly.",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -1746,9 +2158,9 @@
             "fuzzy": true
         },
         {
-            "id": "Select an agent above or edit directly, e.g. npx -y @scope/package",
-            "message": "Select an agent above or edit directly, e.g. npx -y @scope/package",
-            "translation": "Select an agent above or edit directly, e.g. npx -y @scope/package",
+            "id": "Select an agent below or edit directly, e.g. npx -y @scope/package",
+            "message": "Select an agent below or edit directly, e.g. npx -y @scope/package",
+            "translation": "Select an agent below or edit directly, e.g. npx -y @scope/package",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -1777,6 +2189,76 @@
             "id": "FOO=bar BAZ=qux",
             "message": "FOO=bar BAZ=qux",
             "translation": "FOO=bar BAZ=qux",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Version",
+            "message": "Version",
+            "translation": "Version",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Preview In Browser",
+            "message": "Preview In Browser",
+            "translation": "Preview In Browser",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
+            "message": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
+            "translation": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Enable Partial Preview",
+            "message": "Enable Partial Preview",
+            "translation": "Enable Partial Preview",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "The previewer will only render pages inside the viewport if enabled. This improves performance especially for large document.",
+            "message": "The previewer will only render pages inside the viewport if enabled. This improves performance especially for large document.",
+            "translation": "The previewer will only render pages inside the viewport if enabled. This improves performance especially for large document.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Debug Log",
+            "message": "Debug Log",
+            "translation": "Debug Log",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
+            "message": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
+            "translation": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Power Saving",
+            "message": "Power Saving",
+            "translation": "Power Saving",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
+            "message": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
+            "translation": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Language Server",
+            "message": "Language Server",
+            "translation": "Language Server",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -1844,48 +2326,6 @@
             "fuzzy": true
         },
         {
-            "id": "Preview",
-            "message": "Preview",
-            "translation": "Preview",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
-            "id": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
-            "message": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
-            "translation": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
-            "id": "Debug Log",
-            "message": "Debug Log",
-            "translation": "Debug Log",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
-            "id": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
-            "message": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
-            "translation": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
-            "id": "Power Saving",
-            "message": "Power Saving",
-            "translation": "Power Saving",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
-            "id": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
-            "message": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
-            "translation": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
             "id": "External Typst Compiler Path",
             "message": "External Typst Compiler Path",
             "translation": "External Typst Compiler Path",
@@ -1945,6 +2385,20 @@
             "id": "Set the auto save delay (in seconds), cannot be completely disabled.",
             "message": "Set the auto save delay (in seconds), cannot be completely disabled.",
             "translation": "Set the auto save delay (in seconds), cannot be completely disabled.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Preview width",
+            "message": "Preview width",
+            "translation": "Preview width",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Choose how much editor space the preview uses when it opens. You can still drag the divider while editing.",
+            "message": "Choose how much editor space the preview uses when it opens. You can still drag the divider while editing.",
+            "translation": "Choose how much editor space the preview uses when it opens. You can still drag the divider while editing.",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -2026,16 +2480,184 @@
             "fuzzy": true
         },
         {
-            "id": "Typst",
-            "message": "Typst",
-            "translation": "Typst",
+            "id": "File Interface",
+            "message": "File Interface",
+            "translation": "File Interface",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
         {
-            "id": "Versions",
-            "message": "Versions",
-            "translation": "Versions",
+            "id": "Interface",
+            "message": "Interface",
+            "translation": "Interface",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Classic keeps Typstify's existing file workflow. Student adds a Library home and focused project navigation.",
+            "message": "Classic keeps Typstify's existing file workflow. Student adds a Library home and focused project navigation.",
+            "translation": "Classic keeps Typstify's existing file workflow. Student adds a Library home and focused project navigation.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Classic",
+            "message": "Classic",
+            "translation": "Classic",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Student",
+            "message": "Student",
+            "translation": "Student",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Your Student preferences are saved and will return when you choose Student.",
+            "message": "Your Student preferences are saved and will return when you choose Student.",
+            "translation": "Your Student preferences are saved and will return when you choose Student.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Student preferences",
+            "message": "Student preferences",
+            "translation": "Student preferences",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "These choices apply immediately and do not change the Classic interface.",
+            "message": "These choices apply immediately and do not change the Classic interface.",
+            "translation": "These choices apply immediately and do not change the Classic interface.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Library folder",
+            "message": "Library folder",
+            "translation": "Library folder",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "The folder shown when Student mode starts. Forgetting it does not delete any files.",
+            "message": "The folder shown when Student mode starts. Forgetting it does not delete any files.",
+            "translation": "The folder shown when Student mode starts. Forgetting it does not delete any files.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "No Library folder selected",
+            "message": "No Library folder selected",
+            "translation": "No Library folder selected",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Change",
+            "message": "Change",
+            "translation": "Change",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Forget",
+            "message": "Forget",
+            "translation": "Forget",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Editor files",
+            "message": "Editor files",
+            "translation": "Editor files",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Show only the current project or folder, or keep the complete workspace tree.",
+            "message": "Show only the current project or folder, or keep the complete workspace tree.",
+            "translation": "Show only the current project or folder, or keep the complete workspace tree.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Current project or folder",
+            "message": "Current project or folder",
+            "translation": "Current project or folder",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Whole workspace",
+            "message": "Whole workspace",
+            "translation": "Whole workspace",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Library view",
+            "message": "Library view",
+            "translation": "Library view",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Choose the default presentation for folders, notebooks, and files.",
+            "message": "Choose the default presentation for folders, notebooks, and files.",
+            "translation": "Choose the default presentation for folders, notebooks, and files.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Grid",
+            "message": "Grid",
+            "translation": "Grid",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "List",
+            "message": "List",
+            "translation": "List",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Navigation",
+            "message": "Navigation",
+            "translation": "Navigation",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Use the Library rail, or keep Typstify's familiar sidebar and bottom controls.",
+            "message": "Use the Library rail, or keep Typstify's familiar sidebar and bottom controls.",
+            "translation": "Use the Library rail, or keep Typstify's familiar sidebar and bottom controls.",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Library rail",
+            "message": "Library rail",
+            "translation": "Library rail",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Classic controls",
+            "message": "Classic controls",
+            "translation": "Classic controls",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Typst",
+            "message": "Typst",
+            "translation": "Typst",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -2159,6 +2781,13 @@
             "fuzzy": true
         },
         {
+            "id": "Loading...",
+            "message": "Loading...",
+            "translation": "Loading...",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
             "id": "You have an active TPIX session",
             "message": "You have an active TPIX session",
             "translation": "You have an active TPIX session",
@@ -2173,9 +2802,9 @@
             "fuzzy": true
         },
         {
-            "id": "Login TPIX to access all the features of Typstify, including package management, Zotero sync, etc. Some features may need a subscription.",
-            "message": "Login TPIX to access all the features of Typstify, including package management, Zotero sync, etc. Some features may need a subscription.",
-            "translation": "Login TPIX to access all the features of Typstify, including package management, Zotero sync, etc. Some features may need a subscription.",
+            "id": "Login TPIX to access all the features of Typstify, including package management, Zotero sync, MCP tools for AI assistant etc. Some features may need a subscription.",
+            "message": "Login TPIX to access all the features of Typstify, including package management, Zotero sync, MCP tools for AI assistant etc. Some features may need a subscription.",
+            "translation": "Login TPIX to access all the features of Typstify, including package management, Zotero sync, MCP tools for AI assistant etc. Some features may need a subscription.",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },
@@ -2204,13 +2833,6 @@
             "id": "Check new version",
             "message": "Check new version",
             "translation": "Check new version",
-            "translatorComment": "Copied from source.",
-            "fuzzy": true
-        },
-        {
-            "id": "Version",
-            "message": "Version",
-            "translation": "Version",
             "translatorComment": "Copied from source.",
             "fuzzy": true
         },

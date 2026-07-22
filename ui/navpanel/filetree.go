@@ -488,7 +488,7 @@ func (tn *FileTreeNav) layoutContextualScope(gtx C, th *theme.Theme) D {
 								return label.Layout(gtx)
 							}),
 							layout.Rigid(func(gtx C) D {
-								label := material.Caption(th.Theme, strings.ToUpper(string(tn.contextualKind)))
+								label := material.Caption(th.Theme, strings.ToUpper(scopeKindLabel(tn.contextualKind)))
 								label.Color = th.ContrastBg
 								return layout.Inset{Left: unit.Dp(5), Right: unit.Dp(5)}.Layout(gtx, label.Layout)
 							}),
@@ -516,12 +516,19 @@ func (s scopeMenuItem) Layout(gtx C, th *theme.Theme) D {
 		return layout.Flex{Alignment: layout.Middle}.Layout(gtx,
 			layout.Flexed(1, material.Body2(th.Theme, s.name).Layout),
 			layout.Rigid(func(gtx C) D {
-				label := material.Caption(th.Theme, strings.ToUpper(string(s.kind)))
+				label := material.Caption(th.Theme, strings.ToUpper(scopeKindLabel(s.kind)))
 				label.Color = misc.WithAlpha(th.Fg, 0x90)
 				return label.Layout(gtx)
 			}),
 		)
 	})
+}
+
+func scopeKindLabel(kind filetree.EditorScopeKind) string {
+	if kind == filetree.EditorScopeProject {
+		return i18n.Translate("Project")
+	}
+	return i18n.Translate("Folder")
 }
 
 // onFileUpdated close opened view, and then re-open the updated file.

@@ -216,14 +216,14 @@ func (te *TypstEditor) headerActions() []editorHeaderAction {
 	return []editorHeaderAction{
 
 		{
-			Name: "Preview",
+			Name: i18n.Translate("Preview"),
 			Icon: previewIcon,
 			OnClicked: func(gtx C) {
 				te.togglePreview(gtx)
 			},
 		},
 		{
-			Name: "Export",
+			Name: i18n.Translate("Export"),
 			Icon: exportIcon,
 			OnClicked: func(gtx C) {
 				if te.previewVisible {
@@ -239,14 +239,14 @@ func (te *TypstEditor) headerActions() []editorHeaderAction {
 			},
 		},
 		{
-			Name: "AI Assistant",
+			Name: i18n.Translate("AI Assistant"),
 			Icon: chatIcon,
 			OnClicked: func(gtx C) {
 				te.toggleChat()
 			},
 		},
 		{
-			Name: "Search & Replace",
+			Name: i18n.Translate("Search & Replace"),
 			Icon: searchIcon,
 			OnClicked: func(gtx C) {
 				te.srcEditor.ToggleSearchBar(gtx)
@@ -451,7 +451,7 @@ func (te *TypstEditor) onPaste(text string) string {
 
 func (te *TypstEditor) pasteError(err error) {
 	te.srv.EventBus().Emit(bus.TopicStatusbarNotifyEvent, statusbar.Notification{
-		Content: "Paste asset: " + err.Error(),
+		Content: i18n.Translate("Paste asset: %s", err.Error()),
 		Level:   2,
 	})
 }

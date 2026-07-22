@@ -165,19 +165,19 @@ func (c *PkgCard) layout(gtx C, th *theme.Theme) D {
 					layout.Rigid(layout.Spacer{Height: unit.Dp(12)}.Layout),
 
 					layout.Rigid(func(gtx C) D {
-						return layoutLabel(gtx, th, "Author", strings.Join(c.pkgInfo.Authors, ","))
+						return layoutLabel(gtx, th, i18n.Translate("Author"), strings.Join(c.pkgInfo.Authors, ","))
 					}),
 					layout.Rigid(func(gtx C) D {
 						if c.pkgInfo.CreatedAt.IsZero() {
 							return D{}
 						}
-						return layoutLabel(gtx, th, "Last Updated", c.pkgInfo.PublishedAt.Format(time.DateOnly))
+						return layoutLabel(gtx, th, i18n.Translate("Last Updated"), c.pkgInfo.PublishedAt.Format(time.DateOnly))
 					}),
 					layout.Rigid(func(gtx C) D {
-						return layoutLabel(gtx, th, "License", c.pkgInfo.License)
+						return layoutLabel(gtx, th, i18n.Translate("License"), c.pkgInfo.License)
 					}),
 					layout.Rigid(func(gtx C) D {
-						return layoutLabel(gtx, th, "Category", strings.Join(c.pkgInfo.Categories, ","))
+						return layoutLabel(gtx, th, i18n.Translate("Category"), strings.Join(c.pkgInfo.Categories, ","))
 					}),
 					// layout.Rigid(func(gtx C) D {
 					// 	return layoutLabel(gtx, th, "Minimum Typst version", c.pkgInfo.LatestVersion)
@@ -186,7 +186,7 @@ func (c *PkgCard) layout(gtx C, th *theme.Theme) D {
 					// 	return layoutLabel(gtx, th, "Repository", c.pkgInfo.)
 					// }),
 					layout.Rigid(func(gtx C) D {
-						return layoutLabel(gtx, th, "Namespace", c.pkgInfo.Namespace)
+						return layoutLabel(gtx, th, i18n.Translate("Namespace"), c.pkgInfo.Namespace)
 					}),
 
 					layout.Rigid(layout.Spacer{Height: unit.Dp(12)}.Layout),
@@ -201,14 +201,14 @@ func (c *PkgCard) layout(gtx C, th *theme.Theme) D {
 								if c.pkgInfo.IsCached {
 									return D{}
 								}
-								btn := material.Button(th.Theme, &c.docBtn, "Read the docs")
+								btn := material.Button(th.Theme, &c.docBtn, i18n.Translate("Read the docs"))
 								btn.Inset = layout.Inset{Top: unit.Dp(2), Bottom: unit.Dp(2), Left: unit.Dp(4), Right: unit.Dp(4)}
 								return btn.Layout(gtx)
 							}),
 							layout.Rigid(layout.Spacer{Width: unit.Dp(12)}.Layout),
 
 							layout.Rigid(func(gtx C) D {
-								btn := material.Button(th.Theme, &c.copyBtn, "Copy import path")
+								btn := material.Button(th.Theme, &c.copyBtn, i18n.Translate("Copy import path"))
 								btn.Inset = layout.Inset{Top: unit.Dp(2), Bottom: unit.Dp(2), Left: unit.Dp(4), Right: unit.Dp(4)}
 								return btn.Layout(gtx)
 							}),

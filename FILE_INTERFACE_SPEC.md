@@ -67,7 +67,7 @@ Classic is the backwards-compatible master default. In Classic mode, Student pre
 
 The settings page presents the master interface choice first. When Classic is selected, hide the inactive Student preferences while retaining their saved values. When Student is selected, show editor scope, Library view, and navigation layout together as one clearly labeled Student preferences group.
 
-The shared Editor settings include a persisted inline-preview width from 20% to 60%, with 30% as the backwards-compatible default. Opening the preview applies that saved width; dragging the existing divider remains a temporary adjustment, and reopening the preview restores the configured width. This behavior is shared by Classic and Student modes.
+The shared Editor settings include a persisted inline-preview width from 20% to 60%, with 30% as the backwards-compatible default. Opening the preview applies that saved width, and changing the setting updates an already-open preview immediately. Dragging the existing divider remains a temporary adjustment, and reopening the preview restores the configured width. This behavior is shared by Classic and Student modes.
 
 Keep navigation state separate:
 
@@ -102,6 +102,7 @@ The prototype supplies information architecture and interaction ideas, not a rep
 - Treat breadcrumbs as primary Library navigation: use readable text, clear separators, and comfortably sized Up and segment targets rather than caption-sized path text.
 - Use the active Typstify theme's semantic colors (`Bg`, `Bg2`, `Fg`, `ContrastBg`, hover and selection alpha). Never hardcode the prototype's dark palette or cyan accent.
 - Respect the configured typeface and text size; do not import the prototype's IBM Plex fonts.
+- Route every Student-interface label, description, button, toggle, menu item, empty state, and tooltip through Typstify's localization catalog.
 - Reuse Typstify's existing SVG icon set and interaction states.
 - Make the layout responsive down to the current `960 x 640` minimum window size; the prototype's fixed dimensions are illustrative.
 - Keep the interface quiet: restrained borders, theme-derived accents, compact controls, and no unrelated descendants.

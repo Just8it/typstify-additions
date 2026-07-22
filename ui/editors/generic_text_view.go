@@ -7,6 +7,7 @@ import (
 	"gioui.org/layout"
 	"gioui.org/unit"
 	"looz.ws/typstify/editor"
+	"looz.ws/typstify/i18n"
 	"looz.ws/typstify/service"
 
 	"github.com/oligo/gioview/page"
@@ -70,7 +71,7 @@ func (te *GenericTextEditor) OnNavTo(intent view.Intent) error {
 func (te *GenericTextEditor) headerActions() []editorHeaderAction {
 	return []editorHeaderAction{
 		{
-			Name: "Search & Replace",
+			Name: i18n.Translate("Search & Replace"),
 			Icon: searchIcon,
 			OnClicked: func(gtx C) {
 				te.srcEditor.ToggleSearchBar(gtx)

@@ -273,6 +273,21 @@
             "translation": "退出"
         },
         {
+            "id": "Choose your Library folder",
+            "message": "Choose your Library folder",
+            "translation": "选择资料库文件夹"
+        },
+        {
+            "id": "Select the folder that contains your courses, notebooks, and documents. Typstify keeps it as a normal folder.",
+            "message": "Select the folder that contains your courses, notebooks, and documents. Typstify keeps it as a normal folder.",
+            "translation": "选择包含课程、笔记本和文档的文件夹。Typstify 会将其保留为普通文件夹。"
+        },
+        {
+            "id": "Choose folder",
+            "message": "Choose folder",
+            "translation": "选择文件夹"
+        },
+        {
             "id": "Sign In",
             "message": "Sign In",
             "translation": "登陆"
@@ -411,6 +426,16 @@
             "id": "Sessions",
             "message": "Sessions",
             "translation": "会话"
+        },
+        {
+            "id": "New chat",
+            "message": "New chat",
+            "translation": "新建聊天"
+        },
+        {
+            "id": "No previous chats yet.",
+            "message": "No previous chats yet.",
+            "translation": "还没有历史聊天。"
         },
         {
             "id": "Sync Bibliography",
@@ -583,14 +608,6 @@
             ]
         },
         {
-            "id": [
-                "tip2",
-                "Find the desired template in Typst Packages explorer. Both local and remote templates can be used. \nA template name should have the form @namespace/package-name:version, for example: '@preview/aero-check:0.1.1'.\nIf you want to create project without template, just leave it empty."
-            ],
-            "message": "Find the desired template in Typst Packages explorer. Both local and remote templates can be used. \nA template name should have the form @namespace/package-name:version, for example: '@preview/aero-check:0.1.1'.\nIf you want to create project without template, just leave it empty.",
-            "translation": "在 Typst 包资源管理器中找到所需的模板。本地和远程模板均可使用。\n模板名称格式应为 @namespace/package-name:version，例如: '@preview/aero-check:0.1.1'。\n如果要创建不使用模板的项目，请留空。"
-        },
-        {
             "id": "Create New Project",
             "message": "Create New Project",
             "translation": "创建新项目"
@@ -616,9 +633,19 @@
             "translation": "请输入有效的完整模板名称。"
         },
         {
+            "id": "Not a package creation request.",
+            "message": "Not a package creation request.",
+            "translation": "这不是创建包的请求。"
+        },
+        {
             "id": "Please set a name for your package/template.",
             "message": "Please set a name for your package/template.",
             "translation": "请为您的包/模板设置一个名称。"
+        },
+        {
+            "id": "Please select where the project should be created.",
+            "message": "Please select where the project should be created.",
+            "translation": "请选择项目的创建位置。"
         },
         {
             "id": "Create project error: {Error}",
@@ -641,14 +668,34 @@
             "translation": "项目类型"
         },
         {
+            "id": "Choose Document for notes, articles, books, or slides. Choose Package or Template only when developing reusable Typst packages.",
+            "message": "Choose Document for notes, articles, books, or slides. Choose Package or Template only when developing reusable Typst packages.",
+            "translation": "为笔记、文章、书籍或幻灯片选择“文档”。仅在开发可复用的 Typst 包时选择“包”或“模板”。"
+        },
+        {
             "id": "Project Location",
             "message": "Project Location",
             "translation": "项目位置"
         },
         {
-            "id": "Select the location where the project will be created.",
-            "message": "Select the location where the project will be created.",
-            "translation": "选择项目的创建位置。"
+            "id": "Select the folder where the project will be created.",
+            "message": "Select the folder where the project will be created.",
+            "translation": "选择要创建项目的文件夹。"
+        },
+        {
+            "id": "Create In",
+            "message": "Create In",
+            "translation": "创建位置"
+        },
+        {
+            "id": "The project will be created inside the current Library folder.",
+            "message": "The project will be created inside the current Library folder.",
+            "translation": "项目将在当前资料库文件夹中创建。"
+        },
+        {
+            "id": "Select a directory",
+            "message": "Select a directory",
+            "translation": "选择目录"
         },
         {
             "id": "Typst Template",
@@ -656,14 +703,44 @@
             "translation": "Typst 模板"
         },
         {
+            "id": "Optionally start from a Typst package such as @preview/aero-check:0.1.1. Leave this empty to create a basic document.",
+            "message": "Optionally start from a Typst package such as @preview/aero-check:0.1.1. Leave this empty to create a basic document.",
+            "translation": "可以选择从 @preview/aero-check:0.1.1 等 Typst 包开始。留空则创建基本文档。"
+        },
+        {
+            "id": "@preview/package:version (optional)",
+            "message": "@preview/package:version (optional)",
+            "translation": "@preview/package:version（可选）"
+        },
+        {
             "id": "Project Name",
             "message": "Project Name",
             "translation": "项目名称"
         },
         {
-            "id": "The name of your project. A new folder will be created inside of the directory selected.",
-            "message": "The name of your project. A new folder will be created inside of the directory selected.",
-            "translation": "项目名称。将在所选目录中创建一个新文件夹。"
+            "id": "A folder with this name will be created at the location above.",
+            "message": "A folder with this name will be created at the location above.",
+            "translation": "将在上方位置创建同名文件夹。"
+        },
+        {
+            "id": "Project name",
+            "message": "Project name",
+            "translation": "项目名称"
+        },
+        {
+            "id": "Package",
+            "message": "Package",
+            "translation": "包"
+        },
+        {
+            "id": "Template",
+            "message": "Template",
+            "translation": "模板"
+        },
+        {
+            "id": "Document",
+            "message": "Document",
+            "translation": "文档"
         },
         {
             "id": "Delete File/Folder",
@@ -967,6 +1044,41 @@
             "translation": "没有可写的命名空间"
         },
         {
+            "id": "Search \u0026 Replace",
+            "message": "Search \u0026 Replace",
+            "translation": "搜索和替换"
+        },
+        {
+            "id": "Preview",
+            "message": "Preview",
+            "translation": "预览"
+        },
+        {
+            "id": "AI Assistant",
+            "message": "AI Assistant",
+            "translation": "AI助手"
+        },
+        {
+            "id": "Paste asset: {Error}",
+            "message": "Paste asset: {Error}",
+            "translation": "粘贴资源：{Error}",
+            "placeholders": [
+                {
+                    "id": "Error",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "err.Error()"
+                }
+            ]
+        },
+        {
+            "id": "Explorer",
+            "message": "Explorer",
+            "translation": "文件浏览器"
+        },
+        {
             "id": "No project",
             "message": "No project",
             "translation": "无项目"
@@ -975,6 +1087,16 @@
             "id": "No open project.",
             "message": "No open project.",
             "translation": "没有打开的项目。"
+        },
+        {
+            "id": "Project",
+            "message": "Project",
+            "translation": "项目"
+        },
+        {
+            "id": "Folder",
+            "message": "Folder",
+            "translation": "文件夹"
         },
         {
             "id": "pull dependencies error: {Error}",
@@ -1012,19 +1134,109 @@
             "translation": "查看参考文献信息"
         },
         {
-            "id": "Hide Explorer",
-            "message": "Hide Explorer",
-            "translation": "隐藏资源管理器"
+            "id": "No items match this filter.",
+            "message": "No items match this filter.",
+            "translation": "没有符合此筛选条件的项目。"
         },
         {
-            "id": "Open Folder",
-            "message": "Open Folder",
-            "translation": "打开文件夹"
+            "id": "This folder is empty. Use New to create a file, folder, or project.",
+            "message": "This folder is empty. Use New to create a file, folder, or project.",
+            "translation": "此文件夹为空。使用“新建”创建文件、文件夹或项目。"
+        },
+        {
+            "id": "{VisibleEntries} items",
+            "message": "{VisibleEntries} items",
+            "translation": "{VisibleEntries} 个项目",
+            "placeholders": [
+                {
+                    "id": "VisibleEntries",
+                    "string": "%[1]d",
+                    "type": "int",
+                    "underlyingType": "int",
+                    "argNum": 1,
+                    "expr": "len(l.visibleEntries())"
+                }
+            ]
+        },
+        {
+            "id": "New",
+            "message": "New",
+            "translation": "新建"
+        },
+        {
+            "id": "New File",
+            "message": "New File",
+            "translation": "新建文件"
+        },
+        {
+            "id": "New Folder",
+            "message": "New Folder",
+            "translation": "新建文件夹"
         },
         {
             "id": "New Project",
             "message": "New Project",
             "translation": "新建项目"
+        },
+        {
+            "id": "Notebook",
+            "message": "Notebook",
+            "translation": "笔记本"
+        },
+        {
+            "id": "File",
+            "message": "File",
+            "translation": "文件"
+        },
+        {
+            "id": "Typst work",
+            "message": "Typst work",
+            "translation": "Typst 工作"
+        },
+        {
+            "id": "Notebooks",
+            "message": "Notebooks",
+            "translation": "笔记本"
+        },
+        {
+            "id": "Typst documents",
+            "message": "Typst documents",
+            "translation": "Typst 文档"
+        },
+        {
+            "id": "PDFs",
+            "message": "PDFs",
+            "translation": "PDF"
+        },
+        {
+            "id": "Images",
+            "message": "Images",
+            "translation": "图片"
+        },
+        {
+            "id": "Other files",
+            "message": "Other files",
+            "translation": "其他文件"
+        },
+        {
+            "id": "All files",
+            "message": "All files",
+            "translation": "所有文件"
+        },
+        {
+            "id": "Hide Explorer",
+            "message": "Hide Explorer",
+            "translation": "隐藏资源管理器"
+        },
+        {
+            "id": "Library",
+            "message": "Library",
+            "translation": "资料库"
+        },
+        {
+            "id": "Open Folder",
+            "message": "Open Folder",
+            "translation": "打开文件夹"
         },
         {
             "id": "Typst Package Center",
@@ -1037,14 +1249,34 @@
             "translation": "设置"
         },
         {
-            "id": "File Explorer",
-            "message": "File Explorer",
-            "translation": "文件资源管理器"
+            "id": "Files",
+            "message": "Files",
+            "translation": "文件"
         },
         {
             "id": "Outline",
             "message": "Outline",
             "translation": "大纲"
+        },
+        {
+            "id": "Assistant",
+            "message": "Assistant",
+            "translation": "助手"
+        },
+        {
+            "id": "More",
+            "message": "More",
+            "translation": "更多"
+        },
+        {
+            "id": "Local Templates",
+            "message": "Local Templates",
+            "translation": "本地模板"
+        },
+        {
+            "id": "File Explorer",
+            "message": "File Explorer",
+            "translation": "文件资源管理器"
         },
         {
             "id": "A new version is avaliable: {LatestVersion}",
@@ -1077,6 +1309,36 @@
             "translation": "已缓存"
         },
         {
+            "id": "Author",
+            "message": "Author",
+            "translation": "作者"
+        },
+        {
+            "id": "Last Updated",
+            "message": "Last Updated",
+            "translation": "最后更新"
+        },
+        {
+            "id": "License",
+            "message": "License",
+            "translation": "许可证"
+        },
+        {
+            "id": "Category",
+            "message": "Category",
+            "translation": "分类"
+        },
+        {
+            "id": "Read the docs",
+            "message": "Read the docs",
+            "translation": "阅读文档"
+        },
+        {
+            "id": "Copy import path",
+            "message": "Copy import path",
+            "translation": "复制导入路径"
+        },
+        {
             "id": "Loading packages...",
             "message": "Loading packages...",
             "translation": "正在加载包..."
@@ -1087,19 +1349,14 @@
             "translation": "未找到包/模板"
         },
         {
-            "id": "Category",
-            "message": "Category",
-            "translation": "分类"
-        },
-        {
             "id": "Clear",
             "message": "Clear",
             "translation": "清除"
         },
         {
-            "id": "Package kind",
-            "message": "Package kind",
-            "translation": "包类型"
+            "id": "Typst Packages",
+            "message": "Typst Packages",
+            "translation": "Typst 包"
         },
         {
             "id": "Search packages/templates on TPIX",
@@ -1115,6 +1372,26 @@
             "id": "Search TPIX...",
             "message": "Search TPIX...",
             "translation": "搜索 TPIX..."
+        },
+        {
+            "id": "Personal @local packages and templates from Typst's local package folder. No account or network connection is required.",
+            "message": "Personal @local packages and templates from Typst's local package folder. No account or network connection is required.",
+            "translation": "来自 Typst 本地包文件夹的个人 @local 包和模板。无需账户或网络连接。"
+        },
+        {
+            "id": "Search local templates...",
+            "message": "Search local templates...",
+            "translation": "搜索本地模板…"
+        },
+        {
+            "id": "Package kind",
+            "message": "Package kind",
+            "translation": "包类型"
+        },
+        {
+            "id": "Use template",
+            "message": "Use template",
+            "translation": "使用模板"
         },
         {
             "id": "Query packages...",
@@ -1190,9 +1467,24 @@
             ]
         },
         {
-            "id": "AI Assistant",
-            "message": "AI Assistant",
-            "translation": "AI助手"
+            "id": "Found {LastFetchedCount} local templates.",
+            "message": "Found {LastFetchedCount} local templates.",
+            "translation": "找到 {LastFetchedCount} 个本地模板。",
+            "placeholders": [
+                {
+                    "id": "LastFetchedCount",
+                    "string": "%[1]d",
+                    "type": "int",
+                    "underlyingType": "int",
+                    "argNum": 1,
+                    "expr": "vw.lastFetchedCount"
+                }
+            ]
+        },
+        {
+            "id": "All",
+            "message": "All",
+            "translation": "全部"
         },
         {
             "id": "Agent",
@@ -1385,6 +1677,56 @@
             "translation": "FOO=bar BAZ=qux"
         },
         {
+            "id": "Version",
+            "message": "Version",
+            "translation": "版本"
+        },
+        {
+            "id": "Preview In Browser",
+            "message": "Preview In Browser",
+            "translation": "在浏览器中预览"
+        },
+        {
+            "id": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
+            "message": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
+            "translation": "勾选后，文档预览将在默认浏览器中打开。否则预览将使用内置预览器。"
+        },
+        {
+            "id": "Enable Partial Preview",
+            "message": "Enable Partial Preview",
+            "translation": "启用局部预览"
+        },
+        {
+            "id": "The previewer will only render pages inside the viewport if enabled. This improves performance especially for large document.",
+            "message": "The previewer will only render pages inside the viewport if enabled. This improves performance especially for large document.",
+            "translation": "启用后，预览器仅渲染可见区域内的页面。这尤其能提升大型文档的性能。"
+        },
+        {
+            "id": "Debug Log",
+            "message": "Debug Log",
+            "translation": "调试日志"
+        },
+        {
+            "id": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
+            "message": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
+            "translation": "勾选后，内置 LSP（语言服务器协议）服务器的日志将写入控制台面板。需要重启或重新加载才能生效。"
+        },
+        {
+            "id": "Power Saving",
+            "message": "Power Saving",
+            "translation": "省电模式"
+        },
+        {
+            "id": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
+            "message": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
+            "translation": "勾选后，LSP 服务器将运行在省电模式，仅提供基本语法检查和代码补全功能，诊断和预览将无法使用。需要重启或重新加载才能生效。"
+        },
+        {
+            "id": "Language Server",
+            "message": "Language Server",
+            "translation": "语言服务器"
+        },
+        {
             "id": "Language",
             "message": "Language",
             "translation": "语言"
@@ -1430,36 +1772,6 @@
             "translation": "选择您喜欢的用户界面颜色主题。"
         },
         {
-            "id": "Preview",
-            "message": "Preview",
-            "translation": "预览"
-        },
-        {
-            "id": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
-            "message": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
-            "translation": "勾选后，文档预览将在默认浏览器中打开。否则预览将使用内置预览器。"
-        },
-        {
-            "id": "Debug Log",
-            "message": "Debug Log",
-            "translation": "调试日志"
-        },
-        {
-            "id": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
-            "message": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
-            "translation": "勾选后，内置 LSP（语言服务器协议）服务器的日志将写入控制台面板。需要重启或重新加载才能生效。"
-        },
-        {
-            "id": "Power Saving",
-            "message": "Power Saving",
-            "translation": "省电模式"
-        },
-        {
-            "id": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
-            "message": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
-            "translation": "勾选后，LSP 服务器将运行在省电模式，仅提供基本语法检查和代码补全功能，诊断和预览将无法使用。需要重启或重新加载才能生效。"
-        },
-        {
             "id": "External Typst Compiler Path",
             "message": "External Typst Compiler Path",
             "translation": "外部 Typst 编译器路径"
@@ -1503,6 +1815,16 @@
             "id": "Set the auto save delay (in seconds), cannot be completely disabled.",
             "message": "Set the auto save delay (in seconds), cannot be completely disabled.",
             "translation": "设置自动保存延迟（秒），无法完全禁用。"
+        },
+        {
+            "id": "Preview width",
+            "message": "Preview width",
+            "translation": "预览宽度"
+        },
+        {
+            "id": "Choose how much editor space the preview uses when it opens. You can still drag the divider while editing.",
+            "message": "Choose how much editor space the preview uses when it opens. You can still drag the divider while editing.",
+            "translation": "选择预览打开时占用的编辑器空间。编辑时仍可拖动分隔线。"
         },
         {
             "id": "Set the desired fonts for the editor. Use CSS style font family syntax which is a list of comma separated names. You can also leave it empty to let the application choose a fallback.",
@@ -1560,14 +1882,134 @@
             "translation": "编辑器"
         },
         {
+            "id": "File Interface",
+            "message": "File Interface",
+            "translation": "文件界面"
+        },
+        {
+            "id": "Interface",
+            "message": "Interface",
+            "translation": "界面"
+        },
+        {
+            "id": "Classic keeps Typstify's existing file workflow. Student adds a Library home and focused project navigation.",
+            "message": "Classic keeps Typstify's existing file workflow. Student adds a Library home and focused project navigation.",
+            "translation": "“经典”保留 Typstify 现有的文件工作流。“学生”增加资料库主页和聚焦的项目导航。"
+        },
+        {
+            "id": "Classic",
+            "message": "Classic",
+            "translation": "经典"
+        },
+        {
+            "id": "Student",
+            "message": "Student",
+            "translation": "学生"
+        },
+        {
+            "id": "Your Student preferences are saved and will return when you choose Student.",
+            "message": "Your Student preferences are saved and will return when you choose Student.",
+            "translation": "学生模式偏好会被保存，并在再次选择“学生”时恢复。"
+        },
+        {
+            "id": "Student preferences",
+            "message": "Student preferences",
+            "translation": "学生模式偏好"
+        },
+        {
+            "id": "These choices apply immediately and do not change the Classic interface.",
+            "message": "These choices apply immediately and do not change the Classic interface.",
+            "translation": "这些选项立即生效，且不会更改经典界面。"
+        },
+        {
+            "id": "Library folder",
+            "message": "Library folder",
+            "translation": "资料库文件夹"
+        },
+        {
+            "id": "The folder shown when Student mode starts. Forgetting it does not delete any files.",
+            "message": "The folder shown when Student mode starts. Forgetting it does not delete any files.",
+            "translation": "学生模式启动时显示的文件夹。忘记该文件夹不会删除任何文件。"
+        },
+        {
+            "id": "No Library folder selected",
+            "message": "No Library folder selected",
+            "translation": "未选择资料库文件夹"
+        },
+        {
+            "id": "Change",
+            "message": "Change",
+            "translation": "更改"
+        },
+        {
+            "id": "Forget",
+            "message": "Forget",
+            "translation": "忘记"
+        },
+        {
+            "id": "Editor files",
+            "message": "Editor files",
+            "translation": "编辑器文件"
+        },
+        {
+            "id": "Show only the current project or folder, or keep the complete workspace tree.",
+            "message": "Show only the current project or folder, or keep the complete workspace tree.",
+            "translation": "仅显示当前项目或文件夹，或保留完整的工作区文件树。"
+        },
+        {
+            "id": "Current project or folder",
+            "message": "Current project or folder",
+            "translation": "当前项目或文件夹"
+        },
+        {
+            "id": "Whole workspace",
+            "message": "Whole workspace",
+            "translation": "整个工作区"
+        },
+        {
+            "id": "Library view",
+            "message": "Library view",
+            "translation": "资料库视图"
+        },
+        {
+            "id": "Choose the default presentation for folders, notebooks, and files.",
+            "message": "Choose the default presentation for folders, notebooks, and files.",
+            "translation": "选择文件夹、笔记本和文件的默认显示方式。"
+        },
+        {
+            "id": "Grid",
+            "message": "Grid",
+            "translation": "网格"
+        },
+        {
+            "id": "List",
+            "message": "List",
+            "translation": "列表"
+        },
+        {
+            "id": "Navigation",
+            "message": "Navigation",
+            "translation": "导航"
+        },
+        {
+            "id": "Use the Library rail, or keep Typstify's familiar sidebar and bottom controls.",
+            "message": "Use the Library rail, or keep Typstify's familiar sidebar and bottom controls.",
+            "translation": "使用资料库导航栏，或保留 Typstify 熟悉的侧边栏和底部控件。"
+        },
+        {
+            "id": "Library rail",
+            "message": "Library rail",
+            "translation": "资料库导航栏"
+        },
+        {
+            "id": "Classic controls",
+            "message": "Classic controls",
+            "translation": "经典控件"
+        },
+        {
             "id": "Typst",
             "message": "Typst",
             "translation": "Typst"
-        },
-        {
-            "id": "Versions",
-            "message": "Versions",
-            "translation": "版本"
         },
         {
             "id": "Package Dir",
@@ -1693,11 +2135,6 @@
             "id": "Check new version",
             "message": "Check new version",
             "translation": "检查新版本"
-        },
-        {
-            "id": "Version",
-            "message": "Version",
-            "translation": "版本"
         },
         {
             "id": "Changelog",

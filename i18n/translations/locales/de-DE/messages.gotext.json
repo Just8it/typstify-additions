@@ -273,6 +273,21 @@
             "translation": "Beenden"
         },
         {
+            "id": "Choose your Library folder",
+            "message": "Choose your Library folder",
+            "translation": "Bibliotheksordner auswählen"
+        },
+        {
+            "id": "Select the folder that contains your courses, notebooks, and documents. Typstify keeps it as a normal folder.",
+            "message": "Select the folder that contains your courses, notebooks, and documents. Typstify keeps it as a normal folder.",
+            "translation": "Wähle den Ordner mit deinen Kursen, Notizbüchern und Dokumenten. Typstify behandelt ihn weiterhin als normalen Ordner."
+        },
+        {
+            "id": "Choose folder",
+            "message": "Choose folder",
+            "translation": "Ordner auswählen"
+        },
+        {
             "id": "Sign In",
             "message": "Sign In",
             "translation": "Anmelden"
@@ -411,6 +426,16 @@
             "id": "Sessions",
             "message": "Sessions",
             "translation": "Sitzungen"
+        },
+        {
+            "id": "New chat",
+            "message": "New chat",
+            "translation": "Neuer Chat"
+        },
+        {
+            "id": "No previous chats yet.",
+            "message": "No previous chats yet.",
+            "translation": "Noch keine vorherigen Chats."
         },
         {
             "id": "Sync Bibliography",
@@ -583,14 +608,6 @@
             ]
         },
         {
-            "id": [
-                "tip2",
-                "Find the desired template in Typst Packages explorer. Both local and remote templates can be used. \nA template name should have the form @namespace/package-name:version, for example: '@preview/aero-check:0.1.1'.\nIf you want to create project without template, just leave it empty."
-            ],
-            "message": "Find the desired template in Typst Packages explorer. Both local and remote templates can be used. \nA template name should have the form @namespace/package-name:version, for example: '@preview/aero-check:0.1.1'.\nIf you want to create project without template, just leave it empty.",
-            "translation": "Finden Sie die gewünschte Vorlage im Typst-Paket-Explorer. Es können sowohl lokale als auch entfernte Vorlagen verwendet werden.\nEin Vorlagenname sollte das Format @namespace/package-name:version haben, z. B.: '@preview/aero-check:0.1.1'.\nWenn Sie ein Projekt ohne Vorlage erstellen möchten, lassen Sie das Feld einfach leer."
-        },
-        {
             "id": "Create New Project",
             "message": "Create New Project",
             "translation": "Neues Projekt erstellen"
@@ -616,9 +633,19 @@
             "translation": "Bitte geben Sie einen gültigen vollständigen Vorlagennamen ein."
         },
         {
+            "id": "Not a package creation request.",
+            "message": "Not a package creation request.",
+            "translation": "Keine Anfrage zum Erstellen eines Pakets."
+        },
+        {
             "id": "Please set a name for your package/template.",
             "message": "Please set a name for your package/template.",
             "translation": "Bitte geben Sie einen Namen für Ihr Paket/Ihre Vorlage an."
+        },
+        {
+            "id": "Please select where the project should be created.",
+            "message": "Please select where the project should be created.",
+            "translation": "Wähle aus, wo das Projekt erstellt werden soll."
         },
         {
             "id": "Create project error: {Error}",
@@ -641,14 +668,34 @@
             "translation": "Projekttyp"
         },
         {
+            "id": "Choose Document for notes, articles, books, or slides. Choose Package or Template only when developing reusable Typst packages.",
+            "message": "Choose Document for notes, articles, books, or slides. Choose Package or Template only when developing reusable Typst packages.",
+            "translation": "Wähle „Dokument“ für Notizen, Artikel, Bücher oder Folien. Wähle „Paket“ oder „Vorlage“ nur zur Entwicklung wiederverwendbarer Typst-Pakete."
+        },
+        {
             "id": "Project Location",
             "message": "Project Location",
             "translation": "Projektstandort"
         },
         {
-            "id": "Select the location where the project will be created.",
-            "message": "Select the location where the project will be created.",
-            "translation": "Wählen Sie den Speicherort für das Projekt aus."
+            "id": "Select the folder where the project will be created.",
+            "message": "Select the folder where the project will be created.",
+            "translation": "Wähle den Ordner, in dem das Projekt erstellt werden soll."
+        },
+        {
+            "id": "Create In",
+            "message": "Create In",
+            "translation": "Erstellen in"
+        },
+        {
+            "id": "The project will be created inside the current Library folder.",
+            "message": "The project will be created inside the current Library folder.",
+            "translation": "Das Projekt wird im aktuellen Bibliotheksordner erstellt."
+        },
+        {
+            "id": "Select a directory",
+            "message": "Select a directory",
+            "translation": "Verzeichnis auswählen"
         },
         {
             "id": "Typst Template",
@@ -656,14 +703,44 @@
             "translation": "Typst-Vorlage"
         },
         {
+            "id": "Optionally start from a Typst package such as @preview/aero-check:0.1.1. Leave this empty to create a basic document.",
+            "message": "Optionally start from a Typst package such as @preview/aero-check:0.1.1. Leave this empty to create a basic document.",
+            "translation": "Optional kannst du mit einem Typst-Paket wie @preview/aero-check:0.1.1 beginnen. Lass das Feld leer, um ein einfaches Dokument zu erstellen."
+        },
+        {
+            "id": "@preview/package:version (optional)",
+            "message": "@preview/package:version (optional)",
+            "translation": "@preview/package:version (optional)"
+        },
+        {
             "id": "Project Name",
             "message": "Project Name",
             "translation": "Projektname"
         },
         {
-            "id": "The name of your project. A new folder will be created inside of the directory selected.",
-            "message": "The name of your project. A new folder will be created inside of the directory selected.",
-            "translation": "Der Name Ihres Projekts. Im ausgewählten Verzeichnis wird ein neuer Ordner erstellt."
+            "id": "A folder with this name will be created at the location above.",
+            "message": "A folder with this name will be created at the location above.",
+            "translation": "Ein Ordner mit diesem Namen wird am oben gewählten Ort erstellt."
+        },
+        {
+            "id": "Project name",
+            "message": "Project name",
+            "translation": "Projektname"
+        },
+        {
+            "id": "Package",
+            "message": "Package",
+            "translation": "Paket"
+        },
+        {
+            "id": "Template",
+            "message": "Template",
+            "translation": "Vorlage"
+        },
+        {
+            "id": "Document",
+            "message": "Document",
+            "translation": "Dokument"
         },
         {
             "id": "Delete File/Folder",
@@ -967,6 +1044,41 @@
             "translation": "Keine beschreibbaren Namespaces"
         },
         {
+            "id": "Search \u0026 Replace",
+            "message": "Search \u0026 Replace",
+            "translation": "Suchen und Ersetzen"
+        },
+        {
+            "id": "Preview",
+            "message": "Preview",
+            "translation": "Vorschau"
+        },
+        {
+            "id": "AI Assistant",
+            "message": "AI Assistant",
+            "translation": "KI-Assistent"
+        },
+        {
+            "id": "Paste asset: {Error}",
+            "message": "Paste asset: {Error}",
+            "translation": "Asset einfügen: {Error}",
+            "placeholders": [
+                {
+                    "id": "Error",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "err.Error()"
+                }
+            ]
+        },
+        {
+            "id": "Explorer",
+            "message": "Explorer",
+            "translation": "Explorer"
+        },
+        {
             "id": "No project",
             "message": "No project",
             "translation": "Kein Projekt"
@@ -975,6 +1087,16 @@
             "id": "No open project.",
             "message": "No open project.",
             "translation": "Kein Projekt geöffnet."
+        },
+        {
+            "id": "Project",
+            "message": "Project",
+            "translation": "Projekt"
+        },
+        {
+            "id": "Folder",
+            "message": "Folder",
+            "translation": "Ordner"
         },
         {
             "id": "pull dependencies error: {Error}",
@@ -1012,19 +1134,109 @@
             "translation": "Bibliografie-Info anzeigen"
         },
         {
-            "id": "Hide Explorer",
-            "message": "Hide Explorer",
-            "translation": "Explorer ausblenden"
+            "id": "No items match this filter.",
+            "message": "No items match this filter.",
+            "translation": "Keine Elemente entsprechen diesem Filter."
         },
         {
-            "id": "Open Folder",
-            "message": "Open Folder",
-            "translation": "Ordner öffnen"
+            "id": "This folder is empty. Use New to create a file, folder, or project.",
+            "message": "This folder is empty. Use New to create a file, folder, or project.",
+            "translation": "Dieser Ordner ist leer. Verwende „Neu“, um eine Datei, einen Ordner oder ein Projekt zu erstellen."
+        },
+        {
+            "id": "{VisibleEntries} items",
+            "message": "{VisibleEntries} items",
+            "translation": "{VisibleEntries} Elemente",
+            "placeholders": [
+                {
+                    "id": "VisibleEntries",
+                    "string": "%[1]d",
+                    "type": "int",
+                    "underlyingType": "int",
+                    "argNum": 1,
+                    "expr": "len(l.visibleEntries())"
+                }
+            ]
+        },
+        {
+            "id": "New",
+            "message": "New",
+            "translation": "Neu"
+        },
+        {
+            "id": "New File",
+            "message": "New File",
+            "translation": "Neue Datei"
+        },
+        {
+            "id": "New Folder",
+            "message": "New Folder",
+            "translation": "Neuer Ordner"
         },
         {
             "id": "New Project",
             "message": "New Project",
             "translation": "Neues Projekt"
+        },
+        {
+            "id": "Notebook",
+            "message": "Notebook",
+            "translation": "Notizbuch"
+        },
+        {
+            "id": "File",
+            "message": "File",
+            "translation": "Datei"
+        },
+        {
+            "id": "Typst work",
+            "message": "Typst work",
+            "translation": "Typst-Arbeiten"
+        },
+        {
+            "id": "Notebooks",
+            "message": "Notebooks",
+            "translation": "Notizbücher"
+        },
+        {
+            "id": "Typst documents",
+            "message": "Typst documents",
+            "translation": "Typst-Dokumente"
+        },
+        {
+            "id": "PDFs",
+            "message": "PDFs",
+            "translation": "PDFs"
+        },
+        {
+            "id": "Images",
+            "message": "Images",
+            "translation": "Bilder"
+        },
+        {
+            "id": "Other files",
+            "message": "Other files",
+            "translation": "Andere Dateien"
+        },
+        {
+            "id": "All files",
+            "message": "All files",
+            "translation": "Alle Dateien"
+        },
+        {
+            "id": "Hide Explorer",
+            "message": "Hide Explorer",
+            "translation": "Explorer ausblenden"
+        },
+        {
+            "id": "Library",
+            "message": "Library",
+            "translation": "Bibliothek"
+        },
+        {
+            "id": "Open Folder",
+            "message": "Open Folder",
+            "translation": "Ordner öffnen"
         },
         {
             "id": "Typst Package Center",
@@ -1037,14 +1249,34 @@
             "translation": "Einstellungen"
         },
         {
-            "id": "File Explorer",
-            "message": "File Explorer",
-            "translation": "Datei-Explorer"
+            "id": "Files",
+            "message": "Files",
+            "translation": "Dateien"
         },
         {
             "id": "Outline",
             "message": "Outline",
             "translation": "Gliederung"
+        },
+        {
+            "id": "Assistant",
+            "message": "Assistant",
+            "translation": "Assistent"
+        },
+        {
+            "id": "More",
+            "message": "More",
+            "translation": "Mehr"
+        },
+        {
+            "id": "Local Templates",
+            "message": "Local Templates",
+            "translation": "Lokale Vorlagen"
+        },
+        {
+            "id": "File Explorer",
+            "message": "File Explorer",
+            "translation": "Datei-Explorer"
         },
         {
             "id": "A new version is avaliable: {LatestVersion}",
@@ -1077,6 +1309,36 @@
             "translation": "Zwischengespeichert"
         },
         {
+            "id": "Author",
+            "message": "Author",
+            "translation": "Autor"
+        },
+        {
+            "id": "Last Updated",
+            "message": "Last Updated",
+            "translation": "Zuletzt aktualisiert"
+        },
+        {
+            "id": "License",
+            "message": "License",
+            "translation": "Lizenz"
+        },
+        {
+            "id": "Category",
+            "message": "Category",
+            "translation": "Kategorie"
+        },
+        {
+            "id": "Read the docs",
+            "message": "Read the docs",
+            "translation": "Dokumentation lesen"
+        },
+        {
+            "id": "Copy import path",
+            "message": "Copy import path",
+            "translation": "Importpfad kopieren"
+        },
+        {
             "id": "Loading packages...",
             "message": "Loading packages...",
             "translation": "Pakete werden geladen..."
@@ -1087,19 +1349,14 @@
             "translation": "Keine Pakete/Vorlagen gefunden"
         },
         {
-            "id": "Category",
-            "message": "Category",
-            "translation": "Kategorie"
-        },
-        {
             "id": "Clear",
             "message": "Clear",
             "translation": "Löschen"
         },
         {
-            "id": "Package kind",
-            "message": "Package kind",
-            "translation": "Paketart"
+            "id": "Typst Packages",
+            "message": "Typst Packages",
+            "translation": "Typst-Pakete"
         },
         {
             "id": "Search packages/templates on TPIX",
@@ -1115,6 +1372,26 @@
             "id": "Search TPIX...",
             "message": "Search TPIX...",
             "translation": "TPIX durchsuchen..."
+        },
+        {
+            "id": "Personal @local packages and templates from Typst's local package folder. No account or network connection is required.",
+            "message": "Personal @local packages and templates from Typst's local package folder. No account or network connection is required.",
+            "translation": "Persönliche @local-Pakete und -Vorlagen aus Typsts lokalem Paketordner. Es ist weder ein Konto noch eine Netzwerkverbindung erforderlich."
+        },
+        {
+            "id": "Search local templates...",
+            "message": "Search local templates...",
+            "translation": "Lokale Vorlagen durchsuchen …"
+        },
+        {
+            "id": "Package kind",
+            "message": "Package kind",
+            "translation": "Paketart"
+        },
+        {
+            "id": "Use template",
+            "message": "Use template",
+            "translation": "Vorlage verwenden"
         },
         {
             "id": "Query packages...",
@@ -1190,9 +1467,24 @@
             ]
         },
         {
-            "id": "AI Assistant",
-            "message": "AI Assistant",
-            "translation": "KI-Assistent"
+            "id": "Found {LastFetchedCount} local templates.",
+            "message": "Found {LastFetchedCount} local templates.",
+            "translation": "{LastFetchedCount} lokale Vorlagen gefunden.",
+            "placeholders": [
+                {
+                    "id": "LastFetchedCount",
+                    "string": "%[1]d",
+                    "type": "int",
+                    "underlyingType": "int",
+                    "argNum": 1,
+                    "expr": "vw.lastFetchedCount"
+                }
+            ]
+        },
+        {
+            "id": "All",
+            "message": "All",
+            "translation": "Alle"
         },
         {
             "id": "Agent",
@@ -1385,6 +1677,56 @@
             "translation": "FOO=bar BAZ=qux"
         },
         {
+            "id": "Version",
+            "message": "Version",
+            "translation": "Version"
+        },
+        {
+            "id": "Preview In Browser",
+            "message": "Preview In Browser",
+            "translation": "Vorschau im Browser"
+        },
+        {
+            "id": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
+            "message": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
+            "translation": "Wenn aktiviert, wird die Dokumentvorschau in Ihrem Standardbrowser geöffnet. Andernfalls wird die integrierte Vorschau verwendet."
+        },
+        {
+            "id": "Enable Partial Preview",
+            "message": "Enable Partial Preview",
+            "translation": "Teilvorschau aktivieren"
+        },
+        {
+            "id": "The previewer will only render pages inside the viewport if enabled. This improves performance especially for large document.",
+            "message": "The previewer will only render pages inside the viewport if enabled. This improves performance especially for large document.",
+            "translation": "Wenn aktiviert, rendert die Vorschau nur Seiten im sichtbaren Bereich. Dies verbessert besonders bei großen Dokumenten die Leistung."
+        },
+        {
+            "id": "Debug Log",
+            "message": "Debug Log",
+            "translation": "Debug-Protokoll"
+        },
+        {
+            "id": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
+            "message": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
+            "translation": "Wenn aktiviert, werden Protokolle des integrierten LSP-Servers (Language Server Protocol) im Konsolenbereich ausgegeben. Ein Neustart oder Neuladen ist erforderlich."
+        },
+        {
+            "id": "Power Saving",
+            "message": "Power Saving",
+            "translation": "Energiesparmodus"
+        },
+        {
+            "id": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
+            "message": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
+            "translation": "Wenn aktiviert, läuft der LSP-Server im Energiesparmodus. Nur grundlegende Syntaxprüfung und Codevervollständigung sind verfügbar, Diagnose und Vorschau funktionieren nicht. Ein Neustart oder Neuladen ist erforderlich."
+        },
+        {
+            "id": "Language Server",
+            "message": "Language Server",
+            "translation": "Sprachserver"
+        },
+        {
             "id": "Language",
             "message": "Language",
             "translation": "Sprache"
@@ -1430,36 +1772,6 @@
             "translation": "Wählen Sie Ihr bevorzugtes Farbdesign für die Benutzeroberfläche."
         },
         {
-            "id": "Preview",
-            "message": "Preview",
-            "translation": "Vorschau"
-        },
-        {
-            "id": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
-            "message": "When checked, document preview will be opening in your default browser. Otherwise the preview will use built-in previewer.",
-            "translation": "Wenn aktiviert, wird die Dokumentvorschau in Ihrem Standardbrowser geöffnet. Andernfalls wird die integrierte Vorschau verwendet."
-        },
-        {
-            "id": "Debug Log",
-            "message": "Debug Log",
-            "translation": "Debug-Protokoll"
-        },
-        {
-            "id": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
-            "message": "When checked, logs from the built-in LSP (Language Server Procotol) server is written to the console panel. It needs to restart or reload to take effect.",
-            "translation": "Wenn aktiviert, werden Protokolle des integrierten LSP-Servers (Language Server Protocol) im Konsolenbereich ausgegeben. Ein Neustart oder Neuladen ist erforderlich."
-        },
-        {
-            "id": "Power Saving",
-            "message": "Power Saving",
-            "translation": "Energiesparmodus"
-        },
-        {
-            "id": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
-            "message": "When checked, LSP server runs in power saving mode, only basic syntax checking and code completion are avaliable, diagnostics and previewing will not work. It needs to restart or reload to take effect.",
-            "translation": "Wenn aktiviert, läuft der LSP-Server im Energiesparmodus. Nur grundlegende Syntaxprüfung und Codevervollständigung sind verfügbar, Diagnose und Vorschau funktionieren nicht. Ein Neustart oder Neuladen ist erforderlich."
-        },
-        {
             "id": "External Typst Compiler Path",
             "message": "External Typst Compiler Path",
             "translation": "Externer Typst-Compiler-Pfad"
@@ -1503,6 +1815,16 @@
             "id": "Set the auto save delay (in seconds), cannot be completely disabled.",
             "message": "Set the auto save delay (in seconds), cannot be completely disabled.",
             "translation": "Legen Sie die Verzögerung für das automatische Speichern fest (in Sekunden). Kann nicht vollständig deaktiviert werden."
+        },
+        {
+            "id": "Preview width",
+            "message": "Preview width",
+            "translation": "Vorschaubreite"
+        },
+        {
+            "id": "Choose how much editor space the preview uses when it opens. You can still drag the divider while editing.",
+            "message": "Choose how much editor space the preview uses when it opens. You can still drag the divider while editing.",
+            "translation": "Wähle, wie viel Platz die Vorschau beim Öffnen im Editor verwendet. Du kannst den Trenner beim Bearbeiten weiterhin ziehen."
         },
         {
             "id": "Set the desired fonts for the editor. Use CSS style font family syntax which is a list of comma separated names. You can also leave it empty to let the application choose a fallback.",
@@ -1560,14 +1882,134 @@
             "translation": "Editor"
         },
         {
+            "id": "File Interface",
+            "message": "File Interface",
+            "translation": "Dateioberfläche"
+        },
+        {
+            "id": "Interface",
+            "message": "Interface",
+            "translation": "Oberfläche"
+        },
+        {
+            "id": "Classic keeps Typstify's existing file workflow. Student adds a Library home and focused project navigation.",
+            "message": "Classic keeps Typstify's existing file workflow. Student adds a Library home and focused project navigation.",
+            "translation": "„Klassisch“ behält Typstifys bisherigen Dateiablauf bei. „Student“ ergänzt eine Bibliothek und fokussierte Projektnavigation."
+        },
+        {
+            "id": "Classic",
+            "message": "Classic",
+            "translation": "Klassisch"
+        },
+        {
+            "id": "Student",
+            "message": "Student",
+            "translation": "Student"
+        },
+        {
+            "id": "Your Student preferences are saved and will return when you choose Student.",
+            "message": "Your Student preferences are saved and will return when you choose Student.",
+            "translation": "Deine Student-Einstellungen werden gespeichert und wiederhergestellt, sobald du „Student“ auswählst."
+        },
+        {
+            "id": "Student preferences",
+            "message": "Student preferences",
+            "translation": "Student-Einstellungen"
+        },
+        {
+            "id": "These choices apply immediately and do not change the Classic interface.",
+            "message": "These choices apply immediately and do not change the Classic interface.",
+            "translation": "Diese Einstellungen gelten sofort und ändern die klassische Oberfläche nicht."
+        },
+        {
+            "id": "Library folder",
+            "message": "Library folder",
+            "translation": "Bibliotheksordner"
+        },
+        {
+            "id": "The folder shown when Student mode starts. Forgetting it does not delete any files.",
+            "message": "The folder shown when Student mode starts. Forgetting it does not delete any files.",
+            "translation": "Dieser Ordner wird beim Start des Studentenmodus angezeigt. Beim Vergessen werden keine Dateien gelöscht."
+        },
+        {
+            "id": "No Library folder selected",
+            "message": "No Library folder selected",
+            "translation": "Kein Bibliotheksordner ausgewählt"
+        },
+        {
+            "id": "Change",
+            "message": "Change",
+            "translation": "Ändern"
+        },
+        {
+            "id": "Forget",
+            "message": "Forget",
+            "translation": "Vergessen"
+        },
+        {
+            "id": "Editor files",
+            "message": "Editor files",
+            "translation": "Editor-Dateien"
+        },
+        {
+            "id": "Show only the current project or folder, or keep the complete workspace tree.",
+            "message": "Show only the current project or folder, or keep the complete workspace tree.",
+            "translation": "Zeige nur das aktuelle Projekt bzw. den aktuellen Ordner oder behalte den vollständigen Arbeitsbereichsbaum."
+        },
+        {
+            "id": "Current project or folder",
+            "message": "Current project or folder",
+            "translation": "Aktuelles Projekt oder aktueller Ordner"
+        },
+        {
+            "id": "Whole workspace",
+            "message": "Whole workspace",
+            "translation": "Gesamter Arbeitsbereich"
+        },
+        {
+            "id": "Library view",
+            "message": "Library view",
+            "translation": "Bibliotheksansicht"
+        },
+        {
+            "id": "Choose the default presentation for folders, notebooks, and files.",
+            "message": "Choose the default presentation for folders, notebooks, and files.",
+            "translation": "Wähle die Standarddarstellung für Ordner, Notizbücher und Dateien."
+        },
+        {
+            "id": "Grid",
+            "message": "Grid",
+            "translation": "Raster"
+        },
+        {
+            "id": "List",
+            "message": "List",
+            "translation": "Liste"
+        },
+        {
+            "id": "Navigation",
+            "message": "Navigation",
+            "translation": "Navigation"
+        },
+        {
+            "id": "Use the Library rail, or keep Typstify's familiar sidebar and bottom controls.",
+            "message": "Use the Library rail, or keep Typstify's familiar sidebar and bottom controls.",
+            "translation": "Verwende die Bibliotheksleiste oder behalte Typstifys vertraute Seitenleiste und die unteren Bedienelemente."
+        },
+        {
+            "id": "Library rail",
+            "message": "Library rail",
+            "translation": "Bibliotheksleiste"
+        },
+        {
+            "id": "Classic controls",
+            "message": "Classic controls",
+            "translation": "Klassische Bedienelemente"
+        },
+        {
             "id": "Typst",
             "message": "Typst",
             "translation": "Typst"
-        },
-        {
-            "id": "Versions",
-            "message": "Versions",
-            "translation": "Versionen"
         },
         {
             "id": "Package Dir",
@@ -1693,11 +2135,6 @@
             "id": "Check new version",
             "message": "Check new version",
             "translation": "Neue Version prüfen"
-        },
-        {
-            "id": "Version",
-            "message": "Version",
-            "translation": "Version"
         },
         {
             "id": "Changelog",
