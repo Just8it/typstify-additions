@@ -79,6 +79,7 @@ type EditorSettings struct {
 	UseSoftTab       string  `key:"softTab" json:"softTab"`
 	WrapLine         string  `key:"wrapLine" json:"wrapLine"`
 	AutoSaveInterval int     `key:"autoSaveInterval" json:"autoSaveInterval"`
+	PreviewWidth     int     `key:"previewWidth" json:"previewWidth"`
 }
 
 type FileInterfaceSettings struct {
@@ -206,7 +207,10 @@ func (e *EditorSettings) Save() error {
 }
 
 func (e *EditorSettings) Load() error {
-	return e.baseModel.load(e, defaultEditorSettings)
+	if err := e.baseModel.load(e, defaultEditorSettings); err != nil {
+		return err
+	}
+	return e.Validate()
 }
 
 func (e *EditorSettings) Validate() error {
@@ -254,6 +258,9 @@ func (e *EditorSettings) Validate() error {
 	// Validate AutoSaveInterval if changed - must be > 0
 	if e.AutoSaveInterval != persisted.AutoSaveInterval && e.AutoSaveInterval <= 0 {
 		return fmt.Errorf("AutoSaveInterval should > 0")
+	}
+	if e.PreviewWidth < 20 || e.PreviewWidth > 60 {
+		e.PreviewWidth = e2.PreviewWidth
 	}
 
 	return nil
@@ -404,6 +411,7 @@ func init() {
 		TabSize:          4,
 		WrapLine:         "true",
 		AutoSaveInterval: 3,
+		PreviewWidth:     30,
 	}
 
 	defaultFileInterfaceSettings = &FileInterfaceSettings{

@@ -122,6 +122,34 @@ func TestFileInterfaceSettings(t *testing.T) {
 	}
 }
 
+func TestEditorPreviewWidthSettings(t *testing.T) {
+	root := t.TempDir()
+	editor := newSettings(root, nil).Editor()
+	if editor.PreviewWidth != 30 {
+		t.Fatalf("default PreviewWidth = %d, want 30", editor.PreviewWidth)
+	}
+
+	editor.PreviewWidth = 50
+	if err := editor.Save(); err != nil {
+		t.Fatal(err)
+	}
+	if got := newSettings(root, nil).Editor().PreviewWidth; got != 50 {
+		t.Fatalf("reloaded PreviewWidth = %d, want 50", got)
+	}
+
+	invalidRoot := t.TempDir()
+	invalidJSON := `{
+  "version": 1,
+  "editor": {"previewWidth": 90}
+}`
+	if err := os.WriteFile(filepath.Join(invalidRoot, "settings.json"), []byte(invalidJSON), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if got := newSettings(invalidRoot, nil).Editor().PreviewWidth; got != 30 {
+		t.Fatalf("invalid PreviewWidth fallback = %d, want 30", got)
+	}
+}
+
 func TestLegacySettingsMigration(t *testing.T) {
 	root := t.TempDir()
 	db, err := bolt.Open(filepath.Join(root, "settings.db"), 0600, nil)

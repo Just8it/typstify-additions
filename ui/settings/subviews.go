@@ -51,6 +51,7 @@ type EditorView struct {
 	typeface             gvwidget.TextField
 	textSizeInput        *form.FloatBinder
 	lineHeightScaleInput *form.FloatBinder
+	previewWidthInput    *form.FloatBinder
 	textWeightEnum       widget.Enum
 	tabKind              widget.Enum
 	tabSize              gvwidget.TextField
@@ -335,6 +336,7 @@ func (e *EditorView) Layout(gtx C, th *theme.Theme) D {
 		e.tabKind.Value = currentTabKind(e.setting)
 		e.tabSize.SetText(fmt.Sprint(e.setting.TabSize))
 		e.saveIntervalInput = form.NewFloatBinder(float32(e.setting.AutoSaveInterval), []float32{1, 10})
+		e.previewWidthInput = form.NewFloatBinder(float32(e.setting.PreviewWidth), []float32{20, 60})
 		e.isInitialized = true
 	} else {
 		var doUpdate bool
@@ -356,6 +358,11 @@ func (e *EditorView) Layout(gtx C, th *theme.Theme) D {
 
 		if val, updated := e.lineHeightScaleInput.Update(gtx); updated {
 			e.setting.LineHeightScale = val / 10.0
+			doUpdate = true
+		}
+
+		if val, updated := e.previewWidthInput.Update(gtx); updated {
+			e.setting.PreviewWidth = int(val)
 			doUpdate = true
 		}
 
@@ -437,6 +444,20 @@ func (e *EditorView) Layout(gtx C, th *theme.Theme) D {
 					)
 				})
 
+		}),
+
+		layout.Rigid(func(gtx C) D {
+			return settingItem{}.Layout(gtx, th,
+				i18n.Translate("Preview width"),
+				i18n.Translate("Set the width used whenever the inline preview opens. Quarter is 25%, third is 33%, and half is 50%. You can still drag the divider while editing."),
+				func(gtx C) D {
+					previewWidth := int(e.previewWidthInput.Value())
+					return layout.Flex{Alignment: layout.Middle}.Layout(gtx,
+						layout.Flexed(1, material.Slider(th.Theme, e.previewWidthInput.GetWidget(gtx)).Layout),
+						layout.Rigid(layout.Spacer{Width: unit.Dp(12)}.Layout),
+						layout.Rigid(material.Body1(th.Theme, fmt.Sprintf("%d%%", previewWidth)).Layout),
+					)
+				})
 		}),
 
 		layout.Rigid(func(gtx C) D {

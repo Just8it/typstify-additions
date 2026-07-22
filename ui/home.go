@@ -73,6 +73,7 @@ type HomeView struct {
 	previewResizer *widgets.Resize
 	previewBar     *widgets.ResizeBar
 	previewer      *preview.Previewer
+	previewVisible bool
 
 	welcome          WelcomeView
 	accountClick     widget.Clickable
@@ -477,12 +478,17 @@ func (hv *HomeView) layoutView(gtx C, th *theme.Theme) D {
 	showPreview := ok && pv.IsVisible()
 
 	if !showPreview {
+		hv.previewVisible = false
 		return cv.Layout(gtx, th)
 	}
 
 	// Preview is visible.
 	if hv.previewResizer == nil {
-		hv.previewResizer = &widgets.Resize{Axis: layout.Horizontal, Ratio: 0.7}
+		hv.previewResizer = &widgets.Resize{Axis: layout.Horizontal}
+	}
+	if !hv.previewVisible {
+		hv.previewResizer.Ratio = editorRatioForPreviewWidth(hv.srv.Settings().Editor().PreviewWidth)
+		hv.previewVisible = true
 	}
 
 	return hv.previewResizer.Layout(gtx,
@@ -499,6 +505,13 @@ func (hv *HomeView) layoutView(gtx C, th *theme.Theme) D {
 			return hv.previewBar.Layout(gtx, th)
 		},
 	)
+}
+
+func editorRatioForPreviewWidth(previewWidth int) float32 {
+	if previewWidth < 20 || previewWidth > 60 {
+		previewWidth = 30
+	}
+	return 1 - float32(previewWidth)/100
 }
 
 func (hv *HomeView) layoutAccountInfo(gtx C, th *theme.Theme) D {
