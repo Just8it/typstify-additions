@@ -162,18 +162,21 @@ func (te *TypstEditor) setupEditor(path string) error {
 	}
 
 	te.srcEditor = srcEditor
-
-	te.srcEditor.OnSelectChange = func(p gvcode.Position) {
-		te.lastCaretPos = p
-		previewSrv := te.srv.PreviewService()
-		if previewSrv != nil {
-			previewSrv.ScrollOnSelectionChange(context.Background())
-		}
-	}
-	te.srcEditor.OnOpenLink = te.openLink
-	te.srcEditor.OnTextChange = func() {
-		te.symbolsDirty.Store(true)
-	}
+	te.srcEditor.ApplyOptions(
+		editor.WithListeners(editor.EditorListeners{
+			OnSelectChange: func(p gvcode.Position) {
+				te.lastCaretPos = p
+				previewSrv := te.srv.PreviewService()
+				if previewSrv != nil {
+					previewSrv.ScrollOnSelectionChange(context.Background())
+				}
+			},
+			OnOpenLink: te.openLink,
+			OnTextChange: func() {
+				te.symbolsDirty.Store(true)
+			},
+		}),
+	)
 
 	return nil
 }

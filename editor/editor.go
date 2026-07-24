@@ -83,9 +83,7 @@ type TextEditor struct {
 	pendingExternalChange atomic.Bool
 	srv                   *service.ServiceFacade
 
-	OnSelectChange func(gvcode.Position)
-	OnTextChange   func()
-	OnOpenLink     func(link string, external bool)
+	listeners EditorListeners
 }
 
 func (me *TextEditor) File() string {
@@ -262,8 +260,8 @@ func (me *TextEditor) update(gtx layout.Context, th *theme.Theme) {
 
 	// process events from hover tip window
 	link, external := me.hoverTips.Update(gtx, th)
-	if link != "" && me.OnOpenLink != nil {
-		me.OnOpenLink(link, external)
+	if link != "" && me.listeners.OnOpenLink != nil {
+		me.listeners.OnOpenLink(link, external)
 	}
 
 	if me.differ != nil {
@@ -307,14 +305,14 @@ func (me *TextEditor) handleEvents(gtx layout.Context) {
 		case gvcode.SelectEvent:
 			me.hoverTips.Clear(gtx)
 
-			if me.OnSelectChange != nil {
+			if me.listeners.OnSelectChange != nil {
 				start, end := me.state.Selection()
 				if start != end {
 					return
 				}
 
 				line, col := me.state.CaretPos()
-				me.OnSelectChange(gvcode.Position{Line: line, Column: col})
+				me.listeners.OnSelectChange(gvcode.Position{Line: line, Column: col})
 			}
 		}
 	}
@@ -471,8 +469,8 @@ func (me *TextEditor) onTextChanged() {
 
 	me.autoSaver.Update()
 
-	if me.OnTextChange != nil {
-		me.OnTextChange()
+	if me.listeners.OnTextChange != nil {
+		me.listeners.OnTextChange()
 	}
 }
 
@@ -712,6 +710,12 @@ func (me *TextEditor) updateDiff() {
 	me.differ.Trigger(me.state)
 }
 
+func (me *TextEditor) ApplyOptions(opts ...TextEditorOption) {
+	for _, opt := range opts {
+		opt(me)
+	}
+}
+
 func NewTextEditor(path string, showDiff bool, settings *settings.EditorSettings) (*TextEditor, error) {
 	ed := &TextEditor{
 		filename:     path,
@@ -748,15 +752,24 @@ func NewTextEditor(path string, showDiff bool, settings *settings.EditorSettings
 		return nil, err
 	}
 
+	// Apply language extension options registered for this file type.
+	// Applied before SetText so that auto-detected tab style from file content
+	// takes precedence over any tab options from extensions.
+	for _, opt := range langExtRegistry.optionsFor(path) {
+		opt(ed)
+	}
+
+	ed.state.SetText(string(content))
+	ed.originalHash = calcDigest(content)
+
+	// For empty files, auto-detection returns defaults. Apply settings tab options
+	// after SetText so they take effect.
 	if len(content) == 0 {
 		ed.state.WithOptions(
 			gvcode.WithSoftTab(settings.UseSoftTab == "true"),
 			gvcode.WithTabWidth(settings.TabSize),
 		)
-	} // else guess by the editor
-
-	ed.state.SetText(string(content))
-	ed.originalHash = calcDigest(content)
+	}
 
 	// Some file systems or file system watchers, like fswatch, might not
 	// pick up changes if they are batched together or if the file is not
